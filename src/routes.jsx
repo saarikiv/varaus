@@ -17,14 +17,11 @@ export default (
   <Route path="/" component={Layout}>
     <IndexRoute component={Home}></IndexRoute>
     <Route path="admin" component={Admin}></Route>
-    <Route path="instructor" component={Instructor}></Route>
     <Route path="info" component={Info}></Route>
     <Route path="shop" component={Shop}></Route>
     <Route path="user" component={User}></Route>
-    <Route path="userInformation" component={ChangeInformation}></Route>
     <Route path="register" component={Register}> </Route>
     <Route path="checkout" component={Checkout}> </Route>
-    <Route path="specialCourses" component={SpecialCourses}></Route>
     <Route path="userProfile" component={UserProfile}></Route>
     <Route path="forgotPassword" component={ForgotPassword}></Route>
   </Route>
