@@ -1,0 +1,140 @@
+@import 'variables.scss';
+
+/////////////////////////////////////////////////////
+// MOBILE
+/////////////////////////////////////////////////////
+
+@media screen and (max-width: 799px) {
+  table {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    tr {
+      vertical-align: text-top;
+      margin: 0 auto 5vw;
+      width: 100%;
+      display: inline-block;
+      th, td {
+        width: 100%;
+        display: block;
+      }
+      td {      
+        padding: 2vw 0;
+        .table-time {
+          margin-top: 0.2vw;
+        }
+        .table-course, .table-time {
+          margin-bottom: 1vw;
+        }
+        h3 {
+          margin: 0;
+          padding: 0;
+        }
+        p {
+          margin: 0;
+          padding: 0;
+        }      
+      }    
+    }
+  }
+  .table-participants {
+    margin: 0.2vw 0 0 0.5vw;
+  }
+  .mini-icon {
+    margin: 0.2vw 0.5vw 0 0;
+    height: 5.5vw;
+  }
+}
+
+/////////////////////////////////////////////////////
+// DESKTOP
+/////////////////////////////////////////////////////
+
+@media screen and (min-width: 800px) {
+  table {
+    margin: 0 auto;
+    padding: 0;
+    tr {
+      vertical-align: text-top;
+      margin: 0 5px 20px;
+      width: 23%;
+      display: inline-block;    
+      th, td {
+        width: 100%;
+        display: block;
+      }
+      td {      
+        padding: 5px 0;        
+        .table-time {
+          margin-top: 2px;
+        }
+        .table-course, .table-time {
+          margin-bottom: 5px;
+        }
+        h3 {
+          margin: 0;
+          padding: 0;
+        }
+        p {
+          margin: 0;
+          padding: 0;
+        }      
+      }    
+    }
+  }
+  .table-participants {
+    margin: 2px 0 0 3px;
+  }
+  .mini-icon {
+    margin: 1px 3px 0 0;
+    height: 18px;
+  }
+}
+
+/////////////////////////////////////////////////////
+// ALL
+/////////////////////////////////////////////////////
+
+table {
+  tr {
+    background: $white;
+    border-radius: 5px;
+    box-sizing: border-box;
+    border: 1px solid $border;
+    td {
+      padding: 12px 0;
+      border-top: 1px solid $border;
+      transition: background 0.1s;
+      box-sizing: border-box;
+      .table-course {
+        color: $text-dark;
+      }
+      
+      &:hover {
+        background: $lightblue;
+        cursor: pointer;
+      }
+    }
+    th {
+      background: $lightgray;
+      border: none;
+      box-sizing: border-box;
+      color: $text-dark;
+    }
+  }
+}
+.table-participants {        
+  display: inline-block;
+  vertical-align: top;
+  color: $text-fade;
+}
+.mini-icon {
+  display: inline-block;        
+  width: auto;
+}
+.table-time {
+  color: $text-fade;
+}
+.table-nonmargin {
+  margin-top: 0;
+}

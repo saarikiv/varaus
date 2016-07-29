@@ -1,0 +1,265 @@
+/*Import used scss files here
+place all of them in this directory 'src/styles/'
+example:
+@import 'fonts.scss';*/
+@import 'forms.scss';
+@import 'variables.scss';
+@import 'lists.scss';
+@import 'tables.scss';
+@import 'containers.scss';
+@import 'buttons.scss';
+@import 'logo.scss';
+@import 'images.scss';
+
+@import url(https://fonts.googleapis.com/css?family=Asap:400,700);
+
+button, a, select, textarea, body, input {
+  font-family: 'Asap', sans-serif;
+}
+
+//////////////////////////////////////////////////////////////
+// MOBILE
+//////////////////////////////////////////////////////////////
+
+@media screen and (max-width: 799px) {
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 2vw 0;
+  }
+
+  h1.padded-header {
+    margin-top: 5vw;
+  }
+
+  h1 {
+    font-size: 8.2vw;
+    span, div {
+      font-size: 8.2vw;
+    }
+  }
+  h2 {
+    font-size: 7vw;
+  }
+  h3 {
+    font-size: 6vw;
+  }
+  h4 {
+    font-size: 5vw;
+  }
+  h5 {
+    font-size: 4.5vw;
+  }
+  h6 {
+    font-size: 4.4vw;
+  }
+  p {
+    font-size: 4.2vw;
+  }
+  span {
+    font-size: 4.2vw;
+  }
+  div {
+    font-size: 4.2vw;
+  }
+  label {
+    font-size: 4.2vw;
+  }
+  th {
+    font-size: 4.2vw;
+  }
+  td {
+    font-size: 4.2vw;
+  }
+  a, button {
+    font-size: 4.2vw;
+  }
+  input, textarea, select {
+    font-size: 4.2vw;
+  }
+  small {
+    font-size: 3.6vw;
+  }
+  .margin-bottom {
+    margin-bottom: 4vw;
+  }
+  .margin-left {
+    margin-left: 2vw;
+  }
+  .small-text {
+    display: block;
+    margin-bottom: 1vw;
+  }
+}
+
+//////////////////////////////////////////////////////////////
+// DESKTOP
+//////////////////////////////////////////////////////////////
+
+@media screen and (min-width: 800px) {
+  h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    padding: 10px 0;
+  }
+
+  h1 {
+    font-size: 30px;
+    span, div {
+      font-size: 30px;
+    }
+  }
+  h2 {
+    font-size: 25px;
+  }
+  h3 {
+    font-size: 22px;
+  }
+  h4 {
+    font-size: 20px;
+  }
+  h5 {
+    font-size: 19px;
+  }
+  h6 {
+    font-size: 18px;
+  }
+  p {
+    font-size: 14px;
+  }
+  span {
+    font-size: 14px;
+  }
+  div {
+    font-size: 14px;
+  }
+  label {
+    font-size: 14px;
+  }
+  th {
+    font-size: 14px;
+  }
+  td {
+    font-size: 14px;
+  }
+  a, button {
+    font-size: 14px;
+  }
+  input, textarea, select {
+    font-size: 14px;
+  }
+  small {
+    font-size: 13px;
+  }
+  .margin-bottom {
+    margin-bottom: 15px;
+  }
+  .margin-left {
+    margin-left: 5px;
+  }
+  .small-text {
+    margin-bottom: 10px;
+  }
+}
+
+//////////////////////////////////////////////////////////////
+// ALL
+//////////////////////////////////////////////////////////////
+
+button, a {
+  outline-style: none;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  background: $body-color;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: $text-dark;
+  font-weight: 400;
+}
+p {
+  color: $text-dark;
+  font-weight: 400;
+}
+th {
+  font-weight: 400;
+}
+button {
+  font-weight: bold;
+}
+a {
+  font-weight: 400;
+}
+input, textarea, select {
+  font-weight: 400;
+}
+
+.header-collapse {
+  display: inline-block;
+}
+
+.align-left {
+  text-align: left;
+}
+.align-right {
+  text-align: right;
+}
+
+.centered {
+  text-align: center;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.use-times {
+  color: $text-dark;
+}
+
+.item-price {
+  color: $text-dark;
+}
+
+.text-blue {
+  color: $blue;
+  div {
+    color: $blue;
+  }
+  span {
+    color: $blue;
+  }  
+}
+
+.text-red {
+  color: $red;
+  div {
+    color: $red;
+  }
+  span {
+    color: $red;
+  }  
+}
+
+.text-white {
+  color: $text-light;
+  div {
+    color: $text-light;
+  }
+  span {
+    color: $text-light;
+  }  
+}
+
+.text-bold {
+  font-weight: bold;
+}
+
+.small-text {
+  display: block;
+}

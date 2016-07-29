@@ -1,0 +1,414 @@
+@import 'variables.scss';
+
+/////////////////////////////////////////////////////
+// MOBILE
+/////////////////////////////////////////////////////
+
+@media screen and (max-width: 799px) {
+  .course-info-container {
+    .course-info {
+      margin: 0 auto;
+      padding: 5vw 0;
+      width: 100%;
+      .week-info-container {
+        margin: 0 auto 4vw;
+        width: 92vw;
+        display: block;        
+        padding: 2%;        
+      }
+      .info-info-container {
+        margin: 0 4vw;
+      }
+      .exit-btn {
+        float: right;
+        font-size: 12vw;
+        padding: 0;
+        margin: 0 5vw 0;
+        line-height: 0.8;
+      }
+      p {
+      }
+      h3 {
+        margin: 0.6vw 0 0;
+        padding: 0;
+      }
+      .info-time {
+        margin-top: 3vw;
+        margin-bottom: 0;
+        padding: 0;
+      }
+      .info-place {
+        margin: 0;
+      }
+      .info-instructor {
+        margin-top: 0;
+      }
+      .info-desc {
+        margin: 3vw 0;
+        padding: 0;
+      }
+    }
+    .inner {
+      width: 80%;
+    }
+  }
+
+  .timetable-container {
+    h2 {
+      padding: 0;
+      margin: 0;
+    }
+    small {
+      display: block;
+      padding: 1.5vw 0 3vw;
+    }
+  }
+
+  .contact-container {
+    text-align: left;
+    text-indent: 10%;
+  }
+
+  .container {
+    width: 100%;
+    margin: 0;
+    padding: 8vw 0;
+    h1 {
+
+      line-height: 0.7;
+      margin: 0;
+      padding: 0;
+    }
+    small {
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0;
+    }
+  }
+
+  .login-container {
+    width: 100%;
+    margin: 0 auto;
+    background: $container-color;
+    border: 1px solid $border;
+    border-radius: 5px;
+    box-sizing: border-box;
+    form {
+      padding: 2vw;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      margin-top: 2vw;
+    }
+  }
+  .register-container {
+    p {
+      margin: 10px 0 8px;
+      padding: 0;
+    }
+  }
+
+  .content-container {
+    width: 96%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 0;
+  }
+  .transaction-container {
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 10;
+  }
+  .booking-container {
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 10;
+  }
+  .colored-container {
+    h1 {
+      padding: 0;
+    }
+  }
+  .surrounded-container {
+    padding: 4vw;
+  }
+  .info-price {
+    span {
+      margin: 0 0 3vw;
+    }  
+  }
+}
+
+
+/////////////////////////////////////////////////////
+// DESKTOP
+/////////////////////////////////////////////////////
+
+@media screen and (min-width: 800px) {
+  .course-info-container {
+    .course-info {
+      border-radius: 5px;
+      margin: 50px auto;
+      padding: 20px;
+      width: 100%;
+      max-width: 500px;
+      border: 1px solid #888;
+      .week-info-container {
+        margin: 0 0 10px;
+        width: 100%;
+        display: inline-block;
+        vertical-align: text-top;
+        box-sizing: border-box;
+        padding: 1%;        
+      }
+      .info-info-container {
+        margin: 0;
+      }
+      .exit-btn {
+        float: right;
+        font-size: 30px;
+        margin: 0;
+        line-height: 0.8;
+        font-weight: bold;
+      }
+      h3 {
+        margin: 5px 0 0;
+        padding: 0;
+      }
+      .info-time {
+        margin-top: 15px;
+        margin-bottom: 0;
+        padding: 0;
+      }
+      .info-place {
+        margin: 0;
+      }
+      .info-instructor {
+        margin-top: 0;
+      }
+      .info-desc {
+        margin: 15px 0;
+        padding: 0;
+      }
+    }
+    .inner {
+      width: 400px;
+      padding: 4vw;
+    }
+  }
+
+  .timetable-container {
+    h2 {
+      padding: 0;
+      margin: 0;
+    }
+    small {
+      display: block;
+      padding: 10px 0 20px;
+    }
+  }
+
+  .contact-container {
+    text-align: left;
+    text-indent: 10%;
+  }
+
+  .container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 60px 0;
+    h1 {
+      line-height: 0.7;
+      margin: 0;
+      padding: 0;
+    }
+  }
+  .content-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .login-container {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 15px;
+    background: $container-color;
+    border: 1px solid $border;
+    border-radius: 5px;
+    button {
+      width: 100%;
+      margin-top: 12px;
+    }
+  }
+  .register-container {
+    p {
+      margin: 10px 0 8px;
+      padding: 0;
+    }
+  }
+
+  .transaction-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .booking-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .colored-container {
+    h1 {
+      padding: 0;
+    }
+  }
+  .surrounded-container {
+    padding: 12px;
+  }
+
+  .info-price {
+    span {
+      margin: 0 0 10px;
+    }  
+  }
+}
+
+/////////////////////////////////////////////////////
+// ALL
+/////////////////////////////////////////////////////
+
+.course-info-container {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+  .course-info {
+    background-color: $body-color;
+    box-shadow: 0 3px 10px $text-dark;
+    .week-info-container {
+      background-color: $white;
+      box-sizing: border-box;
+      border: 1px solid $border;
+      border-radius: 5px;
+    }
+    .exit-btn {
+      color: $red;
+      border: none;
+      background-color: transparent;
+      &:hover {
+        color: #444;
+      }
+    }
+    .info-time {
+      color: $blue;
+    }
+    .info-desc {
+      color: $text-fade;
+    }
+    .info-place {
+      color: $text-dark;
+    }
+    .info-instructor {
+      color: $text-dark;
+    }
+    .info-reserved {
+      color: $text-dark;
+    }
+    .info-participants {
+      color: $text-fade;
+    }
+    .info-keptweek {
+      color: $text-fade;
+    }
+    .info-cantreserve {
+      color: $red;
+    }
+    .info-noreservations {
+      color: $red;
+    }
+  }
+
+  .outer {
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+  .middle {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  .inner {
+    margin: 0 auto;
+    padding: 20px 0;
+    background-color: rgba(255,255,255, 0.9);
+    box-shadow: 0 3px 10px $text-dark;
+    border-radius: 5px;
+  }
+}
+
+.timetable-container {
+  small {
+    color: $text-fade;
+  }
+}
+
+.main-header-container {
+  h1 {
+    text-transform: uppercase;
+  }
+}
+
+.container {
+  background: $body-color;
+  box-sizing: border-box;
+  .content-container {
+    box-sizing: border-box;
+  }
+}
+.bordered-container {
+  border-bottom: 1px solid $border;
+}
+.colored-container {
+  background-color: $blue;
+  h1 {
+    color: $white;
+  }
+  p {
+    color: $white;
+  }
+  a {
+    color: $white;
+  }
+}
+
+.surrounded-container {
+  background: $container-color;
+  border: 1px solid $border;
+  border-radius: 5px;
+}
+
+.transparent-bg {
+  background: transparent;
+}
+
+.info-price {
+  margin: 0;
+  padding: 0;
+  color: $blue;
+  span {
+    display: inline-block;
+  }  
+}
