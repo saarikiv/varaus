@@ -33,9 +33,8 @@ class UserBooking extends React.Component {
     if(this.props.item.courseTime > day.getTime()+3*60*60*1000){
       cancelButton = <button className="btn-small btn-blue btn-right" onClick={() => this.cancelReservation(this.props.item)}>Peru</button>
     } else {
-      cancelButton = <p>Kurssin alkuun alle 3 tuntia.</p>
+      cancelButton = <p>Tunnin alkuun alle 3 tuntia.</p>
     }
-    console.log("this.props.item.courseTime", this.props.item.courseTime)
 
     return (
         <li className="booking-container">

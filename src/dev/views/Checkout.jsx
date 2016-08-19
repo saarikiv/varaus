@@ -1,25 +1,24 @@
 import React from "react";
 import { Link } from "react-router"
-
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import UserList from '../components/admin/UserList.jsx'
+
 import * as actionCreators from '../actions/shop.js'
-
-
-var Braintree = require("braintree-web");
-import DropIn from "../components/shop/BraintreeDropIn.jsx";
+import SubmitPayTrail from "../components/checkout/SubmitPayTrail.jsx"
+import PayTrail from "../components/checkout/PayTrail.jsx"
+import CashPayment from "../components/checkout/CashPayment.jsx"
 
 class Checkout extends React.Component {
+  
+  static contextTypes = {
+    router: React.PropTypes.object
+  }
 
   constructor(){
     super()
     this.paymentOngoing = false;
     this.buyingSpecialCourse = false;
-  }
-
-  static contextTypes = {
-    router: React.PropTypes.object
+    this.finishingPayTrailOngoing = false;
   }
 
   componentWillReceiveProps(nextProps){
@@ -35,8 +34,28 @@ class Checkout extends React.Component {
     }
   }
 
-  componentWillMount(){
+  componentWillUnmount(){
+    this.props.actions.resetShop(this.props.shopItems)
+  }
 
+  renderSubmitPayTrail(){
+    return(
+      <SubmitPayTrail actions={this.props.actions} shopItems={this.props.shopItems} />
+    )
+  }
+
+  renderPayTrail(){
+    return (
+      <PayTrail shopItems={this.props.shopItems} actions={this.props.actions} />
+    )
+  }
+
+  renderStart(){
+      return(
+          <div className="centered">
+            <Link className="text-link back-btn margin-top" to="user">&lt;Takaisin</Link>
+          </div>
+        )
   }
 
   onReady() {
@@ -60,16 +79,10 @@ class Checkout extends React.Component {
 //=================================================================
 
 renderCashPayment(){
-    return( <UserList /> )
-}
-
-  renderStartPhase(){
-    return(
-      <div>
-        <h2 className="centered">Alustetaan maksuyhteyttä...</h2>
-        </div>
+    return( 
+      <CashPayment actions={this.props.actions} />
     )
-  }
+}
 
   renderDonePhase(){
     if(this.buyingSpecialCourse){
@@ -90,46 +103,34 @@ renderCashPayment(){
     return(
       <div>
         <h2 className="centered">Maksuyhteydessä ongelmia...</h2>
-        </div>
+      </div>
     )
   }
 
-  renderPayment(){
-    return (
-          <div>
-            <h2 className="centered">Valitse maksutapa ja vahvista maksu.</h2>
-            <form action='/transactions' method='POST'>
-                <DropIn
-                    braintree={Braintree}
-                    clientToken={this.props.shopItems.token}
-                    onReady={this.onReady.bind(this)}
-                    onError={this.onError.bind(this)}
-                    onPaymentMethodReceived={this.onPaymentMethodReceived.bind(this)}
-                />
-              <br></br>
-              <p>{this.props.shopItems.cart.title}</p><br></br>
-              <p>Hinta: {this.props.shopItems.cart.price} € </p>
-              <input type='submit' id="submitButton" disabled='true' className="btn-small btn-blue" value='Vahvista!'></input>
-            </form>
-          </div>
-    );
+  renderPayTrailComplete(){
+    setTimeout(() => {this.context.router.push('user')}, 200)
+    return(<div></div>)
   }
 
   render() {
+
     switch(this.props.shopItems.phase){
+      case "payTrailInitialized":
+        return this.renderSubmitPayTrail()
+      case "payTrailPayment":
+        return this.renderPayTrail()
+      case "payTrailComplete":
+        return this.renderPayTrailComplete()
       case "cashPayment":
         return this.renderCashPayment()
-      case "braintreePayment":
-          this.paymentOngoing = false;
-          return this.renderStartPhase()
-      case "tokenReceived":
-        return this.renderPayment()
       case "done":
         return this.renderDonePhase()
       case "error":
         return this.renderError()
       case "timeout":
         return(<p> Palataan takaisin päänäkymään.</p>)
+      case "start":
+        return this.renderStart()
       default:
       return (<p>ERROR</p>)
     }
@@ -141,7 +142,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-  return { shopItems: state.shopItems, currentUser: state.currentUser }
+  return { auth: state.auth, shopItems: state.shopItems, currentUser: state.currentUser }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout)

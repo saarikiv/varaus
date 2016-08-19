@@ -5,8 +5,7 @@ export default class JoogakokouluLogo extends React.Component {
     return (
       <div className="centered">
         <div className="logo-container">
-          <p className="upper-text">Joogakoulu</p>
-          <p className="lower-text">Silta</p>
+          <img className="logo" src="./assets/silta.png"/>
         </div>
       </div>
     );

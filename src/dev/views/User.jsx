@@ -6,13 +6,10 @@ import { connect } from 'react-redux'
 import * as userActionCreators from '../actions/user.js'
 import * as lsActionCreators from '../actions/loadingScreen.js'
 
-import ContactInfo from '../components/home/ContactInfo.jsx'
-import UserHeader from '../components/user/UserHeader.jsx'
-import SpecialCourses from '../components/user/SpecialCourses.jsx'
 import Timetable from '../components/user/Timetable.jsx'
 import CourseInfo from '../components/user/CourseInfo.jsx'
-import SpecialCourseInfo from '../components/user/SpecialCourseInfo.jsx'
-import UserBookings from '../components/user/UserBookings.jsx'
+import TimetableHeader from '../components/user/TimetableHeader.jsx'
+
 
 
 class User extends React.Component {
@@ -24,12 +21,14 @@ class User extends React.Component {
   constructor(){
     super();
     this.userFullyLoaded = false
-    this.emailVerificationOngoing = false
   }
 
   currentUserReady(currentUser){
     if( currentUser.bookingsReady && currentUser.transactionsReady && currentUser.specialCoursesReady) {
       this.userFullyLoaded = true;
+      if(currentUser.locked){
+        this.context.router.push('lockeduser')
+      }
     }
   }
 
@@ -41,41 +40,23 @@ class User extends React.Component {
     this.currentUserReady(nextProps.currentUser)
   }
 
-  handleEmailVerify(){
-    if(!this.emailVerificationOngoing){
-      this.emailVerificationOngoing = true;
-      this.props.actions.sendEmailVerification()
-    } 
-  }
-
-
-  render() {
-
-    const { currentUser, auth } = this.props
-
-    var emailVerification = null
-    if(auth.uid){
-      if(!auth.userdata.emailVerified){
-        emailVerification = <div className="container bordered-container"><div className=" centered content-container"><button className="btn-small btn-red" onClick={this.handleEmailVerify.bind(this)}>Varmista sähköpostisi</button></div></div>    
-      }
-    }
+  render() {    
     if( this.userFullyLoaded ) {
         return (
-            <div>              
-              {emailVerification}
-              <UserHeader curUsr={currentUser}/>
-              <UserBookings/>
-              <Timetable/>
-              <SpecialCourses />
-              <ContactInfo />
-              <CourseInfo />
-              <SpecialCourseInfo />
+            <div>
+              <TimetableHeader />
+              <Timetable/>              
+              <CourseInfo />              
             </div>
           );
       } else {
-            return (
-              <div></div>
-            );
+        return (
+          <div class="container">
+            <div className="centered">
+              <Link className="text-link back-btn" to="/">&lt;Takaisin</Link>
+            </div>
+          </div>
+        )
       }
   }
 }

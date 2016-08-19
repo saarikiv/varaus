@@ -15,6 +15,9 @@ class UserProfile extends React.Component {
   }
 
   componentWillMount(){
+      if(this.props.currentUser.locked){
+        this.context.router.push('lockeduser')
+      }
   }
 
   componentWillUnmount(){
@@ -22,6 +25,9 @@ class UserProfile extends React.Component {
 
 
   componentWillReceiveProps(nextProps){
+      if(nextProps.currentUser.locked){
+        this.context.router.push('lockeduser')
+      }
   }
 
 

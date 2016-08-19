@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Varaus</title>
+    <title>Joogakoulu Silta</title>
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" type="text/css" href="app.min.css">
 </head>
@@ -11,26 +11,27 @@
 <body>
     <div id="app"></div>
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script type="text/javascript" src="https://payment.paytrail.com/js/payment-widget-v1.0.min.js"></script>
     <script>
-        // Select your VARAUSSERVER
-        var VARAUSSERVER = 'https://varausserver-stage.herokuapp.com';
-        //var VARAUSSERVER = 'https://varausserver.herokuapp.com';
-        //var VARAUSSERVER = 'http://localhost:3000';
+        // Select your JOOGASERVER
+        var JOOGASERVER = 'https://joogaserver-stage.herokuapp.com';
+        //var JOOGASERVER = 'https://joogaserver.herokuapp.com';
+        //var JOOGASERVER = 'http://localhost:3000';
 
         // Initialize Firebase
         // Stage
         var firebaseStageConfig = {
-          apiKey: "AIzaSyBpdvTV_I-EFMbcP8j8jvqO8KAUO69bI0U",
-          authDomain: "varaus-a0250.firebaseapp.com",
-          databaseURL: "https://varaus-a0250.firebaseio.com",
-          storageBucket: "varaus-a0250.appspot.com"
+            apiKey: "AIzaSyCq544Yq7EEY-5spIe1oFCe8gkOzRkS5ak",
+            authDomain: "joogakoulusilta-projekti.firebaseapp.com",
+            databaseURL: "https://joogakoulusilta-projekti.firebaseio.com",
+            storageBucket: "joogakoulusilta-projekti.appspot.com",
         };
         // PROD
         var firebaseProdConfig = {
-          apiKey: "AIzaSyBpdvTV_I-EFMbcP8j8jvqO8KAUO69bI0U",
-          authDomain: "varaus-a0250.firebaseapp.com",
-          databaseURL: "https://varaus-a0250.firebaseio.com",
-          storageBucket: "varaus-a0250.appspot.com"
+            apiKey: "AIzaSyBUQvSG9ifK5BZPzUgrZjPDOhm1dOHkvnY",
+            authDomain: "joogakoulusilta-654a9.firebaseapp.com",
+            databaseURL: "https://joogakoulusilta-654a9.firebaseio.com",
+            storageBucket: "joogakoulusilta-654a9.appspot.com",
         };
 
         //----------------------------------------

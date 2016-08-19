@@ -12,16 +12,16 @@ var commonLoaders = [
 
 module.exports = [
   {
-  name : "varaus web front-end",
+  name : "joogakoulu web front-end",
   context: path.join(__dirname, "src"),
   devtool: debug ? "inline-sourcemap" : null,
-  entry: "./app.jsx",
+  entry: ["babel-polyfill", "./app.jsx"],
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
         exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader',
+        loader: 'babel',
         query: {
           presets: ['react', 'es2015', 'stage-0'],
           plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy'],
@@ -50,6 +50,11 @@ module.exports = [
     copyUnmodified: true
     })
   ] : [
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': '"production"'
+      }
+    }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),

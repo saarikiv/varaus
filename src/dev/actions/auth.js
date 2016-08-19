@@ -1,3 +1,5 @@
+import axios from "axios"
+
 import {
     ADD_USER,
     REMOVE_USER,
@@ -5,6 +7,8 @@ import {
     AUTH_TIMEOUT,
     EMAIL_UPDATED,
     PASSWORD_UPDATED,
+    SIGN_OUT,
+    REGISTER_USER
 } from './actionTypes.js'
 import {
     createNewUser
@@ -42,7 +46,7 @@ export function authListener() {
                 user.email = userdata.email;
                 user.uid = userdata.uid;
                 user.userdata = userdata;
-                console.log("USER: ", user.uid, user.email, userdata);
+                //console.log("USER: ", user.uid, user.email, userdata);
                 dispatch({
                     type: ADD_USER,
                     payload: user
@@ -52,7 +56,6 @@ export function authListener() {
                 surname = null;
                 alias = null;
             } else {
-                console.log("REMOVE_USR")
                 dispatch({
                     type: REMOVE_USER
                 })
@@ -63,9 +66,7 @@ export function authListener() {
 
 export function loginWithPopUp() {
     return dispatch => {
-        console.log("firebase auth", firebase)
         var provider = new firebase.auth.GoogleAuthProvider
-        console.log("provider", provider)
         Auth.signInWithPopup(provider).catch(error => {
             if (error) {
                 dispatch({
@@ -84,7 +85,7 @@ export function loginWithPopUp() {
 
 export function login(email, password) {
     return dispatch => {
-        _showLoadingScreen(dispatch, "Kirjataan käyttäjä sisään sovellukseen."); // loading screen is cleared in AuthManager.jsx after user data is fully loaded.
+        _showLoadingScreen(dispatch, "Kirjataan käyttäjä sisään sovellukseen"); // loading screen is cleared in AuthManager.jsx after user data is fully loaded.
         Auth.signInWithEmailAndPassword(email, password).catch(error => {
             if (error) {
                 dispatch({
@@ -96,7 +97,7 @@ export function login(email, password) {
                         }
                     }
                 })
-                _hideLoadingScreen(dispatch, "Kirjautuminen päättyi virheeseen: " + error.message, false, 2000)
+                _hideLoadingScreen(dispatch, "Tarkista käyttäjätunnus/salasana\nOletko rekisteröitynyt?", false, 3000)
             }
         });
     }
@@ -104,7 +105,11 @@ export function login(email, password) {
 
 export function logout() {
     return dispatch => {
-        Auth.signOut().then(() => {}, error => {
+        Auth.signOut().then(() => {
+          dispatch({
+            type: SIGN_OUT
+          })
+        }, error => {
             if (error) {
                 dispatch({
                     type: AUTH_ERROR,
@@ -119,6 +124,21 @@ export function logout() {
         });
     }
 
+}
+
+function sendRegistrationNotification(){
+    let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/notifyRegistration' : JOOGASERVER + '/notifyRegistration'
+    firebase.auth().currentUser.getToken(true)
+    .then(idToken => {
+        return axios.post(JOOGAURL, {
+            current_user: idToken
+        })
+    })
+    .then(response => {
+    })
+    .catch(error => {
+        console.error("REGISTRATION_NOTIFICATION_ERROR:", error);
+    });
 }
 
 export function register(email, password, fName, sName, a) {
@@ -131,6 +151,12 @@ export function register(email, password, fName, sName, a) {
         _showLoadingScreen(dispatch, "Rekisteröidään käyttäjää " + email)
         Auth.createUserWithEmailAndPassword(email, password).then(() => {
             _hideLoadingScreen(dispatch, "Käyttäjä " + email + " onnistuneesti rekisteröity", true)
+            dispatch({
+              type: REGISTER_USER
+            })
+            setTimeout(()=>{
+                sendRegistrationNotification();
+            },2000)
         }).catch(error => {
             if (error) {
                 dispatch({

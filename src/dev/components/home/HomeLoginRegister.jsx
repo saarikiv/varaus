@@ -46,16 +46,16 @@ class HomeLoginRegister extends React.Component {
     return (
       <div class="container bordered-container centered">
         <Logo />
-        <Link className="text-link" to="info">Tutustu tarkemmin</Link>
+        <a className="text-link" href="http://www.joogakoulusilta.com" target="_blank">Tutustu tarkemmin</a>
 
-        <h3 className="centered login-header">Kirjaudu sisään Joogakoulu Siltaan</h3>
+        <h3 className="centered login-header margin-bottom">Kirjaudu sisään Joogakoulu Siltaan</h3>
         <div className="content-container login-container">          
           {this.renderForm()}
         </div>
 
         <div className="register-container">
           <p>Oletko uusi käyttäjä?</p>
-          <Link className="text-link" to="register">Rekisteröidy</Link>
+          <Link className="btn-small btn-green text-bold" to="register">Rekisteröidy</Link>
         </div>
       </div>
     )

@@ -29,6 +29,9 @@ class SpecialCourseForm extends React.Component {
     } else {
       this.props.actions.modifySpecialCourse(props, 
       this.props.itemkey, 
+      this.props.courseTypes.list.find((item) => {return item.key === props.courseType}),
+      this.props.places.list.find((item) => {return item.key === props.place}),
+      this.props.instructors.list.find((item) => {return item.key === props.instructor})
       )
     }
     this.props.actions.minimizeSpecialCourseForm()
@@ -111,7 +114,6 @@ class SpecialCourseForm extends React.Component {
   }
 
   renderExpandButton() {
-    console.log("CMPHERR", this.props.cmp)
     if(this.props.cmp.expanded) {
       return <button className="expand-btn" onClick={() => this.props.actions.minimizeSpecialCourseForm()}>Piilota</button>
     }
@@ -124,7 +126,7 @@ class SpecialCourseForm extends React.Component {
     return (
       <div className="container transparent-bg">
         <div className="surrounded-container">
-          <h2 className="header-collapse">Luo uusi erikoiskurssi</h2>
+          <h2 className="header-collapse">Kurssin tiedot</h2>
           {this.renderExpandButton()}
           {this.renderContent()}
         </div>

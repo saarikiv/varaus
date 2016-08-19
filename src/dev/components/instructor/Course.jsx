@@ -32,20 +32,29 @@ class Course extends React.Component {
     const { booking, item } = this.props;
     var courseCancelled = null;
     if(item.cancelled){
-      courseCancelled = <p>PERUTTU</p>
-    }
-
-    if(booking){
-      var allBooked = <p className="table-participants">0/{item.maxCapacity}</p>
-      if(booking.all.length > 0){
-          allBooked = <p className="table-participants">{booking.all[0].reservations}/{item.maxCapacity}</p>
+      courseCancelled = <p className="text-bold text-red table-alert-c">PERUTTU</p>
+    } else {
+      if(booking){
+        var allBooked = <span>
+          <img className="mini-icon" src="./assets/group.png" />
+          <p className="table-participants">0/{item.maxCapacity}</p>
+        </span>        
+        if(booking.all.length > 0){
+          if (booking.all[0].reservations === item.maxCapacity) {
+            allBooked = <p className="text-bold text-red table-alert-f">TÄYNNÄ</p>
+          } else {
+            allBooked = <span>
+              <img className="mini-icon" src="./assets/group.png" />
+              <p className="table-participants">{booking.all[0].reservations}/{item.maxCapacity}</p>
+            </span> 
+          }                
+        }
       }
-    }
+    }    
     return (
       <td onClick={() => this.itemClicked()}>
         <p className="table-course">{item.courseType.name}</p>
-        <p className="table-time">{getTimeStrMsBeginnignOfDay(item.start)} - {getTimeStrMsBeginnignOfDay(item.end)}</p>
-        <img className="mini-icon" src="./assets/group.png" />
+        <p className="table-time">{getTimeStrMsBeginnignOfDay(item.start)} - {getTimeStrMsBeginnignOfDay(item.end)}</p>        
         {allBooked}
         {courseCancelled}
       </td>

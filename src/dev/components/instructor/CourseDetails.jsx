@@ -70,7 +70,7 @@ class CourseDetails extends React.Component {
       );
     } else {
       return(
-        <h3>Kurssille ei ole ilmoittautuneita.</h3>
+        <p>Tunnille ei ole ilmoittautuneita.</p>
       )
     }
                             
@@ -80,17 +80,17 @@ class CourseDetails extends React.Component {
     const { course, booking } = this.props.instructor;
     var cancelButton = null;
     if(course.cancelled){
-      cancelButton = (this.confirmation)? "Vahvista aktivoiminen" : "Aktivoi kurssi"
+      cancelButton = (this.confirmation)? "Vahvista aktivoiminen" : "Aktivoi tunti"
       return(
         <span className="item-row">
-          <button className="btn-small btn-red" onClick={() => {this.activateCourse()}}>{cancelButton}</button>
+          <button className="btn-small btn-blue mobile-full" onClick={() => {this.activateCourse()}}>{cancelButton}</button>
         </span>
       );
     } else {
       cancelButton = (this.confirmation)? "Vahvista peruminen" : "Peru"
       return(
         <span className="item-row">
-          <button className="btn-small btn-red" onClick={() => {this.cancelCourse()}}>{cancelButton}</button>
+          <button className="btn-small btn-red mobile-full" onClick={() => {this.cancelCourse()}}>{cancelButton}</button>
         </span>
       );
     }
@@ -101,7 +101,7 @@ class CourseDetails extends React.Component {
 
     let courseCancelled = null;
     if(course.cancelled){
-      courseCancelled = <h2>Kurssi on peruttu!</h2>
+      courseCancelled = <p className="text-red">Tunti on peruttu!</p>
     }
 
     let weekIndex = 0;
@@ -122,7 +122,7 @@ class CourseDetails extends React.Component {
       return (
         <div className="course-info-container">
           <div className="course-info">
-            <button className="exit-btn" onClick={this.exitContainer.bind(this)}>x</button>
+            <img src="./assets/error.png" className="exit-btn" onClick={this.exitContainer.bind(this)} />
             <div className="info-info-container">
               <h2>{course.courseType.name}</h2>
               <h3>{dayStr}    ( {bookingPerCapacity} )</h3>

@@ -4,7 +4,7 @@
 // MOBILE
 /////////////////////////////////////////////////////
 
-@media screen and (max-width: 799px) {
+@media screen and (max-width: $mobile-size) {
     .authentication-bar {
     height:10vw;
     text-align: center;
@@ -18,7 +18,7 @@
 // DESKTOP
 /////////////////////////////////////////////////////
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: $desktop-size) {
   .authentication-bar {
     height:50px;
     text-align: center;

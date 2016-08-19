@@ -27,7 +27,7 @@ class AuthManager extends React.Component {
     const { currentUser, auth, loadingScreen } = nextProps;
     if(auth.uid){
       if(!this.userInitialized){
-        this.props.lsActions.showLoadingScreen("Ladataan käyttäjätiedot.")
+        this.props.lsActions.showLoadingScreen("Ladataan käyttäjätiedot")
         this.loadingScreenActivated = true;
         this.props.userActions.fetchUserDetails(auth.uid)
         this.props.userActions.fetchUsersTransactions(auth.uid)
@@ -70,10 +70,7 @@ class AuthManager extends React.Component {
     }
 
 
-    return (<div>
-        {authError}
-        {userError}
-    </div>)
+    return <div></div>
   }
 }
 

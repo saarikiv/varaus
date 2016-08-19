@@ -1,4 +1,4 @@
-function mapDay(dayin) {
+export function mapDay(dayin) {
     return (dayin == 0) ? 7 : dayin;
 }
 
@@ -54,6 +54,18 @@ export function getCourseTimeLocal(weeksForward, timeOfStart, dayNumber) {
 
     return courseTime;
 }
+
+export function daysLeft(time){
+    let today = new Date();
+    let duration = 0;
+    let daysLeft = 0;
+    if(time != 0){
+      duration = time - today.getTime()
+      return Math.round(duration / (24*60*60*1000))
+    } else {
+      return 0;
+    }
+  }
 
 export function getDayStrMs(ms) {
     let day = new Date();

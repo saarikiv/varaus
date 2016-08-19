@@ -24,6 +24,10 @@ class CourseForm extends React.Component {
     this.props.actions.minimizeCourseForm()
   }
 
+  componentDidMount(){
+    document.getElementById("courseFocusItem").focus()
+  }
+
 
   renderCourseTypeOptions(item) {
     return (
@@ -62,7 +66,7 @@ class CourseForm extends React.Component {
           </select>
 
           <label htmlFor="courseStart">Alkaa klo.</label>
-          <input type="number" name="courseStart" {...start} placeholder="esim: 800 tai 1000 tai 2130" />
+          <input type="number" id="courseFocusItem" name="courseStart" {...start} placeholder="esim: 800 tai 1000 tai 2130" />
 
           <label htmlFor="courseEnd">Loppuu klo.</label>
           <input type="number" name="courseEnd" {...end} placeholder="esim: 900 tai 1100 tai 2230" />
@@ -97,7 +101,7 @@ class CourseForm extends React.Component {
     return (
       <div className="container transparent-bg">
         <div className="surrounded-container">
-          <h2 className="header-collapse">Luo uusi vakiokurssi</h2>
+          <h2 className="header-collapse">Tunnin tiedot</h2>
           {this.renderContent()}
         </div>
       </div>

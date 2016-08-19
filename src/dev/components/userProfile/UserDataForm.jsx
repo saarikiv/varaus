@@ -28,7 +28,7 @@ class UserDataForm extends React.Component {
       return (
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
           <label htmlFor="firstName">Etunimi</label>
-          <input type="text" name="firstname"  {...firstname}/>
+          <input id="firstName" type="text" name="firstname"  {...firstname}/>
 
           <label htmlFor="lastName">Sukunimi</label>
           <input type="text" name="lastname" {...lastname}/>

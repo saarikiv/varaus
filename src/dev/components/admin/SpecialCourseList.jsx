@@ -21,7 +21,6 @@ class CourseList extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("CMPPROPS", nextProps)
       if(nextProps.cmp.expanded && nextProps.cmp.expander === "addNew"){
         this.toggleForm = true;
       } else {
@@ -84,7 +83,7 @@ class CourseList extends React.Component {
     return (
       <div className="container bordered-container">
         <div className="content-container align-left">
-          <h2 className="header-collapse">Erikoiskurssit</h2>
+          <h2 className="header-collapse">Kurssit</h2>
           {this.renderExpandButton()}
           {this.renderForm()}
           {this.renderContent()}
