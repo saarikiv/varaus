@@ -1,7 +1,7 @@
 import React from 'react'
 import {getDayStrMs, getTimeStrMs} from '../../helpers/timeHelper.js'
 
-export default class UserSpecialCourse extends React.Component {
+export default class UserSpecialSlot extends React.Component {
 
   render() {
     const { shopItem } = this.props.item; 

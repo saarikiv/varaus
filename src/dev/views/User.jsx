@@ -7,7 +7,7 @@ import * as userActionCreators from '../actions/user.js'
 import * as lsActionCreators from '../actions/loadingScreen.js'
 
 import Timetable from '../components/user/Timetable.jsx'
-import CourseInfo from '../components/user/CourseInfo.jsx'
+import SlotInfo from '../components/user/SlotInfo.jsx'
 import TimetableHeader from '../components/user/TimetableHeader.jsx'
 
 
@@ -24,7 +24,7 @@ class User extends React.Component {
   }
 
   currentUserReady(currentUser){
-    if( currentUser.bookingsReady && currentUser.transactionsReady && currentUser.specialCoursesReady) {
+    if( currentUser.bookingsReady && currentUser.transactionsReady && currentUser.specialSlotsReady) {
       this.userFullyLoaded = true;
       if(currentUser.locked){
         this.context.router.push('lockeduser')
@@ -46,7 +46,7 @@ class User extends React.Component {
             <div>
               <TimetableHeader />
               <Timetable/>              
-              <CourseInfo />              
+              <SlotInfo />              
             </div>
           );
       } else {

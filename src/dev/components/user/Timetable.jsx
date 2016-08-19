@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { mapDay } from '../../helpers/timeHelper.js'
 import TimetableItem from './TimetableItem.jsx'
-import * as actionCreators from '../../actions/courses.js'
+import * as actionCreators from '../../actions/slots.js'
 
 class Timetable extends React.Component {
 
@@ -17,7 +17,7 @@ class Timetable extends React.Component {
   }
 
   renderTR(dayname, dayNumber){
-    const { bookings, courses } = this.props.timetable;
+    const { bookings, slots } = this.props.timetable;
     let day = new Date()
     let today = (dayNumber === mapDay(day.getDay()))? true: false;
     if(today){
@@ -25,7 +25,7 @@ class Timetable extends React.Component {
       <tr className="glowing" key={dayNumber}>
         <th className="text-bold text-blue">{dayname}</th>
         {
-          courses.map(function(item) {
+          slots.map(function(item) {
             if (item.day === dayNumber) {
               return (
                 <TimetableItem key={item.key} item={item} booking={bookings[item.key]}/>
@@ -40,7 +40,7 @@ class Timetable extends React.Component {
       <tr key={dayNumber}>
         <th>{dayname}</th>
         {
-          courses.map(function(item) {
+          slots.map(function(item) {
             if (item.day === dayNumber) {
               return (
                 <TimetableItem key={item.key} item={item} booking={bookings[item.key]}/>

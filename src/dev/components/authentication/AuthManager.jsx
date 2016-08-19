@@ -32,10 +32,10 @@ class AuthManager extends React.Component {
         this.props.userActions.fetchUserDetails(auth.uid)
         this.props.userActions.fetchUsersTransactions(auth.uid)
         this.props.userActions.fetchUsersBookings(auth.uid)
-        this.props.userActions.fetchUsersSpecialCourseBookings(auth.uid)
+        this.props.userActions.fetchUsersSpecialSlotBookings(auth.uid)
         this.userInitialized = true;
       }
-      if( currentUser.bookingsReady && currentUser.transactionsReady && currentUser.specialCoursesReady) {
+      if( currentUser.bookingsReady && currentUser.transactionsReady && currentUser.specialSlotsReady) {
         if(this.loadingScreenActivated){
           this.props.lsActions.hideLoadingScreen("Valmis", true, 500);
           this.loadingScreenActivated = false;

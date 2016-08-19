@@ -1,12 +1,12 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import CourseForm from '../../components/admin/CourseForm.jsx'
+import SlotForm from '../../components/admin/SlotForm.jsx'
 import { getTimeStrMsBeginnignOfDay, toHplusMfromMs } from '../../helpers/timeHelper.js'
 import * as actionCreators from '../../actions/admin.js'
 
 
-class CourseItem extends React.Component {
+class SlotItem extends React.Component {
 
   constructor(){
     super()
@@ -25,7 +25,7 @@ class CourseItem extends React.Component {
       this.initialValues = Object.assign({},nextProps.item) 
       this.initialValues.start = toHplusMfromMs(nextProps.item.start)
       this.initialValues.end = toHplusMfromMs(nextProps.item.end)
-      this.initialValues.courseType = nextProps.item.courseType.name
+      this.initialValues.slotType = nextProps.item.slotType.name
       this.initialValues.place = nextProps.item.place.name
       this.initialValues.instructor = nextProps.item.instructor.key
   }
@@ -38,7 +38,7 @@ class CourseItem extends React.Component {
 
   remove(item){
      if(this.confirmation){
-      this.props.actions.removeCourse(item.key);
+      this.props.actions.removeSlot(item.key);
     } else {
       this.confirmation = true;
       this.forceUpdate();
@@ -52,15 +52,15 @@ class CourseItem extends React.Component {
 
   toggleModify(item){
     if(this.toggleForm){
-      this.props.actions.minimizeCourseForm()
+      this.props.actions.minimizeSlotForm()
     } else {
-      this.props.actions.expandCourseForm(item.key)
+      this.props.actions.expandSlotForm(item.key)
     }    
   }
 
   renderForm(item){
     if(this.toggleForm){
-      return(<CourseForm mode="modify" itemkey={item.key} initialValues={this.initialValues}/>)
+      return(<SlotForm mode="modify" itemkey={item.key} initialValues={this.initialValues}/>)
     } else {
       return(<div></div>)
     }    
@@ -101,7 +101,7 @@ class CourseItem extends React.Component {
     } 
     return (
       <div>
-        <span className="item-row">{item.courseType.name}</span>
+        <span className="item-row">{item.slotType.name}</span>
         <span className="item-row">{dayTxt}</span>
         <span className="item-row">klo {getTimeStrMsBeginnignOfDay(item.start)} - {getTimeStrMsBeginnignOfDay(item.end)}</span>
       </div>
@@ -129,11 +129,11 @@ class CourseItem extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { cmp: state.courseForm }
+  return { cmp: state.slotForm }
 }
 
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actionCreators, dispatch)}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CourseItem)
+export default connect(mapStateToProps, mapDispatchToProps)(SlotItem)

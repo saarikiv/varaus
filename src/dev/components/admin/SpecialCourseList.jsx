@@ -1,11 +1,11 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Form from '../../components/admin/SpecialCourseForm.jsx'
-import Item from './SpecialCourseItem.jsx'
+import Form from '../../components/admin/SpecialSlotForm.jsx'
+import Item from './SpecialSlotItem.jsx'
 import * as actionCreators from '../../actions/admin.js'
 
-class CourseList extends React.Component {
+class SlotList extends React.Component {
 
   constructor(){
     super()
@@ -13,11 +13,11 @@ class CourseList extends React.Component {
   }
   
   componentWillMount() {
-    this.props.actions.fetchSpecialCourseList()
+    this.props.actions.fetchSpecialSlotList()
   }
 
   componentWillUnmount() {
-    this.props.actions.stopFetchSpecialCourseList()
+    this.props.actions.stopFetchSpecialSlotList()
   }
 
   componentWillReceiveProps(nextProps){
@@ -58,9 +58,9 @@ class CourseList extends React.Component {
 
   toggleAdd(){
   if(this.toggleForm){
-      this.props.actions.minimizeSpecialCourseForm()
+      this.props.actions.minimizeSpecialSlotForm()
     } else {
-      this.props.actions.expandSpecialCourseForm("addNew")
+      this.props.actions.expandSpecialSlotForm("addNew")
     }    
   }
 
@@ -69,13 +69,13 @@ class CourseList extends React.Component {
     if(this.props.list.expanded) {
       return (
         <div>
-        <button className="expand-btn" onClick={() => this.props.actions.minimizeSpecialCourseList()}>Piilota</button>
+        <button className="expand-btn" onClick={() => this.props.actions.minimizeSpecialSlotList()}>Piilota</button>
         <button className="expand-btn" onClick={() => this.toggleAdd()}>{buttonText}</button>
         </div>
       )
     }
     else {
-      return <button className="expand-btn" onClick={() => this.props.actions.expandSpecialCourseList()}>Avaa</button>
+      return <button className="expand-btn" onClick={() => this.props.actions.expandSpecialSlotList()}>Avaa</button>
     }
   }
 
@@ -94,11 +94,11 @@ class CourseList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { list: state.specialCourseList, cmp: state.specialCourseForm }
+  return { list: state.specialSlotList, cmp: state.specialSlotForm }
 }
 
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actionCreators, dispatch)}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CourseList)
+export default connect(mapStateToProps, mapDispatchToProps)(SlotList)

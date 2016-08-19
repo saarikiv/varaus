@@ -120,9 +120,9 @@ function _fetchUserList(dispatch) {
         })
 }
 
-export function stopFetchCourseTypeList() {
+export function stopFetchSlotTypeList() {
     return dispatch => {
-        firebase.database().ref('/courseTypes/').off('value');
+        firebase.database().ref('/slotTypes/').off('value');
         dispatch({
             type: FETCH_COURSE_TYPE_LIST,
             payload: {
@@ -132,16 +132,16 @@ export function stopFetchCourseTypeList() {
     }
 }
 
-export function fetchCourseTypeList() {
+export function fetchSlotTypeList() {
     var list = []
     var returnObject = {}
     return dispatch => {
-        firebase.database().ref('/courseTypes/').on('value', snapshot => {
-            var courseTypes = snapshot.val()
+        firebase.database().ref('/slotTypes/').on('value', snapshot => {
+            var slotTypes = snapshot.val()
             list = Object.assign([])
-            for (var key in courseTypes) {
-                if (courseTypes.hasOwnProperty(key)) {
-                    let ItemWithKey = courseTypes[key]
+            for (var key in slotTypes) {
+                if (slotTypes.hasOwnProperty(key)) {
+                    let ItemWithKey = slotTypes[key]
                     ItemWithKey.key = key
                     list = list.concat(ItemWithKey)
                 }
@@ -165,14 +165,14 @@ export function fetchCourseTypeList() {
                 payload: returnObject
             })
         }, err => {
-            console.error("ERR: fetch courseTypes: ", err);
+            console.error("ERR: fetch slotTypes: ", err);
         })
     }
 }
 
-export function stopFetchCourseList() {
+export function stopFetchSlotList() {
     return dispatch => {
-        firebase.database().ref('/courses/').off('value');
+        firebase.database().ref('/slots/').off('value');
         dispatch({
             type: FETCH_COURSE_LIST,
             payload: {
@@ -182,16 +182,16 @@ export function stopFetchCourseList() {
     }
 }
 
-export function fetchCourseList() {
+export function fetchSlotList() {
     var list = []
     var returnObject = {}
     return dispatch => {
-        firebase.database().ref('/courses/').on('value', snapshot => {
-            var courses = snapshot.val()
+        firebase.database().ref('/slots/').on('value', snapshot => {
+            var slots = snapshot.val()
             list = Object.assign([])
-            for (var key in courses) {
-                if (courses.hasOwnProperty(key)) {
-                    let ItemWithKey = courses[key]
+            for (var key in slots) {
+                if (slots.hasOwnProperty(key)) {
+                    let ItemWithKey = slots[key]
                     ItemWithKey.key = key
                     list = list.concat(ItemWithKey)
                 }
@@ -210,14 +210,14 @@ export function fetchCourseList() {
                 payload: returnObject
             })
         }, err => {
-            console.error("ERR: fetch courses: ", err);
+            console.error("ERR: fetch slots: ", err);
         })
     }
 }
 
-export function stopFetchSpecialCourseList() {
+export function stopFetchSpecialSlotList() {
     return dispatch => {
-        firebase.database().ref('/specialCourses/').off('value');
+        firebase.database().ref('/specialSlots/').off('value');
         dispatch({
             type: FETCH_SPECIAL_COURSE_LIST,
             payload: {
@@ -227,16 +227,16 @@ export function stopFetchSpecialCourseList() {
     }
 }
 
-export function fetchSpecialCourseList() {
+export function fetchSpecialSlotList() {
     var list = []
     var returnObject = {}
     return dispatch => {
-        firebase.database().ref('/specialCourses/').on('value', snapshot => {
-            var courses = snapshot.val()
+        firebase.database().ref('/specialSlots/').on('value', snapshot => {
+            var slots = snapshot.val()
             list = Object.assign([])
-            for (var key in courses) {
-                if (courses.hasOwnProperty(key)) {
-                    let ItemWithKey = courses[key]
+            for (var key in slots) {
+                if (slots.hasOwnProperty(key)) {
+                    let ItemWithKey = slots[key]
                     ItemWithKey.key = key
                     list = list.concat(ItemWithKey)
                 }
@@ -255,7 +255,7 @@ export function fetchSpecialCourseList() {
                 payload: returnObject
             })
         }, err => {
-            console.error("ERR: fetch specialCourses: ", err);
+            console.error("ERR: fetch specialSlots: ", err);
         })
     }
 }
@@ -485,61 +485,61 @@ export function modifyPlace(data) {
         })
 }
 
-export function removeCourse(key) {
+export function removeSlot(key) {
     return dispatch => {
-        firebase.database().ref('/courses/' + key).remove().then(() => {
+        firebase.database().ref('/slots/' + key).remove().then(() => {
 
         }).catch(err => {
-            console.error("Removing course failed: ", err)
+            console.error("Removing slot failed: ", err)
         })
     }
 }
 
-export function removeSpecialCourse(key) {
+export function removeSpecialSlot(key) {
     return dispatch => {
-        firebase.database().ref('/specialCourses/' + key).remove().then(() => {
+        firebase.database().ref('/specialSlots/' + key).remove().then(() => {
 
         }).catch(err => {
-            console.error("Removing course failed: ", err)
+            console.error("Removing slot failed: ", err)
         })
     }
 }
 
-export function addCourse(data, courseType, place, instructor) {
+export function addSlot(data, slotType, place, instructor) {
 
     return dispatch => {
-        firebase.database().ref('/courses/').push({
+        firebase.database().ref('/slots/').push({
             start: toMilliseconds(parseInt(data.start)),
             end: toMilliseconds(parseInt(data.end)),
             maxCapacity: parseInt(data.maxCapacity),
             day: parseInt(data.day),
             place: place,
             instructor: instructor,
-            courseType: courseType
+            slotType: slotType
         })
     }
 }
 
-export function modifyCourse(data, key, courseType, place, instructor) {
+export function modifySlot(data, key, slotType, place, instructor) {
     return dispatch => {
-        firebase.database().ref('/courses/' + key).update({
+        firebase.database().ref('/slots/' + key).update({
             start: toMilliseconds(parseInt(data.start)),
             end: toMilliseconds(parseInt(data.end)),
             maxCapacity: parseInt(data.maxCapacity),
             day: parseInt(data.day),
             place: place,
             instructor: instructor,
-            courseType: courseType
+            slotType: slotType
         })
     }
 }
 
-export function modifySpecialCourse(data, key, courseType, place, instructor) {
+export function modifySpecialSlot(data, key, slotType, place, instructor) {
     const beforetax = data.price / (1 + (data.taxpercent / 100))
     const taxamount = data.price - beforetax
 
     return dispatch => {
-                firebase.database().ref('/specialCourses/' + key).update({
+                firebase.database().ref('/specialSlots/' + key).update({
                     start: toMilliseconds(parseInt(data.start)),
                     end: toMilliseconds(parseInt(data.end)),
                     maxCapacity: parseInt(data.maxCapacity),
@@ -550,20 +550,20 @@ export function modifySpecialCourse(data, key, courseType, place, instructor) {
                     beforetax: Number(beforetax.toFixed(2)),
                     place: place,
                     instructor: instructor,
-                    courseType: courseType,
+                    slotType: slotType,
                     type: "special",
                     title: data.title
                 })
     }
 }
 
-export function addSpecialCourse(data, courseType, place, instructor) {
+export function addSpecialSlot(data, slotType, place, instructor) {
 
     const beforetax = data.price / (1 + (data.taxpercent / 100))
     const taxamount = data.price - beforetax
 
     return dispatch => {
-        firebase.database().ref('/specialCourses/').push({
+        firebase.database().ref('/specialSlots/').push({
             start: toMilliseconds(parseInt(data.start)),
             end: toMilliseconds(parseInt(data.end)),
             maxCapacity: parseInt(data.maxCapacity),
@@ -574,26 +574,26 @@ export function addSpecialCourse(data, courseType, place, instructor) {
             beforetax: Number(beforetax.toFixed(2)),
             place: place,
             instructor: instructor,
-            courseType: courseType,
+            slotType: slotType,
             type: "special",
             title: data.title
         })
     }
 }
 
-export function addCourseType(data) {
-    return dispatch => firebase.database().ref('/courseTypes/' + data.name).update({
+export function addSlotType(data) {
+    return dispatch => firebase.database().ref('/slotTypes/' + data.name).update({
         name: data.name,
         desc: data.desc
     })
         .catch(err => {
-            console.error("ERR: update; addCourseType: ", err);
+            console.error("ERR: update; addSlotType: ", err);
         })
 }
 
-export function removeCourseType(item) {
+export function removeSlotType(item) {
     return dispatch => {
-        firebase.database().ref('/courseTypes/' + item.name).remove().then(() => {
+        firebase.database().ref('/slotTypes/' + item.name).remove().then(() => {
 
         }).catch(err => {
             console.error("Removing place item failed: ", err)
@@ -601,13 +601,13 @@ export function removeCourseType(item) {
     }
 }
 
-export function modifyCourseType(data) {
-    return dispatch => firebase.database().ref('/courseTypes/' + data.name).update({
+export function modifySlotType(data) {
+    return dispatch => firebase.database().ref('/slotTypes/' + data.name).update({
         name: data.name,
         desc: data.desc
     })
         .catch(err => {
-            console.error("ERR: update; modifyCourseType: ", err);
+            console.error("ERR: update; modifySlotType: ", err);
         })
 }
 
@@ -795,7 +795,7 @@ export function minimizeUserList() {
     }
 }
 
-export function expandCourseTypeList() {
+export function expandSlotTypeList() {
     return dispatch => {
         dispatch({
             type: EXPAND_COURSE_TYPE_LIST
@@ -803,7 +803,7 @@ export function expandCourseTypeList() {
     }
 }
 
-export function minimizeCourseTypeList() {
+export function minimizeSlotTypeList() {
     return dispatch => {
         dispatch({
             type: MINIMIZE_COURSE_TYPE_LIST
@@ -811,7 +811,7 @@ export function minimizeCourseTypeList() {
     }
 }
 
-export function expandCourseList() {
+export function expandSlotList() {
     return dispatch => {
         dispatch({
             type: EXPAND_COURSE_LIST
@@ -819,7 +819,7 @@ export function expandCourseList() {
     }
 }
 
-export function minimizeCourseList() {
+export function minimizeSlotList() {
     return dispatch => {
         dispatch({
             type: MINIMIZE_COURSE_LIST
@@ -827,7 +827,7 @@ export function minimizeCourseList() {
     }
 }
 
-export function expandSpecialCourseList() {
+export function expandSpecialSlotList() {
     return dispatch => {
         dispatch({
             type: EXPAND_SPECIAL_COURSE_LIST
@@ -835,7 +835,7 @@ export function expandSpecialCourseList() {
     }
 }
 
-export function minimizeSpecialCourseList() {
+export function minimizeSpecialSlotList() {
     return dispatch => {
         dispatch({
             type: MINIMIZE_SPECIAL_COURSE_LIST
@@ -915,7 +915,7 @@ export function minimizePlaceForm() {
     }
 }
 
-export function expandCourseTypeForm(expander) {
+export function expandSlotTypeForm(expander) {
     return dispatch => {
         dispatch({
             type: EXPAND_COURSE_TYPE_FORM,
@@ -927,7 +927,7 @@ export function expandCourseTypeForm(expander) {
     }
 }
 
-export function minimizeCourseTypeForm() {
+export function minimizeSlotTypeForm() {
     return dispatch => {
         dispatch({
             type: MINIMIZE_COURSE_TYPE_FORM,
@@ -939,7 +939,7 @@ export function minimizeCourseTypeForm() {
     }
 }
 
-export function expandCourseForm(expander) {
+export function expandSlotForm(expander) {
     return dispatch => {
         dispatch({
             type: EXPAND_COURSE_FORM,
@@ -951,7 +951,7 @@ export function expandCourseForm(expander) {
     }
 }
 
-export function minimizeCourseForm() {
+export function minimizeSlotForm() {
     return dispatch => {
         dispatch({
             type: MINIMIZE_COURSE_FORM,
@@ -963,7 +963,7 @@ export function minimizeCourseForm() {
     }
 }
 
-export function expandSpecialCourseForm(expander) {
+export function expandSpecialSlotForm(expander) {
     return dispatch => {
         dispatch({
             type: EXPAND_SPECIAL_COURSE_FORM,
@@ -975,7 +975,7 @@ export function expandSpecialCourseForm(expander) {
     }
 }
 
-export function minimizeSpecialCourseForm() {
+export function minimizeSpecialSlotForm() {
     return dispatch => {
         dispatch({
             type: MINIMIZE_SPECIAL_COURSE_FORM,

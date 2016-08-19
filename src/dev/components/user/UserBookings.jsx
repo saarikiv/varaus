@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import UserBooking from './UserBooking.jsx'
-import UserSpecialCourse from './UserSpecialCourse.jsx'
+import UserSpecialSlot from './UserSpecialSlot.jsx'
 
 class UserBookings extends React.Component {
 
@@ -10,22 +10,22 @@ class UserBookings extends React.Component {
   }
 
   renderSpecialCources(item){
-    return(<UserSpecialCourse key={item.transactionReference} item={item}/>)
+    return(<UserSpecialSlot key={item.transactionReference} item={item}/>)
   }
 
   renderBookings(item){
-    return(<UserBooking key={item.courseInfo.key} item={item}/>)
+    return(<UserBooking key={item.slotInfo.key} item={item}/>)
   }
 
   render() {
-    const { specialCourses, bookings } = this.props.currentUser;
-    if(bookings.length > 0 || specialCourses.length ){
+    const { specialSlots, bookings } = this.props.currentUser;
+    if(bookings.length > 0 || specialSlots.length ){
       return (
         <div className="container bordered-container">
           <div className="content-container">
             <h2 className="header-collapse">Tulevat varauksesi</h2>
               <ul className="wide-list">
-                {specialCourses.map(this.renderSpecialCources)}
+                {specialSlots.map(this.renderSpecialCources)}
                 {bookings.map(this.renderBookings)}
               </ul>
           </div>

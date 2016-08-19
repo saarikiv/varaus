@@ -98,7 +98,7 @@ class TopBar extends React.Component {
                 <Link className="text-link" to="user" onClick={() => this.toggleNav()}>Joogatunnit & varaukset</Link>
               </div>
               <div className="mobile-row">
-                <Link className="text-link" to="specialCourses" onClick={() => this.toggleNav()}>Kurssit</Link>
+                <Link className="text-link" to="specialSlots" onClick={() => this.toggleNav()}>Kurssit</Link>
               </div>
               <div className="mobile-row">
                 {instructor}

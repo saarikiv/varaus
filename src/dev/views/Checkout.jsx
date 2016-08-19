@@ -17,16 +17,16 @@ class Checkout extends React.Component {
   constructor(){
     super()
     this.paymentOngoing = false;
-    this.buyingSpecialCourse = false;
+    this.buyingSpecialSlot = false;
     this.finishingPayTrailOngoing = false;
   }
 
   componentWillReceiveProps(nextProps){
     if(nextProps.shopItems.cart.type){
       if(nextProps.shopItems.cart.type === "special"){
-        this.buyingSpecialCourse = true
+        this.buyingSpecialSlot = true
       } else {
-        this.buyingSpecialCourse = false
+        this.buyingSpecialSlot = false
       }
     }
     if(nextProps.shopItems.phase === "timeout"){
@@ -85,7 +85,7 @@ renderCashPayment(){
 }
 
   renderDonePhase(){
-    if(this.buyingSpecialCourse){
+    if(this.buyingSpecialSlot){
       this.props.actions.waitForMilliseconds(300); //Set this to define how long the done phase is displayed 
       return(
         <div>

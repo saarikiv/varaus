@@ -3,8 +3,8 @@ export function mapDay(dayin) {
 }
 
 export function hasDayPassed(dayNumber) {
-    let courseTime = new Date();
-    if (dayNumber < mapDay(courseTime.getDay())) {
+    let slotTime = new Date();
+    if (dayNumber < mapDay(slotTime.getDay())) {
         return true;
     } else {
         return false;
@@ -12,8 +12,8 @@ export function hasDayPassed(dayNumber) {
 }
 
 export function hasTimePassed(dayNumber, startTime) {
-    let courseTime = getCourseTimeLocal(0, startTime, dayNumber);
-    if (courseTime.getTime() < Date.now()) {
+    let slotTime = getSlotTimeLocal(0, startTime, dayNumber);
+    if (slotTime.getTime() < Date.now()) {
         return true;
     } else {
         return false;
@@ -22,8 +22,8 @@ export function hasTimePassed(dayNumber, startTime) {
 
 
 export function sameDay(dayNumber) {
-    let courseTime = new Date();
-    if (dayNumber === mapDay(courseTime.getDay())) {
+    let slotTime = new Date();
+    if (dayNumber === mapDay(slotTime.getDay())) {
         return true;
     } else {
         return false;
@@ -34,25 +34,25 @@ export function timeToMoment(startTime) {
     return startTime - Date.now();
 }
 
-export function getCourseTimeUTC(weeksForward, timeOfStart, dayNumber) {
-    let courseTimeUTC = getCourseTimeLocal(weeksForward, timeOfStart, dayNumber);
-    courseTimeUTC.setTime(courseTimeUTC.getTime() + courseTimeUTC.getTimezoneOffset() * 60 * 1000);
+export function getSlotTimeUTC(weeksForward, timeOfStart, dayNumber) {
+    let slotTimeUTC = getSlotTimeLocal(weeksForward, timeOfStart, dayNumber);
+    slotTimeUTC.setTime(slotTimeUTC.getTime() + slotTimeUTC.getTimezoneOffset() * 60 * 1000);
 }
 
-export function getCourseTimeLocal(weeksForward, timeOfStart, dayNumber) {
+export function getSlotTimeLocal(weeksForward, timeOfStart, dayNumber) {
 
-    let courseTime = new Date();
-    let dayNum = courseTime.getDay()
+    let slotTime = new Date();
+    let dayNum = slotTime.getDay()
     dayNum = (dayNum == 0) ? 7 : dayNum;
     let daysToAdd = weeksForward * 7 + dayNumber - dayNum;
 
-    courseTime.setHours(0);
-    courseTime.setMinutes(0);
-    courseTime.setSeconds(0);
-    courseTime.setMilliseconds(0);
-    courseTime.setTime(courseTime.getTime() + daysToAdd * 24 * 60 * 60 * 1000 + timeOfStart);
+    slotTime.setHours(0);
+    slotTime.setMinutes(0);
+    slotTime.setSeconds(0);
+    slotTime.setMilliseconds(0);
+    slotTime.setTime(slotTime.getTime() + daysToAdd * 24 * 60 * 60 * 1000 + timeOfStart);
 
-    return courseTime;
+    return slotTime;
 }
 
 export function daysLeft(time){

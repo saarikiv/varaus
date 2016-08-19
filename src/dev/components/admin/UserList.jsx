@@ -22,7 +22,7 @@ class UserList extends React.Component {
   renderContent() {
     if (this.props.list.expanded || 
         this.props.shopItems.phase === "cashPayment" || 
-        this.props.courseInfo.key !== "0") {
+        this.props.slotInfo.key !== "0") {
       return (
         <ul className="wide-list">
           <SearchBar />
@@ -36,7 +36,7 @@ class UserList extends React.Component {
   }
 
   renderExpandButton() {
-    if(this.props.shopItems.phase === "cashPayment" || this.props.courseInfo.key !== "0") return null;
+    if(this.props.shopItems.phase === "cashPayment" || this.props.slotInfo.key !== "0") return null;
     if(this.props.list.expanded) {
       return <button className="expand-btn" onClick={() => this.props.actions.minimizeUserList()}>Piilota</button>
     }
@@ -59,7 +59,7 @@ class UserList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { list: state.userList, shopItems: state.shopItems, searchBar: state.searchBar, courseInfo: state.courseInfo, }
+  return { list: state.userList, shopItems: state.shopItems, searchBar: state.searchBar, slotInfo: state.slotInfo, }
 }
 
 function mapDispatchToProps(dispatch) {

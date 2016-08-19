@@ -5,6 +5,7 @@ import {
     reducer as FormReducer
 } from 'redux-form'
 
+
 import LoadingScreenReducer from './loadingScreen.js'
 import ShopReducer from './shopReducer.js'
 import TimetableReducer from './timetableReducer.js'
@@ -12,13 +13,12 @@ import AuthReducer from './authReducer.js'
 import UserReducer from './userReducer.js'
 import InfoReducer from './infoReducer.js'
 import TermsListReducer from './admin/termsReducer.js'
-import CourseInfoReducer from './courseInfoReducer.js'
+import SlotInfoReducer from './slotInfoReducer.js'
 import UserListReducer from './admin/userListReducer.js'
 import AdminListReducer from './admin/adminListReducer.js'
-import CourseListReducer from './admin/courseListReducer.js'
+import SlotListReducer from './admin/slotListReducer.js'
 import ShopListReducer from './admin/shopListReducer.js'
-import CourseFormReducer from './admin/courseFormReducer.js'
-import ShopItemTimeFormReducer from './admin/shopItemTimeFormReducer.js'
+import SlotFormReducer from './admin/slotFormReducer.js'
 import ShopItemCountFormReducer from './admin/shopItemCountFormReducer.js'
 import InfoFormReducer from './admin/infoFormReducer.js'
 import TermsFormReducer from './admin/termsFormReducer.js'
@@ -38,13 +38,12 @@ const combinedReducer = combineReducers({
     timetable: TimetableReducer,
     auth: AuthReducer,
     form: FormReducer,
-    courseInfo: CourseInfoReducer,
+    slotInfo: SlotInfoReducer,
     userList: UserListReducer,
     adminList: AdminListReducer,
-    courseList: CourseListReducer,
+    slotList: SlotListReducer,
     shopList: ShopListReducer,
-    courseForm: CourseFormReducer,
-    shopItemTimeForm: ShopItemTimeFormReducer,
+    slotForm: SlotFormReducer,
     shopItemCountForm: ShopItemCountFormReducer,
     infoList: InfoReducer,
     infoForm: InfoFormReducer,

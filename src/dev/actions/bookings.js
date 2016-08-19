@@ -16,7 +16,7 @@ import {
 } from './loadingScreen.js'
 
 
-export function postCancellation(item, txRef, courseInfo) {
+export function postCancellation(item, txRef, slotInfo) {
     var JOOGAURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/cancelSlot' : VARAUSSERVER + '/cancelSlot'
     return dispatch => {
         _showLoadingScreen(dispatch, "Perutaan varausta")
@@ -25,7 +25,7 @@ export function postCancellation(item, txRef, courseInfo) {
             axios.post(
                     JOOGAURL, {
                         user: idToken,
-                        courseInfo: courseInfo,
+                        slotInfo: slotInfo,
                         cancelItem: item,
                         transactionReference: txRef,
                         timezoneOffset: now.getTimezoneOffset() * 60 * 1000
@@ -33,14 +33,14 @@ export function postCancellation(item, txRef, courseInfo) {
                 .then(response => {
                   dispatch({
                     type: CANCEL_RESERVATION,
-                    payload: {courseInfo, txRef}
+                    payload: {slotInfo, txRef}
                   })
                     _hideLoadingScreen(dispatch, "Varaus peruttu", true)
                 })
                 .catch(error => {
                   dispatch({
                     type: CANCEL_ERROR,
-                    payload: {error, courseInfo, txRef}
+                    payload: {error, slotInfo, txRef}
                   })
                     console.error(error);
                     _hideLoadingScreen(dispatch, "Varauksen perumisesa tapahtui virhe: " + error.data, false)
@@ -52,7 +52,7 @@ export function postCancellation(item, txRef, courseInfo) {
     }
 }
 
-export function postLateReservation(forUser, weeksBehind, courseInfo) {
+export function postLateReservation(forUser, weeksBehind, slotInfo) {
     var JOOGAURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/reserveLateSlot' : VARAUSSERVER + '/reserveLateSlot'
     return dispatch => {
         _showLoadingScreen(dispatch, "Varataan tuntia jälkikäteen")
@@ -62,21 +62,21 @@ export function postLateReservation(forUser, weeksBehind, courseInfo) {
                     JOOGAURL, {
                         user: idToken,
                         forUser: forUser,
-                        courseInfo: courseInfo,
+                        slotInfo: slotInfo,
                         weeksBehind: weeksBehind,
                         timezoneOffset: now.getTimezoneOffset() * 60 * 1000
                     })
                 .then(response => {
                   dispatch({
                     type: LATE_BOOK_A_COURSE,
-                    payload: {courseInfo}
+                    payload: {slotInfo}
                   })
                     _hideLoadingScreen(dispatch, "Varaus onnistui", true)
                 })
                 .catch(error => {
                   dispatch({
                     type: BOOKING_ERROR,
-                    payload: {error, courseInfo}
+                    payload: {error, slotInfo}
                   })
                     console.error(error);
                     _hideLoadingScreen(dispatch, "Varauksen tekemisessä tapahtui virhe: " + error.data, false, 5000)
@@ -90,7 +90,7 @@ export function postLateReservation(forUser, weeksBehind, courseInfo) {
 
 
 
-export function postReservation(forward, courseInfo) {
+export function postReservation(forward, slotInfo) {
     var JOOGAURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/reserveSlot' : VARAUSSERVER + '/reserveSlot'
     return dispatch => {
         _showLoadingScreen(dispatch, "Varataan tuntia")
@@ -99,21 +99,21 @@ export function postReservation(forward, courseInfo) {
             axios.post(
                     JOOGAURL, {
                         user: idToken,
-                        courseInfo: courseInfo,
+                        slotInfo: slotInfo,
                         weeksForward: forward,
                         timezoneOffset: now.getTimezoneOffset() * 60 * 1000
                     })
                 .then(response => {
                   dispatch({
                     type: BOOK_A_COURSE,
-                    payload: {courseInfo}
+                    payload: {slotInfo}
                   })
                     _hideLoadingScreen(dispatch, "Varaus onnistui", true)
                 })
                 .catch(error => {
                   dispatch({
                     type: BOOKING_ERROR,
-                    payload: {error, courseInfo}
+                    payload: {error, slotInfo}
                   })
                     console.error(error);
                     _hideLoadingScreen(dispatch, "Varauksen tekemisessä tapahtui virhe: " + error.data, false)
@@ -164,7 +164,7 @@ function processBookings(inputBookings, uid, bookings, userbookings) {
     })
 }
 
-export function fetchCourseBookings(coursekey, uid) {
+export function fetchSlotBookings(slotkey, uid) {
     var bookings = [];
     var userbookings = [];
 
@@ -172,13 +172,13 @@ export function fetchCourseBookings(coursekey, uid) {
         var bkns = {};
         var returnObject;
         //Clear the booking details in case there are no bookings and the
-        firebase.database().ref('/bookingsbycourse/' + coursekey).on('value', snapshot => {
+        firebase.database().ref('/bookingsbyslot/' + slotkey).on('value', snapshot => {
             bkns = snapshot.val();
             bookings = Object.assign([]);
             userbookings = Object.assign([]);
             processBookings(bkns, uid, bookings, userbookings)
             returnObject = Object.assign({})
-            returnObject[coursekey] = {
+            returnObject[slotkey] = {
                 all: bookings,
                 user: userbookings
             }
@@ -187,13 +187,13 @@ export function fetchCourseBookings(coursekey, uid) {
                 payload: returnObject
             })
         }, err => {
-            console.error("Error is fetching bookingsbycourse: ", err);
+            console.error("Error is fetching bookingsbyslot: ", err);
         });
     }
 }
 
-export function stopfetchCourseBookings(coursekey) {
+export function stopfetchSlotBookings(slotkey) {
     return dispatch => {
-        firebase.database().ref('/bookingsbycourse/' + coursekey).off('value');
+        firebase.database().ref('/bookingsbyslot/' + slotkey).off('value');
     }
 }

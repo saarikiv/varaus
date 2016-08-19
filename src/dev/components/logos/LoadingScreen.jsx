@@ -19,7 +19,7 @@ class LoadingScreen extends React.Component {
 
     if(loadingScreen.visible){
       return (
-        <div className="course-info-container">
+        <div className="slot-info-container">
           <div className="outer">
             <div className="middle">
               <div className="inner centered">

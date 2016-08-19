@@ -7,25 +7,25 @@ import {
 
 import {
     hasTimePassed,
-    getCourseTimeLocal
+    getSlotTimeLocal
 } from '../helpers/timeHelper.js'
 
-function processCancel(course, cancelledCourse){
-    let weekIndex = (hasTimePassed(course.day, course.start))? 1 : 0;
-    let instance = getCourseTimeLocal(weekIndex, course.start, course.day)
-    if(cancelledCourse[instance.getTime()]){
-        course.cancelInfo = cancelledCourse[instance.getTime()];
-        course.cancelInfo.instance = instance.getTime();
-        course.cancelled = true;
+function processCancel(slot, cancelledSlot){
+    let weekIndex = (hasTimePassed(slot.day, slot.start))? 1 : 0;
+    let instance = getSlotTimeLocal(weekIndex, slot.start, slot.day)
+    if(cancelledSlot[instance.getTime()]){
+        slot.cancelInfo = cancelledSlot[instance.getTime()];
+        slot.cancelInfo.instance = instance.getTime();
+        slot.cancelled = true;
     }
 }
 
 export function fetchTimetable(instructor = "all"){
     return dispatch => {
-        firebase.database().ref('/cancelledCourses/').on('value', snapshot => {
+        firebase.database().ref('/cancelledSlots/').on('value', snapshot => {
             _fetchTimetable(dispatch, instructor);
         });
-        firebase.database().ref('/courses/').on('value', snapshot => {
+        firebase.database().ref('/slots/').on('value', snapshot => {
             _fetchTimetable(dispatch, instructor);
         });
     }
@@ -33,31 +33,31 @@ export function fetchTimetable(instructor = "all"){
 
 export function stopFetchTimetable(instructor = "all"){
     return dispatch => {
-        firebase.database().ref('/cancelledCourses/').off('value');
-        firebase.database().ref('/courses/').off('value');        
+        firebase.database().ref('/cancelledSlots/').off('value');
+        firebase.database().ref('/slots/').off('value');        
     }
 }
 
 export function _fetchTimetable(dispatch, instructor = "all") {
     var list = Object.assign([])
     var cancelled = {}
-    firebase.database().ref('/cancelledCourses/').once('value')
+    firebase.database().ref('/cancelledSlots/').once('value')
     .then(snapshot => {
         cancelled = snapshot.val()
-        return firebase.database().ref('/courses/').once('value');
+        return firebase.database().ref('/slots/').once('value');
     })
     .then( snapshot => {
-        var courses = snapshot.val()
-        for (var key in courses) {
-            if (instructor === "all" || courses[key].instructor.key === instructor) {
-                courses[key].key = key
-                courses[key].cancelled = false; //This will be overwritten in processCancel if called
+        var slots = snapshot.val()
+        for (var key in slots) {
+            if (instructor === "all" || slots[key].instructor.key === instructor) {
+                slots[key].key = key
+                slots[key].cancelled = false; //This will be overwritten in processCancel if called
                 if(cancelled){
                     if(cancelled[key]){
-                        processCancel(courses[key], cancelled[key]);
+                        processCancel(slots[key], cancelled[key]);
                     }
                 }
-                list = list.concat(courses[key])
+                list = list.concat(slots[key])
             }
         }
         list.sort(function(a, b) {
@@ -69,7 +69,7 @@ export function _fetchTimetable(dispatch, instructor = "all") {
         dispatch({
             type: FETCH_TIMETABLE,
             payload: {
-                courses: list
+                slots: list
             }
         })
     })
@@ -78,11 +78,11 @@ export function _fetchTimetable(dispatch, instructor = "all") {
     })
 }
 
-export function putCourseInfo(course, booking) {
+export function putSlotInfo(slot, booking) {
     return dispatch => {
         dispatch({
             type: PUT_COURSE_INFO,
-            payload: course
+            payload: slot
         });
         dispatch({
             type: PUT_COURSE_INFO,
@@ -93,13 +93,13 @@ export function putCourseInfo(course, booking) {
     }
 }
 
-export function flagCourseInfoToExit(){
+export function flagSlotInfoToExit(){
     return {
         type: FLAG_COURSE_INFO_TO_EXIT
     }
 }
 
-export function removeCourseInfo() {
+export function removeSlotInfo() {
     return {
         type: REMOVE_COURSE_INFO
     }

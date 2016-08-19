@@ -3,12 +3,12 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Link } from "react-router"
 
-import { getCourseTimeLocal, sameDay, hasDayPassed, hasTimePassed, timeToMoment, getDayStrMs, getTimeStrMs, getDayStr, getTimeStr } from '../../helpers/timeHelper.js'
-import {removeCourseInfo} from '../../actions/courses.js'
+import { getSlotTimeLocal, sameDay, hasDayPassed, hasTimePassed, timeToMoment, getDayStrMs, getTimeStrMs, getDayStr, getTimeStr } from '../../helpers/timeHelper.js'
+import {removeSlotInfo} from '../../actions/slots.js'
 import * as bookingsActionCreators from '../../actions/bookings.js'
 import UserList from '../admin/UserList.jsx'
 
-class CourseInfo extends React.Component {
+class SlotInfo extends React.Component {
 
   constructor(){
     super();
@@ -22,7 +22,7 @@ class CourseInfo extends React.Component {
 
   componentWillReceiveProps(nextProps){
     this.cancellationOngoing = false;
-    if(nextProps.courseInfo.closeInfo){
+    if(nextProps.slotInfo.closeInfo){
       this.exitContainer()
     }
   }
@@ -34,14 +34,14 @@ class CourseInfo extends React.Component {
   }
 
   cancelReservation(forward){
-    const { courseInfo } = this.props;
+    const { slotInfo } = this.props;
     if(this.confirmation){
       if(!this.cancellationOngoing){
         this.cancellationOngoing = true;
         this.props.bookingsActions.postCancellation(
-          courseInfo.bookings.user[0].item, 
-          courseInfo.bookings.user[0].txRef, 
-          courseInfo);
+          slotInfo.bookings.user[0].item, 
+          slotInfo.bookings.user[0].txRef, 
+          slotInfo);
           this.exitContainer();
       }
     } else {
@@ -59,7 +59,7 @@ class CourseInfo extends React.Component {
   makeReservation(forward) {
     if(!this.reservationRequestOngoing){
       this.reservationRequestOngoing = true;
-      this.props.bookingsActions.postReservation(forward, this.props.courseInfo)
+      this.props.bookingsActions.postReservation(forward, this.props.slotInfo)
       this.exitContainer()
     }
   }
@@ -73,7 +73,7 @@ class CourseInfo extends React.Component {
 
 
   exitContainer() {
-    this.props.courseActions.removeCourseInfo()
+    this.props.slotActions.removeSlotInfo()
     this.reservationRequestOngoing = false;
     this.lateReservationRequestOngoing = false;
     this.cancellationOngoing = false;
@@ -85,12 +85,12 @@ class CourseInfo extends React.Component {
     return (transactions.count > 0 || transactions.time > day.getTime()) ? true : false;
   }
 
-  courseIsFull(){
-    const { bookings, maxCapacity } = this.props.courseInfo;
+  slotIsFull(){
+    const { bookings, maxCapacity } = this.props.slotInfo;
     if(bookings.all.length > 0){
       return (bookings.all[0].reservations < maxCapacity)? false : true;
     } else {
-      return false; // No bookings for the course yet.
+      return false; // No bookings for the slot yet.
     }
   }
 
@@ -98,7 +98,7 @@ class CourseInfo extends React.Component {
   //========================================================================
   //========================================================================
   renderParticipants(){
-    const { bookings, maxCapacity } = this.props.courseInfo;
+    const { bookings, maxCapacity } = this.props.slotInfo;
 
     if(bookings.all.length > 0){
         return(
@@ -115,20 +115,20 @@ class CourseInfo extends React.Component {
   //========================================================================
   //========================================================================
   //========================================================================
-  renderReservationButton(courseInfo, day, dayStr, weekIndex){
+  renderReservationButton(slotInfo, day, dayStr, weekIndex){
 
     var notificationText = null;
 
 
-    if(courseInfo.cancelled){
+    if(slotInfo.cancelled){
         return(
                 <p className="text-red">Tunti on peruttu!</p>
               );
     }
 
-    if(courseInfo.bookings){
-    if(courseInfo.bookings.user.length > 0){
-      if(day.getTime() < (Date.now() + 3*60*60*1000)){ // Course starts less than 3 hours from now.
+    if(slotInfo.bookings){
+    if(slotInfo.bookings.user.length > 0){
+      if(day.getTime() < (Date.now() + 3*60*60*1000)){ // Slot starts less than 3 hours from now.
         return( <div>
                   <p className="text-blue"> Sinä olet ilmoittautunut tälle tunnille.</p>
                   <p className="text-red"> Kurssin alkuun aikaa alle 3 tuntia. Valitettavasti et voi enää peruuttaa varausta.</p>
@@ -144,7 +144,7 @@ class CourseInfo extends React.Component {
       }
     }}
 
-    if(this.courseIsFull()){
+    if(this.slotIsFull()){
       return(
         <p className="text-red"> Tunti on jo täyteen varattu!</p>
       );
@@ -161,8 +161,8 @@ class CourseInfo extends React.Component {
     
 
     if(
-      hasTimePassed(courseInfo.day, courseInfo.start) && 
-      !hasTimePassed(courseInfo.day, courseInfo.end)){
+      hasTimePassed(slotInfo.day, slotInfo.start) && 
+      !hasTimePassed(slotInfo.day, slotInfo.end)){
         notificationText = <p className="text-red"> Tämän viikon tunti on alkanut. Varaus on seuraavalle viikolle. </p>
     }
 
@@ -178,12 +178,12 @@ class CourseInfo extends React.Component {
 
   renderLateBooking(weekIndex){
     if(weekIndex === 0){
-      return(<div></div>)  //Course booking is still open.
+      return(<div></div>)  //Slot booking is still open.
     }
-    const { courseInfo } = this.props;
+    const { slotInfo } = this.props;
     const { instructor, admin } = this.props.currentUser.roles
 
-    let day = getCourseTimeLocal(0, courseInfo.start, courseInfo.day);
+    let day = getSlotTimeLocal(0, slotInfo.start, slotInfo.day);
     let dayStr = getDayStr(day) + " " + getTimeStr(day);
 
     if(instructor || admin){
@@ -210,38 +210,38 @@ class CourseInfo extends React.Component {
 
 
   render() {
-    const { courseInfo } = this.props;
+    const { slotInfo } = this.props;
 
     let weekIndex = 0;
-    if (hasTimePassed(courseInfo.day, courseInfo.start)) {
+    if (hasTimePassed(slotInfo.day, slotInfo.start)) {
       weekIndex = 1;
     }
 
-    let day = getCourseTimeLocal(weekIndex, courseInfo.start, courseInfo.day);
+    let day = getSlotTimeLocal(weekIndex, slotInfo.start, slotInfo.day);
     let dayStr = getDayStr(day) + " " + getTimeStr(day);
-    let end = getCourseTimeLocal(weekIndex, courseInfo.end, courseInfo.day);
+    let end = getSlotTimeLocal(weekIndex, slotInfo.end, slotInfo.day);
     let endStr = getTimeStr(end);
 
-    if(this.props.courseInfo.key !== "0"){
+    if(this.props.slotInfo.key !== "0"){
       return (
-        <div className="course-info-container">
-          <div className="course-info">
+        <div className="slot-info-container">
+          <div className="slot-info">
             <img src="./assets/error.png" className="exit-btn" onClick={this.exitContainer.bind(this)} />
             <div className="info-info-container">
-              <h3>{courseInfo.courseType.name}</h3>
+              <h3>{slotInfo.slotType.name}</h3>
               <div className="surrounded-border">
                 <p className="info-line border-bottom">Aika: {dayStr} - {endStr}</p>
-                <p className="info-line border-bottom">Sijainti: {courseInfo.place.name}, {courseInfo.place.address}</p>
-                <p className="info-line">Joogaopettaja: {courseInfo.instructor.firstname} {courseInfo.instructor.lastname}</p>
+                <p className="info-line border-bottom">Sijainti: {slotInfo.place.name}, {slotInfo.place.address}</p>
+                <p className="info-line">Joogaopettaja: {slotInfo.instructor.firstname} {slotInfo.instructor.lastname}</p>
               </div>
               <div>
                 <div className="centered">
                   <img className="mini-icon" src="./assets/group.png" />
                   {this.renderParticipants()}
                 </div>
-                {this.renderReservationButton(courseInfo, day, dayStr, weekIndex)}
+                {this.renderReservationButton(slotInfo, day, dayStr, weekIndex)}
               </div>
-              <p className="info-desc pre-wrap">{courseInfo.courseType.desc}</p>
+              <p className="info-desc pre-wrap">{slotInfo.slotType.desc}</p>
             </div>
               {this.renderLateBooking(weekIndex)}
           </div>
@@ -254,12 +254,12 @@ class CourseInfo extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return {  courseInfo: state.courseInfo, currentUser: state.currentUser }
+  return {  slotInfo: state.slotInfo, currentUser: state.currentUser }
 }
 
 function mapDispatchToProps(dispatch) {
-  return { courseActions: bindActionCreators({removeCourseInfo}, dispatch),
+  return { slotActions: bindActionCreators({removeSlotInfo}, dispatch),
            bookingsActions: bindActionCreators(bookingsActionCreators, dispatch)}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CourseInfo)
+export default connect(mapStateToProps, mapDispatchToProps)(SlotInfo)

@@ -83,7 +83,7 @@ export function updateUserDetails(user) {
     }
 }
 
-export function fetchUsersSpecialCourseBookings(uid) {
+export function fetchUsersSpecialSlotBookings(uid) {
     return dispatch => {
         specialCBookingsRef = firebase.database().ref('/scbookingsbyuser/' + uid)
         specialCBookingsRef.on('value', (snapshot) => {
@@ -100,8 +100,8 @@ export function fetchUsersSpecialCourseBookings(uid) {
             dispatch({
                 type: UPDATE_USERS_SCBOOKINGS,
                 payload: {
-                    specialCoursesReady: true,
-                    specialCourses: returnList
+                    specialSlotsReady: true,
+                    specialSlots: returnList
                 }
             })
         }, (error) => {
@@ -109,7 +109,7 @@ export function fetchUsersSpecialCourseBookings(uid) {
                 type: USER_ERROR,
                 payload: {
                     error,
-                    specialCoursesReady: true
+                    specialSlotsReady: true
                 }
             })
         })
@@ -118,43 +118,43 @@ export function fetchUsersSpecialCourseBookings(uid) {
 
 export function fetchUsersBookings(uid) {
     return dispatch => {
-        var oneCourse;
-        var allCourses;
+        var oneSlot;
+        var allSlots;
         var oneBooking;
         var allBookings;
         var booking = {};
         var returnListBookings = [];
         var returnListHistory = [];
-        var courseInfo = {}
-        firebase.database().ref('/courses/').once('value')
+        var slotInfo = {}
+        firebase.database().ref('/slots/').once('value')
             .then(snapshot => {
-                courseInfo = snapshot.val()
+                slotInfo = snapshot.val()
                 BookingsRef = firebase.database().ref('/bookingsbyuser/' + uid);
                 BookingsRef.on('value', snapshot => {
-                    allCourses = snapshot.val();
+                    allSlots = snapshot.val();
                     returnListBookings = Object.assign([]);
                     returnListHistory = Object.assign([]);
-                    if (allCourses) {
-                        for (oneCourse in allCourses) {
-                            allBookings = allCourses[oneCourse]
+                    if (allSlots) {
+                        for (oneSlot in allSlots) {
+                            allBookings = allSlots[oneSlot]
                             for (oneBooking in allBookings) {
                                 booking = Object.assign({}, allBookings[oneBooking]);
-                                booking.course = oneCourse;
-                                booking.courseInfo = courseInfo[oneCourse];
-                                if (!booking.courseInfo) {
+                                booking.slot = oneSlot;
+                                booking.slotInfo = slotInfo[oneSlot];
+                                if (!booking.slotInfo) {
                                     dispatch({
                                         type: USER_ERROR,
                                         payload: {
                                             error: {
                                                 code: "DB_INTEGRITY_ERR",
-                                                message: "Referred course is missing from database: " + oneCourse
+                                                message: "Referred slot is missing from database: " + oneSlot
                                             },
                                             bookingsReady: true
                                         }
                                     })
                                 } else {
-                                    booking.courseInfo.key = oneCourse;
-                                    if (booking.courseTime < Date.now()) {
+                                    booking.slotInfo.key = oneSlot;
+                                    if (booking.slotTime < Date.now()) {
                                         returnListHistory.push(booking)
                                     } else {
                                         returnListBookings.push(booking);
@@ -163,10 +163,10 @@ export function fetchUsersBookings(uid) {
                             }
                         }
                         returnListBookings.sort((a, b) => {
-                            return a.courseTime - b.courseTime
+                            return a.slotTime - b.slotTime
                         })
                         returnListHistory.sort((a, b) => {
-                            return a.courseTime - b.courseTime
+                            return a.slotTime - b.slotTime
                         })
                     }
                     dispatch({
@@ -188,7 +188,7 @@ export function fetchUsersBookings(uid) {
                     })
                 })
             }, error => {
-                console.error("Failed getting course info: ", uid, error);
+                console.error("Failed getting slot info: ", uid, error);
                 dispatch({
                     type: USER_ERROR,
                     payload: {

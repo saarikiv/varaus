@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { getDayStrMs, getTimeStrMs } from '../../helpers/timeHelper.js'
 
-class UserCourseHistory extends React.Component {
+class UserSlotHistory extends React.Component {
 
   static contextTypes = {
     router: React.PropTypes.object
@@ -12,8 +12,8 @@ class UserCourseHistory extends React.Component {
 
   renderEntry(item){
     return(
-      <li key={item.courseTime} className="booking-container">
-        <p>{item.courseName} {getDayStrMs(item.courseTime)} {getTimeStrMs(item.courseTime)}</p>
+      <li key={item.slotTime} className="booking-container">
+        <p>{item.slotName} {getDayStrMs(item.slotTime)} {getTimeStrMs(item.slotTime)}</p>
       </li>
     )
   }
@@ -37,4 +37,4 @@ function mapStateToProps(state) {
   return { auth: state.auth, currentUser: state.currentUser }
 }
 
-export default connect(mapStateToProps, null)(UserCourseHistory)
+export default connect(mapStateToProps, null)(UserSlotHistory)

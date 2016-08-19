@@ -16,7 +16,7 @@
 
 #### Github-repo:
 > cd path/to/code <br>
-> git clone https://github.com/tsaarikivi/joogakoulusilta
+> git clone https://github.com/saarikiv/varaus
 
 #### Alustus:
 > cd path/to/code/project <br>

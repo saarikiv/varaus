@@ -22,15 +22,15 @@ class UserBooking extends React.Component {
   cancelReservation(item){
     if(!this.cancellationOngoing){
       this.cancellationOngoing = true;
-      this.props.actions.postCancellation(item.courseTime, item.transactionReference, item.courseInfo);
+      this.props.actions.postCancellation(item.slotTime, item.transactionReference, item.slotInfo);
     }
   }
 
   render() {
     let day = new Date()
     var cancelButton = null;
-    //Show cancel button if course starts more than 3 hours from now.
-    if(this.props.item.courseTime > day.getTime()+3*60*60*1000){
+    //Show cancel button if slot starts more than 3 hours from now.
+    if(this.props.item.slotTime > day.getTime()+3*60*60*1000){
       cancelButton = <button className="btn-small btn-blue btn-right" onClick={() => this.cancelReservation(this.props.item)}>Peru</button>
     } else {
       cancelButton = <p>Tunnin alkuun alle 3 tuntia.</p>
@@ -39,7 +39,7 @@ class UserBooking extends React.Component {
     return (
         <li className="booking-container">
           <span className="item-row">
-            <p className="header-collapse onerow-item">{this.props.item.courseName} {getDayStrMs(this.props.item.courseTime)} {getTimeStrMs(this.props.item.courseTime)}</p>
+            <p className="header-collapse onerow-item">{this.props.item.slotName} {getDayStrMs(this.props.item.slotTime)} {getTimeStrMs(this.props.item.slotTime)}</p>
             {cancelButton}
           </span>
         </li>

@@ -6,7 +6,7 @@ import * as actionCreators from '../../actions/admin.js'
 var DatePicker = require('react-datepicker')
 var moment = require('moment')
 
-class SpecialCourseForm extends React.Component {
+class SpecialSlotForm extends React.Component {
 
   constructor(){
     super();
@@ -21,23 +21,23 @@ class SpecialCourseForm extends React.Component {
   onSubmit(props) {
     props.date = this.startDate.valueOf()
     if(this.props.mode === "addNew"){
-      this.props.actions.addSpecialCourse(props, 
-      this.props.courseTypes.list.find((item) => {return item.key === props.courseType}),
+      this.props.actions.addSpecialSlot(props, 
+      this.props.slotTypes.list.find((item) => {return item.key === props.slotType}),
       this.props.places.list.find((item) => {return item.key === props.place}),
       this.props.instructors.list.find((item) => {return item.key === props.instructor})
       )
     } else {
-      this.props.actions.modifySpecialCourse(props, 
+      this.props.actions.modifySpecialSlot(props, 
       this.props.itemkey, 
-      this.props.courseTypes.list.find((item) => {return item.key === props.courseType}),
+      this.props.slotTypes.list.find((item) => {return item.key === props.slotType}),
       this.props.places.list.find((item) => {return item.key === props.place}),
       this.props.instructors.list.find((item) => {return item.key === props.instructor})
       )
     }
-    this.props.actions.minimizeSpecialCourseForm()
+    this.props.actions.minimizeSpecialSlotForm()
   }
 
-  renderCourseTypeOptions(item) {
+  renderSlotTypeOptions(item) {
     return (
       <option key={item.key} value={item.key} >{item.key}</option>
     )
@@ -57,7 +57,7 @@ class SpecialCourseForm extends React.Component {
 
   renderContent() {
     var buttonText = (this.props.mode === "addNew")? "Luo" : "Päivitä"
-    const { fields: { title, start, end, maxCapacity, courseType, place, instructor, price, taxpercent }, handleSubmit } = this.props
+    const { fields: { title, start, end, maxCapacity, slotType, place, instructor, price, taxpercent }, handleSubmit } = this.props
 
     if (this.props.cmp.expanded) {
       return (
@@ -79,20 +79,20 @@ class SpecialCourseForm extends React.Component {
           <label htmlFor="specialMax">Maksimimäärä henkilöitä</label>
           <input type="number" name="specialMax" {...maxCapacity} placeholder="esim: 12 tai 1" />
 
-          <label htmlFor="scourseType">Kurssityyppi</label>
-          <select name="scourseType" {...courseType} value={courseType.value || ''}>
+          <label htmlFor="sslotType">Kurssityyppi</label>
+          <select name="sslotType" {...slotType} value={slotType.value || ''}>
             <option>-- Valitse kurssityyppi --</option>
-            {this.props.courseTypes.list.map(this.renderCourseTypeOptions)}
+            {this.props.slotTypes.list.map(this.renderSlotTypeOptions)}
           </select>
 
-          <label htmlFor="scourseInstructor">Ohjaaja</label>
-          <select name="scourseInstructor" {...instructor} value={instructor.value || ''}>
+          <label htmlFor="sslotInstructor">Ohjaaja</label>
+          <select name="sslotInstructor" {...instructor} value={instructor.value || ''}>
             <option>-- Valitse ohjaaja --</option>
             {this.props.instructors.list.map(this.renderInstructorOptions)}
           </select>
 
-          <label htmlFor="scoursePlace">Paikka</label>
-          <select name="scoursePlace" {...place} value={place.value || ''}>
+          <label htmlFor="sslotPlace">Paikka</label>
+          <select name="sslotPlace" {...place} value={place.value || ''}>
             <option>-- Valitse paikka --</option>
             {this.props.places.list.map(this.renderPlaceOptions)}
           </select>
@@ -115,10 +115,10 @@ class SpecialCourseForm extends React.Component {
 
   renderExpandButton() {
     if(this.props.cmp.expanded) {
-      return <button className="expand-btn" onClick={() => this.props.actions.minimizeSpecialCourseForm()}>Piilota</button>
+      return <button className="expand-btn" onClick={() => this.props.actions.minimizeSpecialSlotForm()}>Piilota</button>
     }
     else {
-      return <button className="expand-btn" onClick={() => this.props.actions.expandSpecialCourseForm()}>Avaa</button>
+      return <button className="expand-btn" onClick={() => this.props.actions.expandSpecialSlotForm()}>Avaa</button>
     }
   }
 
@@ -143,8 +143,8 @@ function validate(values) {
 
 function mapStateToProps(state) {
   return {
-    cmp: state.specialCourseForm,
-    courseTypes: state.courseTypeList,
+    cmp: state.specialSlotForm,
+    slotTypes: state.slotTypeList,
     instructors: state.instructorList,
     places: state.placeList
   }
@@ -155,7 +155,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default reduxForm({
-  form: 'SpecialCourseForm',
-  fields: ['title', 'start', 'end', 'maxCapacity', 'courseType', 'place', 'instructor', 'price', 'taxpercent'],
+  form: 'SpecialSlotForm',
+  fields: ['title', 'start', 'end', 'maxCapacity', 'slotType', 'place', 'instructor', 'price', 'taxpercent'],
   validate
-}, mapStateToProps, mapDispatchToProps)(SpecialCourseForm)
+}, mapStateToProps, mapDispatchToProps)(SpecialSlotForm)

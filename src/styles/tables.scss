@@ -26,7 +26,7 @@
         .table-time {
           margin-top: 0.2vw;
         }
-        .table-course, .table-time {
+        .table-slot, .table-time {
           margin-bottom: 1vw;
         }
         h3 {
@@ -79,7 +79,7 @@
         .table-time {
           margin-top: 2px;
         }
-        .table-course, .table-time {
+        .table-slot, .table-time {
           margin-bottom: 5px;
         }
         h3 {
@@ -116,7 +116,7 @@ table {
       border-top: 1px solid $border;
       transition: background 0.1s;
       box-sizing: border-box;
-      .table-course {
+      .table-slot {
         color: $text-dark;
       }
       

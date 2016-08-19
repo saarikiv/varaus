@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import * as adminActionCreators from '../../actions/admin.js'
 import * as shopActionCreators from '../../actions/shop.js'
-import * as courseActionCreators from '../../actions/courses.js'
+import * as slotActionCreators from '../../actions/slots.js'
 import * as bookingActionCreators from '../../actions/bookings.js'
 
 class UserItem extends React.Component {
@@ -25,8 +25,8 @@ class UserItem extends React.Component {
   executeLateReservation(){
     if(!this.lateReservationOngoing){
       this.lateReservationOngoing = true;
-      this.props.bookingActions.postLateReservation(this.props.item.uid, 0, this.props.courseInfo)
-      this.props.courseActions.flagCourseInfoToExit()
+      this.props.bookingActions.postLateReservation(this.props.item.uid, 0, this.props.slotInfo)
+      this.props.slotActions.flagSlotInfoToExit()
     }
   }
 
@@ -41,7 +41,7 @@ class UserItem extends React.Component {
         </span>
       )
     }
-    if(this.props.courseInfo.key !== "0") {
+    if(this.props.slotInfo.key !== "0") {
       return (
         <span className="item-row">
           <button className="btn-small btn-blue" onClick={() => this.executeLateReservation()}>Varaus</button>
@@ -84,14 +84,14 @@ class UserItem extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { shopItems: state.shopItems, courseInfo: state.courseInfo }
+  return { shopItems: state.shopItems, slotInfo: state.slotInfo }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     adminActions: bindActionCreators(adminActionCreators, dispatch),
     shopActions: bindActionCreators(shopActionCreators,dispatch),
-    courseActions: bindActionCreators(courseActionCreators,dispatch),
+    slotActions: bindActionCreators(slotActionCreators,dispatch),
     bookingActions: bindActionCreators(bookingActionCreators, dispatch)
   }
 }

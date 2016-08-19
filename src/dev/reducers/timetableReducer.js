@@ -1,7 +1,7 @@
 import { FETCH_TIMETABLE, FETCH_COURSE_BOOKINGS } from '../actions/actionTypes.js'
 
 const INITIAL_STATE = {
-  courses: [],
+  slots: [],
   bookings: {}
 }
 

@@ -1,12 +1,12 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import CourseForm from '../../components/admin/SpecialCourseForm.jsx'
+import SlotForm from '../../components/admin/SpecialSlotForm.jsx'
 import { getTimeStrMsBeginnignOfDay, toHplusMfromMs } from '../../helpers/timeHelper.js'
 import * as actionCreators from '../../actions/admin.js'
 
 
-class SpecialCourseItem extends React.Component {
+class SpecialSlotItem extends React.Component {
 
   constructor(){
     super()
@@ -25,7 +25,7 @@ class SpecialCourseItem extends React.Component {
       this.initialValues = Object.assign({},nextProps.item) 
       this.initialValues.start = toHplusMfromMs(nextProps.item.start)
       this.initialValues.end = toHplusMfromMs(nextProps.item.end)
-      this.initialValues.courseType = nextProps.item.courseType.name
+      this.initialValues.slotType = nextProps.item.slotType.name
       this.initialValues.place = nextProps.item.place.name
       this.initialValues.instructor = nextProps.item.instructor.key
   }
@@ -38,7 +38,7 @@ class SpecialCourseItem extends React.Component {
 
   remove(item){
      if(this.confirmation){
-      this.props.actions.removeSpecialCourse(item.key);
+      this.props.actions.removeSpecialSlot(item.key);
     } else {
       this.confirmation = true;
       this.forceUpdate();
@@ -52,15 +52,15 @@ class SpecialCourseItem extends React.Component {
 
   toggleModify(item){
     if(this.toggleForm){
-      this.props.actions.minimizeSpecialCourseForm()
+      this.props.actions.minimizeSpecialSlotForm()
     } else {
-      this.props.actions.expandSpecialCourseForm(item.key)
+      this.props.actions.expandSpecialSlotForm(item.key)
     }    
   }
 
   renderForm(item){
     if(this.toggleForm){
-      return(<CourseForm mode="modify" itemkey={item.key} initialValues={this.initialValues}/>)
+      return(<SlotForm mode="modify" itemkey={item.key} initialValues={this.initialValues}/>)
     } else {
       return(<div></div>)
     }    
@@ -73,7 +73,7 @@ class SpecialCourseItem extends React.Component {
     return (
       <div>
         <span className="item-row">{item.title}</span>
-        <span className="item-row">{item.courseType.name}</span>
+        <span className="item-row">{item.slotType.name}</span>
       </div>
     )
   }
@@ -99,11 +99,11 @@ class SpecialCourseItem extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { cmp: state.specialCourseForm }
+  return { cmp: state.specialSlotForm }
 }
 
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actionCreators, dispatch)}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SpecialCourseItem)
+export default connect(mapStateToProps, mapDispatchToProps)(SpecialSlotItem)
