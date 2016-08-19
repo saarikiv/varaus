@@ -20,25 +20,25 @@ function processCancel(slot, cancelledSlot){
     }
 }
 
-export function fetchTimetable(instructor = "all"){
+export function fetchTimetable(){
     return dispatch => {
         firebase.database().ref('/cancelledSlots/').on('value', snapshot => {
-            _fetchTimetable(dispatch, instructor);
+            _fetchTimetable(dispatch);
         });
         firebase.database().ref('/slots/').on('value', snapshot => {
-            _fetchTimetable(dispatch, instructor);
+            _fetchTimetable(dispatch);
         });
     }
 }
 
-export function stopFetchTimetable(instructor = "all"){
+export function stopFetchTimetable(){
     return dispatch => {
         firebase.database().ref('/cancelledSlots/').off('value');
         firebase.database().ref('/slots/').off('value');        
     }
 }
 
-export function _fetchTimetable(dispatch, instructor = "all") {
+export function _fetchTimetable(dispatch) {
     var list = Object.assign([])
     var cancelled = {}
     firebase.database().ref('/cancelledSlots/').once('value')
@@ -49,16 +49,14 @@ export function _fetchTimetable(dispatch, instructor = "all") {
     .then( snapshot => {
         var slots = snapshot.val()
         for (var key in slots) {
-            if (instructor === "all" || slots[key].instructor.key === instructor) {
-                slots[key].key = key
-                slots[key].cancelled = false; //This will be overwritten in processCancel if called
-                if(cancelled){
-                    if(cancelled[key]){
-                        processCancel(slots[key], cancelled[key]);
-                    }
+            slots[key].key = key
+            slots[key].cancelled = false; //This will be overwritten in processCancel if called
+            if(cancelled){
+                if(cancelled[key]){
+                    processCancel(slots[key], cancelled[key]);
                 }
-                list = list.concat(slots[key])
             }
+            list = list.concat(slots[key])
         }
         list.sort(function(a, b) {
             if (a.start && b.start) {

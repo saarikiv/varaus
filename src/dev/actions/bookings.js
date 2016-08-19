@@ -17,13 +17,13 @@ import {
 
 
 export function postCancellation(item, txRef, slotInfo) {
-    var JOOGAURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/cancelSlot' : VARAUSSERVER + '/cancelSlot'
+    var VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/cancelSlot' : VARAUSSERVER + '/cancelSlot'
     return dispatch => {
         _showLoadingScreen(dispatch, "Perutaan varausta")
         let now = new Date();
         firebase.auth().currentUser.getToken(true).then(idToken => {
             axios.post(
-                    JOOGAURL, {
+                    VARAUSURL, {
                         user: idToken,
                         slotInfo: slotInfo,
                         cancelItem: item,
@@ -53,13 +53,13 @@ export function postCancellation(item, txRef, slotInfo) {
 }
 
 export function postLateReservation(forUser, weeksBehind, slotInfo) {
-    var JOOGAURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/reserveLateSlot' : VARAUSSERVER + '/reserveLateSlot'
+    var VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/reserveLateSlot' : VARAUSSERVER + '/reserveLateSlot'
     return dispatch => {
         _showLoadingScreen(dispatch, "Varataan tuntia jälkikäteen")
         let now = new Date();
         firebase.auth().currentUser.getToken(true).then(idToken => {
             axios.post(
-                    JOOGAURL, {
+                    VARAUSURL, {
                         user: idToken,
                         forUser: forUser,
                         slotInfo: slotInfo,
@@ -91,13 +91,13 @@ export function postLateReservation(forUser, weeksBehind, slotInfo) {
 
 
 export function postReservation(forward, slotInfo) {
-    var JOOGAURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/reserveSlot' : VARAUSSERVER + '/reserveSlot'
+    var VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/reserveSlot' : VARAUSSERVER + '/reserveSlot'
     return dispatch => {
         _showLoadingScreen(dispatch, "Varataan tuntia")
         let now = new Date();
         firebase.auth().currentUser.getToken(true).then(idToken => {
             axios.post(
-                    JOOGAURL, {
+                    VARAUSURL, {
                         user: idToken,
                         slotInfo: slotInfo,
                         weeksForward: forward,

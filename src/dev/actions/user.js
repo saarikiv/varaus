@@ -31,10 +31,10 @@ export function sendFeedback(feedback){
       type: SEND_FEEDBABCK
     })
     _showLoadingScreen(dispatch, "Lähetetään palaute")
-    let JOOGAURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/feedback' : VARAUSSERVER + '/feedback'
+    let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/feedback' : VARAUSSERVER + '/feedback'
     firebase.auth().currentUser.getToken(true)
     .then(idToken => {
-        return axios.post(JOOGAURL, {
+        return axios.post(VARAUSURL, {
             current_user: idToken,
             feedback_message: feedback
         })

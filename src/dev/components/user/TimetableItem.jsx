@@ -50,24 +50,21 @@ class TimeTableItem extends React.Component {
     }
     if(booking){
       var allBooked = <span>
-                        <img className="mini-icon tiny-icon" src="./assets/group.png" />
-                        <p className="table-participants margin-left">0/{item.maxCapacity}</p>
+                        <p className="table-participants margin-left">VAPAA</p>
                       </span>       
       if(booking.all.length > 0){
-        if(booking.all[0].reservations === item.maxCapacity) {
-          allBooked = <p className="table-participants text-red text-bold table-alert-f">TÄYNNÄ</p>
+        if(booking.all[0].reservations === 1) {
+          allBooked = <p className="table-participants text-red text-bold table-alert-f">VARATTU</p>
 
         } else {
           allBooked = <span>
-                        <img className="mini-icon tiny-icon" src="./assets/group.png" />
-                        <p className="table-participants margin-left">{booking.all[0].reservations}/{item.maxCapacity}</p>
+                        <p className="table-participants margin-left">VAPAA</p>
                       </span>          
         }        
       }
     }
     return (
       <td onClick={() => this.itemClicked()}>
-        <p className="table-slot">{item.slotType.name}</p>
         <p className="table-time">{getTimeStrMsBeginnignOfDay(item.start)} - {getTimeStrMsBeginnignOfDay(item.end)}</p>        
         {this.renderBooked(item, allBooked)}
         {userBooked}
