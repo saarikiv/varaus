@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import InstructorHeader from '../components/instructor/InstructorHeader.jsx'
 import CoursesList from '../components/instructor/CoursesList.jsx'
 import CoursesDetails from '../components/instructor/CourseDetails.jsx'
+import SpecialCourses from '../components/instructor/SpecialCourses.jsx'
+import SpecialCourseInfo from '../components/instructor/SpecialCourseInfo.jsx'
 
 
 class Instructor extends React.Component {
@@ -18,12 +20,18 @@ class Instructor extends React.Component {
   }
 
 componentWillMount(){
+  if(this.props.currentUser.locked){
+    this.context.router.push('lockeduser')
+  }
 }
 
 componentWillUnmount(){
 }
 
 componentWillReceiveProps(nextProps){
+  if(nextProps.currentUser.locked){
+    this.context.router.push('lockeduser')
+  }
   if(nextProps.currentUser.roles.instructor === true){
     this.allowShow = true;
   }
@@ -39,6 +47,8 @@ componentWillReceiveProps(nextProps){
           <InstructorHeader />
           <CoursesList />
           <CoursesDetails />
+          <SpecialCourses />
+          <SpecialCourseInfo />
         </div>
       )
     } else {

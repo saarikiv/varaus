@@ -1,5 +1,4 @@
-import React from "react";
-import { Link } from "react-router"
+import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -15,10 +14,9 @@ class InstructorHeader extends React.Component {
       errorOut = <p>Error: {error.code} {error.message}</p>
     }
     return (
-      <div class="container bordered-container">
+      <div class="container header-container">
         <div className="content-container">
           {errorOut}
-          <Link className="text-link back-btn" to="user">&lt;Takaisin</Link>
           <h1>Opettajan sivu</h1>
         </div>
       </div>

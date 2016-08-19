@@ -6,6 +6,7 @@ import { reduxForm } from 'redux-form'
 
 import * as actionCreators from '../actions/auth.js'
 import Logo from '../components/logos/JoogakouluLogo.jsx'
+import Terms from '../components/home/Terms.jsx'
 
 class Register extends React.Component {
 
@@ -19,15 +20,10 @@ class Register extends React.Component {
     this.password = "";
     this.firstName = "";
     this.alias = "";
+    this.termsOpen = false;
   }
 
   componentWillReceiveProps(nextProps){
-    if(nextProps.auth.error.code != 0){
-      this.errorText = nextProps.auth.error.message
-    }
-    else {
-      this.errorText = "";
-    }
     if(nextProps.auth.uid){
       this.context.router.push('/user/')
     }
@@ -37,27 +33,44 @@ class Register extends React.Component {
     this.props.actions.register(data.email, data.password, data.firstName, data.lastName, null)
   }
 
+  toggleTerms() {
+    if (this.termsOpen === false) {
+      document.getElementById("terms-container").classList.remove("hidden")
+      this.termsOpen = true
+    } else {
+      document.getElementById("terms-container").classList.add("hidden")
+      this.termsOpen = false
+    }
+  }
+
   renderForm() {
 
-    const { fields: { email, password, firstName, lastName, alias }, handleSubmit } = this.props
+    const { fields: { email, password, firstName, lastName, alias, terms }, handleSubmit } = this.props
 
     return (
       <form onSubmit={handleSubmit(data => { this.doRegister(data) })}>
         <label htmlFor="email">Sähköposti</label>
-        <input type="email" placeholder="Sähköposti" {...email} />
+        <input name="email" type="email" placeholder="Sähköposti" {...email} />
         {email.touched && email.error && <div className="form-error">{email.error}</div>}
         <label htmlFor="password">Salasana</label>
-        <input type="password" placeholder="Salasana" {...password}/>
+        <input name="password" type="password" placeholder="Salasana" {...password}/>
         {password.touched && password.error && <div className="form-error">{password.error}</div>}
         <label htmlFor="firstName">Etunimi</label>
-        <input type="text" placeholder="Etunimi" {...firstName}/>
+        <input name="firstName" type="text" placeholder="Etunimi" {...firstName}/>
         {firstName.touched && firstName.error && <div className="form-error">{firstName.error}</div>}
         <label htmlFor="lastName">Sukunimi</label>
-        <input type="text" placeholder="Sukunimi" {...lastName}/>
+        <input name="lastName" type="text" placeholder="Sukunimi" {...lastName}/>
         {lastName.touched && lastName.error && <div className="form-error">{lastName.error}</div>}
-        <br/>
+
+        <a className="text-link block centered margin-bottom cursor-pointer" onClick={() => this.toggleTerms()}>Käyttöehdot</a>
+        <div id="terms-container" className="hidden">
+          <Terms />
+        </div>
+
+        <input name="terms" type="checkbox" {...terms} className="checkbox" />
+        <label htmlFor="terms" className="inline-label">Hyväksyn käyttöehdot</label>
+        {terms.touched && terms.error && <div className="form-error">{terms.error}</div>}
         <button type="submit" className="btn-small btn-blue">Rekisteröidy</button>
-        <br/>
       </form>
     );
 
@@ -67,10 +80,14 @@ class Register extends React.Component {
       return (
         <div class="container">
           <Logo />
-          <h2 className="centered login-header">Rekisteröidy käyttäjäksi</h2>
+          <div className="centered">
+            <Link className="text-link back-btn" to="/">&lt;Takaisin</Link>
+          </div>
+          <h2 className="centered login-header">Rekisteröidy käyttäjäksi</h2>          
           <div className="content-container login-container">
+            <p className="text-fade margin-top margin-bottom small-info pushed">Rekisteröidythän aktiivisella sähköpostilla! Lähetämme mahdolliset kuitit ja tuntien perumiset sähköpostiisi.</p>
+            <p className="text-fade margin-top margin-bottom small-info pushed">Sähköpostiosoitetta käytetään vain vahvistus ja tiedotus viestien lähetykseen. Sähköpostitietoja ei luovuteta kolmannelle osapuolelle mitään tarkoitusta varten.</p>
             {this.renderForm()}
-            <b>{this.errorText}</b>
           </div>  
         </div>
       );
@@ -94,6 +111,9 @@ const validate = values => {
   if (!values.lastName) {
     errors.lastName = 'Pakollinen kenttä.'
   }
+  if (!values.terms) {
+    errors.terms = 'Sinun tulee hyväksyä käyttöehdot.'
+  }
   return errors
 }
 
@@ -107,6 +127,6 @@ function mapDispatchToProps(dispatch) {
 
 export default reduxForm({
   form: 'RegisterForm',
-  fields: ['email', 'password', 'firstName', 'lastName', 'alias'],
+  fields: ['email', 'password', 'firstName', 'lastName', 'alias', 'terms'],
   validate
 }, mapStateToProps, mapDispatchToProps)(Register)

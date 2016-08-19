@@ -14,6 +14,8 @@ import ShopList from '../components/admin/ShopList.jsx'
 import SpecialCourseList from '../components/admin/SpecialCourseList.jsx'
 import PlaceList from '../components/admin/PlaceList.jsx'
 import InfoList from '../components/admin/InfoList.jsx'
+import TermsList from '../components/admin/TermsList.jsx'
+import PendingTransactionsList from '../components/admin/PendingTransactionsList.jsx'
 
 
 class Admin extends React.Component {
@@ -50,12 +52,12 @@ componentWillReceiveProps(nextProps){
           <AdminList />
           <InstructorList />
           <UserList />
-          <InfoList />
           <ShopList />
           <PlaceList />
           <CourseTypeList />
           <CourseList />
           <SpecialCourseList />
+          <TermsList />
         </div>
       )
     } else {

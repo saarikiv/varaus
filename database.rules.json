@@ -1,6 +1,94 @@
 {
-  "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null"
-  }
+    "rules": {
+        "users": {
+            ".read": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true || root.child('specialUsers').child(auth.uid).child('instructor').val() == true",
+            ".write": "auth.uid === 'joogaserver'  || root.child('specialUsers').child(auth.uid).child('admin').val() == true || root.child('specialUsers').child(auth.uid).child('instructor').val() == true",
+            "$userId": {
+                ".read": "auth.uid === $userId || root.child('specialUsers').child(auth.uid).child('instructor').val() == true",
+                ".write": "auth.uid === $userId"
+            }
+        },
+        "cancelledCourses": {
+            ".read": "auth != null",
+            ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('instructor').val() == true"
+        },
+        "infoItems": {
+            ".read": "true",
+            ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+        },
+        "diagnostics": {
+            ".read": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true",
+            ".write": "true"
+        },
+        "terms": {
+            ".read": "true",
+            ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+        },
+        "bookingsbycourse": {
+            ".read": "auth != null",
+            ".write": "auth.uid === 'joogaserver'"
+        },
+        "scbookingsbycourse": {
+            ".read": "auth != null",
+            ".write": "auth.uid === 'joogaserver'"
+        },
+        "specialUsers": {
+            ".read": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true || root.child('specialUsers').child(auth.uid).child('instructor').val() == true",
+            ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true || root.child('specialUsers').child(auth.uid).child('instructor').val() == true",
+            "$userId": {
+                ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
+                ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+            }
+        },
+        "scbookingsbyuser": {
+            "$userId": {
+                ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
+                ".write": "auth.uid === 'joogaserver'"
+            }
+        },
+        "bookingsbyuser": {
+            "$userId": {
+                ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
+                ".write": "auth.uid === 'joogaserver'"
+            }
+        },
+        "transactions": {
+            "$userId": {
+                ".read": "auth.uid === 'joogaserver' || auth.uid === $userId || root.child('specialUsers').child(auth.uid).child('admin').val() == true || root.child('specialUsers').child(auth.uid).child('instructor').val() == true",
+                ".write": "auth.uid === 'joogaserver'"
+            }
+        },
+        "pendingtransactions": {
+            ".read": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true",
+            ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+        },
+        "courseTypes": {
+            ".read": "auth != null",
+            ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+        },
+        "serverError": {
+            ".read": "auth.uid === 'joogaserver'",
+            ".write": "auth.uid === 'joogaserver'"
+        },
+        "courses": {
+            ".read": "auth != null",
+            ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+        },
+        "specialCourses": {
+            ".read": "auth != null",
+            ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+        },
+        "places": {
+            ".read": "auth != null",
+            ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+        },
+        "instructors": {
+            ".read": "auth != null",
+            ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+        },
+        "shopItems": {
+            ".read": "auth != null",
+            ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+        }
+    }
 }

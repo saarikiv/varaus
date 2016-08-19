@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 
 import * as actionCreators from '../../actions/admin.js'
 
-class PlaceForm extends React.Component {
+class InfoForm extends React.Component {
 
   onSubmit(props) {
 
@@ -62,7 +62,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default reduxForm({
-  form: 'PlaceForm',
+  form: 'InfoForm',
   fields: ['title', 'content'],
   validate
-}, null, mapDispatchToProps)(PlaceForm)
+}, null, mapDispatchToProps)(InfoForm)

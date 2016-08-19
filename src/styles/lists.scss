@@ -4,7 +4,7 @@
 // MOBILE
 /////////////////////////////////////////////////////
 
-@media screen and (max-width: 799px) {
+@media screen and (max-width: $mobile-size) {
   .narrow-list {
     width: 100%;
     margin: 0 auto 3vw;
@@ -16,6 +16,19 @@
       margin: 0 0 2vw;
       padding: 3.6vw 0;
       text-align: center;
+    }
+  }
+
+  .shop-list {
+    width: 100%;
+    margin: 0 auto 3vw;
+    padding: 0;
+    box-sizing: border-box;
+    li {
+      width: 100%;
+      display: inline-block;
+      margin: 0 0 2vw;
+      padding: 2vw;
     }
   }
   .text-list-item {
@@ -47,18 +60,25 @@
   .item-item {
     margin-right: 2vw;
   }
+
+  ul.blank-list {
+    li {
+      margin-bottom: 4vw;
+    }  
+  }
 }
 
 /////////////////////////////////////////////////////
 // DESKTOP
 /////////////////////////////////////////////////////
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: $desktop-size) {
   .narrow-list {
     width: 100%;
     margin: 0 auto 15px;
     padding: 0;
     li {
+      vertical-align: top;
       width: 32%;
       display: inline-block;
       margin: 0 5px 5px 0;
@@ -66,6 +86,20 @@
       text-align: center;
     }
   }
+
+  .shop-list {
+    width: 100%;
+    margin: 0 auto 15px;
+    padding: 0;
+    li {
+      vertical-align: top;
+      width: 49%;
+      display: inline-block;
+      margin: 0 5px 5px 0;
+      padding: 15px;
+    }
+  }
+
   .text-list-item {
     span {
       margin-top: 14px;
@@ -73,6 +107,15 @@
     button {
       margin-top: 6px;
     }
+  }
+  .table-alert {
+    height: 20px;
+  }
+  .table-alert-c {
+    height: 22px;
+  }
+  .table-alert-f {
+    height: 20px;
   }
 
   ul.wide-list {
@@ -95,6 +138,12 @@
   .item-item {
     margin-right: 25px;
   }
+
+  ul.blank-list {
+    li {
+      margin-bottom: 10px;
+    }  
+  }
 }
 
 /////////////////////////////////////////////////////
@@ -112,7 +161,7 @@ ul {
 .wide-list {
   li {
     background: $container-color;
-    border-radius: 5px;
+    border-radius: $container-radius;
     border: 1px solid $border;
     box-sizing: border-box;
     .item-row {
@@ -123,14 +172,15 @@ ul {
   }
 }
 
-.narrow-list {
+.narrow-list, .shop-list {
   li {
     background: $container-color;
-    border-radius: 5px;
+    border-radius: $container-radius;
     border: 1px solid $border;
     box-sizing: border-box;
   }
 }
+
 .special-course-item {
   &:hover {
     background: $lightblue;
@@ -139,10 +189,8 @@ ul {
 }
 
 ul.blank-list {
-  margin-top: 60px;
   li {
     background: transparent;
     border: none;
-    margin-bottom: 10px;
   }  
 }

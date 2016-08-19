@@ -1,6 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+
 import CourseForm from '../../components/admin/CourseForm.jsx'
 import Item from './CourseItem.jsx'
 import * as actionCreators from '../../actions/admin.js'
@@ -85,7 +86,7 @@ class CourseList extends React.Component {
     return (
       <div className="container bordered-container">
         <div className="content-container align-left">
-          <h2 className="header-collapse">Kurssit</h2>
+          <h2 className="header-collapse">Tunnit</h2>
           {this.renderExpandButton()}
           {this.renderForm()}
           {this.renderContent()}

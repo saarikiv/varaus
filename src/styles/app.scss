@@ -21,7 +21,7 @@ button, a, select, textarea, body, input {
 // MOBILE
 //////////////////////////////////////////////////////////////
 
-@media screen and (max-width: 799px) {
+@media screen and (max-width: $mobile-size) {
   h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 2vw 0;
@@ -32,19 +32,19 @@ button, a, select, textarea, body, input {
   }
 
   h1 {
-    font-size: 8.2vw;
+    font-size: 5.5vw;
     span, div {
-      font-size: 8.2vw;
+      font-size: 5.5vw;
     }
   }
   h2 {
-    font-size: 7vw;
+    font-size: 5.2vw;
   }
   h3 {
-    font-size: 6vw;
+    font-size: 5vw;
   }
   h4 {
-    font-size: 5vw;
+    font-size: 4.7vw;
   }
   h5 {
     font-size: 4.5vw;
@@ -89,62 +89,89 @@ button, a, select, textarea, body, input {
     display: block;
     margin-bottom: 1vw;
   }
+  .margin-top {
+    margin-top: 4vw;
+  }
+  .small-info {
+    margin: 2vw 0;
+  }
+
+  .surrounded-border {
+    margin: 3vw 0;
+  }
+
+  .info-line {
+    padding: 3vw 2vw;
+  }
+
+  .mobile-hidden {
+    display: none;
+  }
+
+  .mobile-centered {
+    text-align: center;
+  }
+
+  .pushed {
+    margin-left: 2vw;
+    margin-right: 2vw;
+  }
 }
 
 //////////////////////////////////////////////////////////////
 // DESKTOP
 //////////////////////////////////////////////////////////////
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: $desktop-size) {
   h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 10px 0;
   }
 
   h1 {
-    font-size: 30px;
+    font-size: 20px;
     span, div {
-      font-size: 30px;
+      font-size: 20px;
     }
   }
   h2 {
-    font-size: 25px;
-  }
-  h3 {
-    font-size: 22px;
-  }
-  h4 {
-    font-size: 20px;
-  }
-  h5 {
-    font-size: 19px;
-  }
-  h6 {
     font-size: 18px;
   }
-  p {
+  h3 {
+    font-size: 17px;
+  }
+  h4 {
+    font-size: 16px;
+  }
+  h5 {
+    font-size: 15px;
+  }
+  h6 {
     font-size: 14px;
+  }
+  p {
+    font-size: 13px;
   }
   span {
-    font-size: 14px;
+    font-size: 13px;
   }
   div {
-    font-size: 14px;
+    font-size: 13px;
   }
   label {
-    font-size: 14px;
+    font-size: 13px;
   }
   th {
-    font-size: 14px;
+    font-size: 13px;
   }
   td {
-    font-size: 14px;
+    font-size: 13px;
   }
   a, button {
-    font-size: 14px;
+    font-size: 13px;
   }
   input, textarea, select {
-    font-size: 14px;
+    font-size: 13px;
   }
   small {
     font-size: 13px;
@@ -158,6 +185,24 @@ button, a, select, textarea, body, input {
   .small-text {
     margin-bottom: 10px;
   }
+  .margin-top {
+    margin-top: 17px;
+  }
+  .small-info {
+    margin: 10px 0;
+  }
+
+  .surrounded-border {
+    margin: 10px 0;
+  }
+
+  .info-line {
+    padding: 10px 5px;
+  }
+
+  .desktop-hidden {
+    display: none;
+  }
 }
 
 //////////////////////////////////////////////////////////////
@@ -166,6 +211,7 @@ button, a, select, textarea, body, input {
 
 button, a {
   outline-style: none;
+  cursor: pointer;
 }
 
 body {
@@ -236,6 +282,16 @@ input, textarea, select {
   }  
 }
 
+.text-green {
+  color: $green;
+  div {
+    color: $green;
+  }
+  span {
+    color: $green;
+  }  
+}
+
 .text-red {
   color: $red;
   div {
@@ -243,6 +299,16 @@ input, textarea, select {
   }
   span {
     color: $red;
+  }  
+}
+
+.text-fade {
+  color: $text-fade;
+  div {
+    color: $text-fade;
+  }
+  span {
+    color: $text-fade;
   }  
 }
 
@@ -262,4 +328,50 @@ input, textarea, select {
 
 .small-text {
   display: block;
+}
+
+.small-info {
+  display: block;
+}
+
+.nomargin {
+  margin: 0;
+}
+
+.nopadding {
+  padding: 0;
+}
+
+.surrounded-border {
+  border: 1px solid $border;
+  box-sizing: border-box;
+  border-radius: $container-radius;
+  background-color: $container-color;
+}
+
+.border-bottom {
+  border-bottom: 1px solid $border;
+  box-sizing: border-box;
+}
+
+.info-line {
+  margin: 0;
+  display: block;
+  box-sizing: border-box;
+}
+
+.pre-wrap {
+  white-space: pre-line;
+}
+
+.hidden {
+  display: none;
+}
+
+.block {
+  display: block;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }

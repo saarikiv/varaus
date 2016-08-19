@@ -2,6 +2,7 @@ import {
     FETCH_TIMETABLE,
     PUT_COURSE_INFO,
     REMOVE_COURSE_INFO,
+    FLAG_COURSE_INFO_TO_EXIT
 } from './actionTypes.js'
 
 import {
@@ -89,6 +90,12 @@ export function putCourseInfo(course, booking) {
                 bookings: booking
             }
         });
+    }
+}
+
+export function flagCourseInfoToExit(){
+    return {
+        type: FLAG_COURSE_INFO_TO_EXIT
     }
 }
 

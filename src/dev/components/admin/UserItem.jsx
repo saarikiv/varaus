@@ -4,18 +4,29 @@ import { connect } from 'react-redux'
 
 import * as adminActionCreators from '../../actions/admin.js'
 import * as shopActionCreators from '../../actions/shop.js'
+import * as courseActionCreators from '../../actions/courses.js'
+import * as bookingActionCreators from '../../actions/bookings.js'
 
 class UserItem extends React.Component {
 
   constructor(){
     super();
     this.paymentOngoing = false;
+    this.lateReservationOngoing = false;
   }
 
   executeCashBuy(){
     if(!this.paymentOngoing){
       this.paymentOngoing = true;
       this.props.shopActions.executeCashPurchase(this.props.item.uid, this.props.shopItems.cart.key, this.props.shopItems.cart.type)
+    }
+  }
+
+  executeLateReservation(){
+    if(!this.lateReservationOngoing){
+      this.lateReservationOngoing = true;
+      this.props.bookingActions.postLateReservation(this.props.item.uid, 0, this.props.courseInfo)
+      this.props.courseActions.flagCourseInfoToExit()
     }
   }
 
@@ -29,6 +40,13 @@ class UserItem extends React.Component {
           <button className="btn-small btn-green" onClick={() => this.props.adminActions.unlockUser(this.props.item.uid)}>Aktivoi</button>
         </span>
       )
+    }
+    if(this.props.courseInfo.key !== "0") {
+      return (
+        <span className="item-row">
+          <button className="btn-small btn-blue" onClick={() => this.executeLateReservation()}>Varaus</button>
+        </span>
+      )      
     }
     if(this.props.shopItems.phase === "cashPayment"){
       return (
@@ -58,6 +76,7 @@ class UserItem extends React.Component {
       <li className="text-list-item">
         <span className="item-row">{item.firstname} {item.lastname}</span>
         <span className="item-row">{item.email}</span>
+        <span className="item-row">{item.uid}</span>
         {this.renderButtons()}
       </li>
     )
@@ -65,13 +84,15 @@ class UserItem extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { shopItems: state.shopItems }
+  return { shopItems: state.shopItems, courseInfo: state.courseInfo }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
     adminActions: bindActionCreators(adminActionCreators, dispatch),
-    shopActions: bindActionCreators(shopActionCreators,dispatch)
+    shopActions: bindActionCreators(shopActionCreators,dispatch),
+    courseActions: bindActionCreators(courseActionCreators,dispatch),
+    bookingActions: bindActionCreators(bookingActionCreators, dispatch)
   }
 }
 

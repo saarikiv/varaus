@@ -28,30 +28,48 @@ class TimeTableItem extends React.Component {
     this.props.courseActions.putCourseInfo(this.props.item, this.props.booking)
   }
 
+  renderBooked(item, allBooked) {
+    if(!item.cancelled) {
+      return (
+        allBooked    
+      )
+    }    
+  }
+
   render() {
     const { booking, item } = this.props;
     var courseCancelled = null;
     if(item.cancelled){
-      courseCancelled = <p>PERUTTU</p>
+      courseCancelled = <p className="text-bold text-red table-alert-c">PERUTTU</p>
     }
     var userBooked = null;
     if(booking){
       if(booking.user.length > 0){
-         userBooked = <img className="mini-icon margin-left" src="./assets/booked.png" />
+         userBooked = <img className="mini-icon margin-left tiny-icon" src="./assets/booked.png" />
       }
     }
     if(booking){
-      var allBooked = <p className="table-participants margin-left">0/{item.maxCapacity}</p>
+      var allBooked = <span>
+                        <img className="mini-icon tiny-icon" src="./assets/group.png" />
+                        <p className="table-participants margin-left">0/{item.maxCapacity}</p>
+                      </span>       
       if(booking.all.length > 0){
-        allBooked = <p className="table-participants margin-left">{booking.all[0].reservations}/{item.maxCapacity}</p>
+        if(booking.all[0].reservations === item.maxCapacity) {
+          allBooked = <p className="table-participants text-red text-bold table-alert-f">TÄYNNÄ</p>
+
+        } else {
+          allBooked = <span>
+                        <img className="mini-icon tiny-icon" src="./assets/group.png" />
+                        <p className="table-participants margin-left">{booking.all[0].reservations}/{item.maxCapacity}</p>
+                      </span>          
+        }        
       }
     }
     return (
       <td onClick={() => this.itemClicked()}>
         <p className="table-course">{item.courseType.name}</p>
-        <p className="table-time">{getTimeStrMsBeginnignOfDay(item.start)} - {getTimeStrMsBeginnignOfDay(item.end)}</p>
-        <img className="mini-icon" src="./assets/group.png" />
-        {allBooked}
+        <p className="table-time">{getTimeStrMsBeginnignOfDay(item.start)} - {getTimeStrMsBeginnignOfDay(item.end)}</p>        
+        {this.renderBooked(item, allBooked)}
         {userBooked}
         {courseCancelled}
       </td>

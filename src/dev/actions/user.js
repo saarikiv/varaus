@@ -1,10 +1,16 @@
+import axios from "axios"
+
 import {
     UPDATE_USERS_BOOKINGS,
     UPDATE_USERS_TRANSACTIONS,
     USER_ERROR,
     USER_DETAILS_UPDATED_IN_DB,
     STOP_UPDATING_USER_DETAILS_FROM_DB,
-    UPDATE_USERS_SCBOOKINGS
+    UPDATE_USERS_SCBOOKINGS,
+    SEND_FEEDBABCK,
+    VERIFY_EMAIL,
+    PASSWORD_RESET,
+    UPDATE_USER_DETAILS
 } from './actionTypes.js'
 
 import {
@@ -20,12 +26,51 @@ var TransactionsRef;
 var BookingsRef;
 var specialCBookingsRef;
 
+export function sendFeedback(feedback){
+  return dispatch => {
+    //for diagnostics
+    dispatch({
+      type: SEND_FEEDBABCK
+    })
+    _showLoadingScreen(dispatch, "Lähetetään palaute")
+    let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/feedback' : JOOGASERVER + '/feedback'
+    firebase.auth().currentUser.getToken(true)
+    .then(idToken => {
+        return axios.post(JOOGAURL, {
+            current_user: idToken,
+            feedback_message: feedback
+        })
+    })
+    .then(response => {
+        _hideLoadingScreen(dispatch, "Palaute lähetetty", true)
+    })
+    .catch(error => {
+        console.error("FEEDBACK_ERROR:", error);
+        _hideLoadingScreen(dispatch, "Palautteen lähettämisessä tapahtui virhe: " + error.toString(), false)
+        dispatch({
+            type: USER_ERROR,
+            payload: {
+                error: {
+                    code: "FEEDBACK_ERROR",
+                    message: "Sending feedback failed: " + error.toString()
+                }
+            }
+        })
+    });
+
+
+  }
+}
+
 export function updateUserDetails(user) {
     return dispatch => {
-        _showLoadingScreen(dispatch, "Päivitetään tiedot.")
+        _showLoadingScreen(dispatch, "Päivitetään tiedot")
         firebase.database().ref('/users/' + user.uid).update(user)
             .then(() => {
-                _hideLoadingScreen(dispatch, "Tiedot päivitetty.", true)
+              dispatch({
+                type: UPDATE_USER_DETAILS
+              })
+                _hideLoadingScreen(dispatch, "Tiedot päivitetty", true)
             })
             .catch(error => {
                 console.error("User details update failed: ", error)
@@ -177,7 +222,8 @@ export function fetchUsersTransactions(uid) {
                 details: {
                     valid: [],
                     expired: [],
-                    special: []
+                    special: [],
+                    oneTime: []
                 }
             };
             let now = Date.now();
@@ -192,6 +238,7 @@ export function fetchUsersTransactions(uid) {
                 trxdetails.paymentInstrumentType = all[one].details.transaction.paymentInstrumentType;
                 trxdetails.shopItem = all[one].shopItem;
                 trxdetails.shopItemKey = all[one].shopItemKey;
+                trxdetails.oneTime = all[one].oneTime || false;
                 switch (all[one].type) {
                     case "time":
                         if (all[one].expires > now) {
@@ -203,10 +250,10 @@ export function fetchUsersTransactions(uid) {
                         trxdetails.usetimes = all[one].usetimes;
                         if (all[one].expires > now) {
                             trx.count += all[one].unusedtimes;
-                        }
-                        if (all[one].expires < trx.firstexpire || trx.firstexpire === 0) {
-                            if (all[one].unusedtimes > 0) {
-                                trx.firstexpire = all[one].expires;
+                            if (all[one].expires < trx.firstexpire || trx.firstexpire === 0) {
+                                if (all[one].unusedtimes > 0) {
+                                    trx.firstexpire = all[one].expires;
+                                }
                             }
                         }
                         break;
@@ -224,6 +271,9 @@ export function fetchUsersTransactions(uid) {
                         trx.details.valid.push(trxdetails);
                     } else {
                         trx.details.expired.push(trxdetails);
+                    }
+                    if (trxdetails.oneTime) {
+                        trx.details.oneTime.push(trxdetails.shopItemKey)
                     }
                 }
             }
@@ -262,7 +312,6 @@ export function fetchUserDetails(uid) {
         UserRef.on('value', snapshot => {
             if (snapshot.val()) {
                 usr = snapshot.val();
-                console.log("userdetails", usr);
                 usr.key = snapshot.key;
                 firebase.database().ref('/specialUsers/' + usr.key).once('value')
                     .then(snapshot => {
@@ -276,6 +325,9 @@ export function fetchUserDetails(uid) {
                             }
                             if (snapshot.val().instructor) {
                                 usr.roles.instructor = snapshot.val().instructor
+                            }
+                            if (snapshot.val().tester) {
+                                usr.roles.tester = snapshot.val().tester
                             }
                         }
                         dispatch({
@@ -309,9 +361,12 @@ export function finishedWithUserDetails() {
 
 export function resetPassword(email) {
     return dispatch => {
-        _showLoadingScreen(dispatch, "Lähetetään salasanan uudelleen asetus viesti.");
+        _showLoadingScreen(dispatch, "Lähetetään salasanan uudelleen asetus viesti");
         firebase.auth().sendPasswordResetEmail(email).then(() => {
-                _hideLoadingScreen(dispatch, "Viesti lähetetty.", true);
+          dispatch({
+            type: PASSWORD_RESET
+          })
+                _hideLoadingScreen(dispatch, "Viesti lähetetty", true);
             })
             .catch((error) => {
                 console.error("Error from: sendPasswordResetEmail - ", error)
@@ -335,7 +390,10 @@ export function sendEmailVerification() {
         _showLoadingScreen(dispatch, "Lähetetään verifiointilinkki sähköpostiisi")
         firebase.auth().currentUser.sendEmailVerification()
             .then(() => {
-                _hideLoadingScreen(dispatch, "Sähköposti lähetetty.", true)
+              dispatch({
+                type: VERIFY_EMAIL
+              })
+                _hideLoadingScreen(dispatch, "Sähköposti lähetetty", true)
             })
             .catch((error) => {
                 console.error("Error from: sendEmailVerification - ", error)
