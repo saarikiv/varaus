@@ -3,21 +3,18 @@ import {
     UPDATE_USERS_TRANSACTIONS,
     USER_ERROR,
     USER_DETAILS_UPDATED_IN_DB,
-    STOP_UPDATING_USER_DETAILS_FROM_DB,
-    UPDATE_USERS_SCBOOKINGS
+    STOP_UPDATING_USER_DETAILS_FROM_DB
 } from '../actions/actionTypes.js'
 
 const INITIAL_STATE = {
     key: "0",
     bookingsReady: false,
-    specialSlotsReady: false,
     transactionsReady: false,
     error: {
         code: "0",
         message: "ok"
     },
     bookings: [],
-    specialSlots: [],
     history: [],
     roles: {
         admin: false,
@@ -26,8 +23,7 @@ const INITIAL_STATE = {
     transactions: {
         details: {
             expired: [],
-            valid: [],
-            special: []
+            valid: []
         }
     }
 }
@@ -35,8 +31,6 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
 
     switch (action.type) {
-        case UPDATE_USERS_SCBOOKINGS:
-            return Object.assign({}, state, action.payload);
         case UPDATE_USERS_BOOKINGS:
             return Object.assign({}, state, action.payload);
         case UPDATE_USERS_TRANSACTIONS:

@@ -22,7 +22,7 @@ class Feedback extends React.Component {
         <ContactInfo />
         <div className="content-container login-container">
             <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
-                <h5>Lähetä palautetta joogakoululle</h5>
+                <h5>Lähetä palautetta varausjärjestelmästä</h5>
                 <textarea type="text" id="feedback" {...feedback}/>
                 {feedback.touched && feedback.error && <div className="form-error">{feedback.error}</div>}
                 <button type="submit" className="btn-small btn-blue">Lähetä</button>

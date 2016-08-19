@@ -1,10 +1,10 @@
 import axios from 'axios'
 
 import {
-    FETCH_COURSE_BOOKINGS,
+    FETCH_SLOT_BOOKINGS,
     CHANGE_LOADINGSCREEN_STATE,
-    BOOK_A_COURSE,
-    LATE_BOOK_A_COURSE,
+    BOOK_A_SLOT,
+    LATE_BOOK_A_SLOT,
     BOOKING_ERROR,
     CANCEL_ERROR,
     CANCEL_RESERVATION
@@ -68,7 +68,7 @@ export function postLateReservation(forUser, weeksBehind, slotInfo) {
                     })
                 .then(response => {
                   dispatch({
-                    type: LATE_BOOK_A_COURSE,
+                    type: LATE_BOOK_A_SLOT,
                     payload: {slotInfo}
                   })
                     _hideLoadingScreen(dispatch, "Varaus onnistui", true)
@@ -105,7 +105,7 @@ export function postReservation(forward, slotInfo) {
                     })
                 .then(response => {
                   dispatch({
-                    type: BOOK_A_COURSE,
+                    type: BOOK_A_SLOT,
                     payload: {slotInfo}
                   })
                     _hideLoadingScreen(dispatch, "Varaus onnistui", true)
@@ -183,7 +183,7 @@ export function fetchSlotBookings(slotkey, uid) {
                 user: userbookings
             }
             dispatch({
-                type: FETCH_COURSE_BOOKINGS,
+                type: FETCH_SLOT_BOOKINGS,
                 payload: returnObject
             })
         }, err => {

@@ -11,9 +11,9 @@ class InstructorItem extends React.Component {
     this.confirmed = false;
   }
 
-  unmakeInstructor(uid){
+  unmakeAdmin(uid){
     if(this.confirmed){
-      this.props.actions.unmakeInstructor(uid)
+      this.props.actions.unmakeAdmin(uid)
       this.confirmed = false;
     } else {
       this.confirmed = true;
@@ -31,7 +31,7 @@ class InstructorItem extends React.Component {
     
     return(
       <span className="item-row">
-        <button className="btn-small btn-red" onClick={() => this.unmakeInstructor(this.props.item.uid) }>{buttonName}</button> 
+        <button className="btn-small btn-red" onClick={() => this.unmakeAdmin(this.props.item.uid) }>{buttonName}</button> 
       </span>
     )
   }

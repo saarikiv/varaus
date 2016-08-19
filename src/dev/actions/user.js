@@ -6,7 +6,6 @@ import {
     USER_ERROR,
     USER_DETAILS_UPDATED_IN_DB,
     STOP_UPDATING_USER_DETAILS_FROM_DB,
-    UPDATE_USERS_SCBOOKINGS,
     SEND_FEEDBABCK,
     VERIFY_EMAIL,
     PASSWORD_RESET,
@@ -24,7 +23,6 @@ const Auth = firebase.auth();
 var UserRef;
 var TransactionsRef;
 var BookingsRef;
-var specialCBookingsRef;
 
 export function sendFeedback(feedback){
   return dispatch => {
@@ -83,38 +81,6 @@ export function updateUserDetails(user) {
     }
 }
 
-export function fetchUsersSpecialSlotBookings(uid) {
-    return dispatch => {
-        specialCBookingsRef = firebase.database().ref('/scbookingsbyuser/' + uid)
-        specialCBookingsRef.on('value', (snapshot) => {
-            let scBookings = snapshot.val();
-            let one;
-            let returnList = Object.assign([])
-            if (scBookings) {
-                for (one in scBookings) {
-                    if (scBookings[one].shopItem.date > Date.now()) {
-                        returnList.push(scBookings[one])
-                    }
-                }
-            }
-            dispatch({
-                type: UPDATE_USERS_SCBOOKINGS,
-                payload: {
-                    specialSlotsReady: true,
-                    specialSlots: returnList
-                }
-            })
-        }, (error) => {
-            dispatch({
-                type: USER_ERROR,
-                payload: {
-                    error,
-                    specialSlotsReady: true
-                }
-            })
-        })
-    }
-}
 
 export function fetchUsersBookings(uid) {
     return dispatch => {
@@ -222,7 +188,6 @@ export function fetchUsersTransactions(uid) {
                 details: {
                     valid: [],
                     expired: [],
-                    special: [],
                     oneTime: []
                 }
             };
@@ -257,24 +222,17 @@ export function fetchUsersTransactions(uid) {
                             }
                         }
                         break;
-                    case "special":
-                        //Placeholder for any special handling of specials
-                        break;
                     default:
                         console.error("undefined transaction type: ", uid, all[one].type, all[one]);
                         break;
                 }
-                if (all[one].type === "special") {
-                    trx.details.special.push(trxdetails);
+                if (trxdetails.expires > now) {
+                    trx.details.valid.push(trxdetails);
                 } else {
-                    if (trxdetails.expires > now) {
-                        trx.details.valid.push(trxdetails);
-                    } else {
-                        trx.details.expired.push(trxdetails);
-                    }
-                    if (trxdetails.oneTime) {
-                        trx.details.oneTime.push(trxdetails.shopItemKey)
-                    }
+                    trx.details.expired.push(trxdetails);
+                }
+                if (trxdetails.oneTime) {
+                    trx.details.oneTime.push(trxdetails.shopItemKey)
                 }
             }
             trx.details.valid.sort((a, b) => {
@@ -350,7 +308,6 @@ export function finishedWithUserDetails() {
     if (UserRef) UserRef.off('value');
     if (TransactionsRef) TransactionsRef.off('value');
     if (BookingsRef) BookingsRef.off('value')
-    if (specialCBookingsRef) specialCBookingsRef.off('value')
     return dispatch => {
         dispatch({
             type: STOP_UPDATING_USER_DETAILS_FROM_DB,

@@ -1,8 +1,8 @@
 import {
     FETCH_TIMETABLE,
-    PUT_COURSE_INFO,
-    REMOVE_COURSE_INFO,
-    FLAG_COURSE_INFO_TO_EXIT
+    PUT_SLOT_INFO,
+    REMOVE_SLOT_INFO,
+    FLAG_SLOT_INFO_TO_EXIT
 } from './actionTypes.js'
 
 import {
@@ -81,11 +81,11 @@ export function _fetchTimetable(dispatch, instructor = "all") {
 export function putSlotInfo(slot, booking) {
     return dispatch => {
         dispatch({
-            type: PUT_COURSE_INFO,
+            type: PUT_SLOT_INFO,
             payload: slot
         });
         dispatch({
-            type: PUT_COURSE_INFO,
+            type: PUT_SLOT_INFO,
             payload: {
                 bookings: booking
             }
@@ -95,12 +95,12 @@ export function putSlotInfo(slot, booking) {
 
 export function flagSlotInfoToExit(){
     return {
-        type: FLAG_COURSE_INFO_TO_EXIT
+        type: FLAG_SLOT_INFO_TO_EXIT
     }
 }
 
 export function removeSlotInfo() {
     return {
-        type: REMOVE_COURSE_INFO
+        type: REMOVE_SLOT_INFO
     }
 }

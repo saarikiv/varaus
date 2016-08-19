@@ -61,11 +61,6 @@ class TopBar extends React.Component {
     if(roles.tester){
       tests = <Link className="text-link" to="tests" onClick={() => this.toggleNav()}>Test</Link>
     }
-    let instructor = null;
-    if(roles.instructor){
-      instructor = <Link className="text-link" to="instructor" onClick={() => this.toggleNav()}>Opettaja</Link>
-      adminShop = <Link className="text-link text-green" to="shop" onClick={() => this.toggleNav()}>Admin-Kauppa</Link>
-    }
 
     if (this.props.curUsr.key != '0') {
       if(locked){
@@ -95,13 +90,7 @@ class TopBar extends React.Component {
             {this.renderTickets()}
             <div className="userinfo-container mobile-hidden" id="nav-menu">
               <div className="mobile-row">
-                <Link className="text-link" to="user" onClick={() => this.toggleNav()}>Joogatunnit & varaukset</Link>
-              </div>
-              <div className="mobile-row">
-                <Link className="text-link" to="specialSlots" onClick={() => this.toggleNav()}>Kurssit</Link>
-              </div>
-              <div className="mobile-row">
-                {instructor}
+                <Link className="text-link" to="user" onClick={() => this.toggleNav()}>Varaukset</Link>
               </div>
               <div className="mobile-row">
                 {admin}
@@ -117,9 +106,6 @@ class TopBar extends React.Component {
               </div>
               <div className="mobile-row">
                 {adminShop}
-              </div>
-              <div className="mobile-row">
-                <a className="text-link text-green" href="https://holvi.com/shop/4Z4CW4/" onClick={() => this.toggleNav()} target="_blank">Kauppa - Holvi</a>
               </div>
               <div className="mobile-row">
                 <Link className="text-link text-fade" to="userProfile" onClick={() => this.toggleNav()}>Käyttäjätiedot</Link>
