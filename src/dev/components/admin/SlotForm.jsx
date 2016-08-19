@@ -8,18 +8,9 @@ class SlotForm extends React.Component {
 
   onSubmit(props) {
     if(this.props.mode === "addNew"){
-      this.props.actions.addSlot(props, 
-      this.props.slotTypes.list.find((item) => {return item.key === props.slotType}),
-      this.props.places.list.find((item) => {return item.key === props.place}),
-      this.props.instructors.list.find((item) => {return item.key === props.instructor})
-      )
+      this.props.actions.addSlot(props)
     } else {
-      this.props.actions.modifySlot(props, 
-      this.props.itemkey, 
-      this.props.slotTypes.list.find((item) => {return item.key === props.slotType}),
-      this.props.places.list.find((item) => {return item.key === props.place}),
-      this.props.instructors.list.find((item) => {return item.key === props.instructor})
-      )
+      this.props.actions.modifySlot(props, this.props.itemkey)
     }
     this.props.actions.minimizeSlotForm()
   }
@@ -28,28 +19,9 @@ class SlotForm extends React.Component {
     document.getElementById("slotFocusItem").focus()
   }
 
-
-  renderSlotTypeOptions(item) {
-    return (
-      <option key={item.key} value={item.key} >{item.key}</option>
-    )
-  }
-
-  renderInstructorOptions(item) {
-    return (
-      <option key={item.key} value={item.key} >{item.firstname} {item.lastname}</option>
-    )
-  }
-
-  renderPlaceOptions(item) {
-    return (
-      <option key={item.key} value={item.key} >{item.key}</option>
-    )
-  }
-
   renderContent() {
     var buttonText = (this.props.mode === "addNew")? "Luo" : "Päivitä"
-    const { fields: { day, start, end, maxCapacity, slotType, instructor, place }, handleSubmit } = this.props
+    const { fields: { day, start, end }, handleSubmit } = this.props
 
       return (
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
@@ -71,27 +43,6 @@ class SlotForm extends React.Component {
           <label htmlFor="slotEnd">Loppuu klo.</label>
           <input type="number" name="slotEnd" {...end} placeholder="esim: 900 tai 1100 tai 2230" />
 
-          <label htmlFor="slotMax">Maksimimäärä henkilöitä</label>
-          <input type="number" name="slotMax" {...maxCapacity} placeholder="esim: 12 tai 1" />
-
-          <label htmlFor="slotType">Kurssityyppi</label>
-          <select name="slotType" {...slotType} value={slotType.value || ''}>
-            <option>-- Valitse kurssityyppi --</option>
-            {this.props.slotTypes.list.map(this.renderSlotTypeOptions)}
-          </select>
-
-          <label htmlFor="slotInstructor">Ohjaaja</label>
-          <select name="slotInstructor" {...instructor} value={instructor.value || ''}>
-            <option>-- Valitse ohjaaja --</option>
-            {this.props.instructors.list.map(this.renderInstructorOptions)}
-          </select>
-
-          <label htmlFor="slotPlace">Paikka</label>
-          <select name="slotPlace" {...place} value={place.value || ''}>
-            <option>-- Valitse paikka --</option>
-            {this.props.places.list.map(this.renderPlaceOptions)}
-          </select>
-
           <button className="btn-small btn-blue" type="submit">{buttonText}</button>
         </form>
       )
@@ -101,7 +52,7 @@ class SlotForm extends React.Component {
     return (
       <div className="container transparent-bg">
         <div className="surrounded-container">
-          <h2 className="header-collapse">Tunnin tiedot</h2>
+          <h2 className="header-collapse">Vuoron tiedot</h2>
           {this.renderContent()}
         </div>
       </div>
@@ -115,20 +66,12 @@ function validate(values) {
   // TODO: form validation
 }
 
-function mapStateToProps(state) {
-  return {
-    slotTypes: state.slotTypeList,
-    instructors: state.instructorList,
-    places: state.placeList
-  }
-}
-
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actionCreators, dispatch)}
 }
 
 export default reduxForm({
   form: 'SlotForm',
-  fields: ['day', 'start', 'end', 'maxCapacity', 'slotType', 'instructor', 'place'],
+  fields: ['day', 'start', 'end'],
   validate
-}, mapStateToProps, mapDispatchToProps)(SlotForm)
+}, null, mapDispatchToProps)(SlotForm)

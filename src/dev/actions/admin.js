@@ -291,31 +291,23 @@ export function removeSlot(key) {
 }
 
 
-export function addSlot(data, slotType, place, instructor) {
+export function addSlot(data) {
 
     return dispatch => {
         firebase.database().ref('/slots/').push({
             start: toMilliseconds(parseInt(data.start)),
             end: toMilliseconds(parseInt(data.end)),
-            maxCapacity: parseInt(data.maxCapacity),
-            day: parseInt(data.day),
-            place: place,
-            instructor: instructor,
-            slotType: slotType
+            day: parseInt(data.day)
         })
     }
 }
 
-export function modifySlot(data, key, slotType, place, instructor) {
+export function modifySlot(data, key) {
     return dispatch => {
         firebase.database().ref('/slots/' + key).update({
             start: toMilliseconds(parseInt(data.start)),
             end: toMilliseconds(parseInt(data.end)),
-            maxCapacity: parseInt(data.maxCapacity),
-            day: parseInt(data.day),
-            place: place,
-            instructor: instructor,
-            slotType: slotType
+            day: parseInt(data.day)
         })
     }
 }

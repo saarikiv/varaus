@@ -86,7 +86,7 @@ class SlotList extends React.Component {
     return (
       <div className="container bordered-container">
         <div className="content-container align-left">
-          <h2 className="header-collapse">Tunnit</h2>
+          <h2 className="header-collapse">Saunavuorot</h2>
           {this.renderExpandButton()}
           {this.renderForm()}
           {this.renderContent()}

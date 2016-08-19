@@ -4,24 +4,19 @@ import { connect } from 'react-redux'
 
 import * as actionCreators from '../../actions/admin.js'
 import FormCount from './ShopItemCountForm.jsx'
-import FormTime from './ShopItemTimeForm.jsx'
 
 class ShopItem extends React.Component {
 
   constructor(){
     super();
     this.toggleCountForm = false
-    this.toggleTimeForm = false
   }
 
   componentWillReceiveProps(nextProps){
     if(nextProps.cmpCount.expanded && nextProps.cmpCount.expander === this.props.item.key){
       this.toggleCountForm = true
-    } else if (nextProps.cmpTime.expanded && nextProps.cmpTime.expander === this.props.item.key) {
-      this.toggleTimeForm = true
     } else {
       this.toggleCountForm = false
-      this.toggleTimeForm = false
     }
   }
 
@@ -33,23 +28,11 @@ class ShopItem extends React.Component {
     }    
   }
 
-  toggleTimeModify(item){
-    if(this.toggleTimeForm){
-      this.props.actions.minimizeTimeShopForm()
-    } else {
-      this.props.actions.expandTimeShopForm(item.key)
-    }    
-  }
 
   renderModifyButtons(item) {
     var buttonCountText = (this.toggleCountForm)? "Peru Muokkaus" : "Muokkaa"
-    var buttonTimeText = (this.toggleTimeForm)? "Peru Muokkaus" : "Muokkaa"
 
-    if (item.type === "count") {
-      return <button className="btn-small btn-blue" onClick={() => {this.toggleCountModify(item)}}>{buttonCountText}</button>
-    } else {
-      return <button className="btn-small btn-blue" onClick={() => {this.toggleTimeModify(item)}}>{buttonTimeText}</button>
-    }
+    return <button className="btn-small btn-blue" onClick={() => {this.toggleCountModify(item)}}>{buttonCountText}</button>
   }
   
   renderLockButtons(item) {
@@ -71,19 +54,10 @@ class ShopItem extends React.Component {
     }
   }
 
-  renderTimeForm(item){
-    if(this.toggleTimeForm){
-      return <FormTime mode="modify" dbKey={item.key} initialValues={item}/>
-    } else {
-      return(<div></div>)
-    }
-  }
-
+ 
   renderType(item) {
     if (item.type === "count") {
       return <span className="item-row">Kertakortti</span>
-    } else if (item.type === "time") {
-      return <span className="item-row">Aikakortti</span>
     } else {
       return <span className="item-row">EI TYYPPIÄ</span>
     }
@@ -104,14 +78,13 @@ class ShopItem extends React.Component {
           {this.renderLockButtons(item)}
         </span>
         {this.renderCountForm(item)}
-        {this.renderTimeForm(item)}
       </li>
     )
   }
 }
 
 function mapStateToProps(state) {
-  return { cmpCount: state.shopItemCountForm, cmpTime: state.shopItemTimeForm }
+  return { cmpCount: state.shopItemCountForm}
 }
 
 function mapDispatchToProps(dispatch) {

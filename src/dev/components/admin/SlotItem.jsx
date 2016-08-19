@@ -25,9 +25,6 @@ class SlotItem extends React.Component {
       this.initialValues = Object.assign({},nextProps.item) 
       this.initialValues.start = toHplusMfromMs(nextProps.item.start)
       this.initialValues.end = toHplusMfromMs(nextProps.item.end)
-      this.initialValues.slotType = nextProps.item.slotType.name
-      this.initialValues.place = nextProps.item.place.name
-      this.initialValues.instructor = nextProps.item.instructor.key
   }
   
   componentWillUnmount(){
@@ -101,7 +98,6 @@ class SlotItem extends React.Component {
     } 
     return (
       <div>
-        <span className="item-row">{item.slotType.name}</span>
         <span className="item-row">{dayTxt}</span>
         <span className="item-row">klo {getTimeStrMsBeginnignOfDay(item.start)} - {getTimeStrMsBeginnignOfDay(item.end)}</span>
       </div>

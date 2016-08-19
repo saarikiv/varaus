@@ -5,14 +5,12 @@ import { connect } from 'react-redux'
 import Item from './ShopItem.jsx'
 import * as actionCreators from '../../actions/admin.js'
 import FormCount from './ShopItemCountForm.jsx'
-import FormTime from './ShopItemTimeForm.jsx'
 
 class ShopList extends React.Component {
 
   constructor(){
     super();
     this.toggleCountForm = false
-    this.toggleTimeForm = false
   }
 
   componentWillMount() {
@@ -26,13 +24,8 @@ class ShopList extends React.Component {
 
     if(nextProps.cmpCount.expanded && nextProps.cmpCount.expander === "addNew"){
       this.toggleCountForm = true;
-      this.toggleTimeForm = false;
-    } else if (nextProps.cmpTime.expanded && nextProps.cmpTime.expander === "addNew"){
-      this.toggleTimeForm = true;
-      this.toggleCountForm = false;
     } else {
       this.toggleCountForm = false;
-      this.toggleTimeForm = false;
     }
   }
 
@@ -50,31 +43,15 @@ class ShopList extends React.Component {
     }
   }
 
-  renderTimeForm(){
-    if(this.toggleTimeForm){
-      return ( <FormTime mode="addNew"/>)
-    } else {
-      return <div></div>
-    }
-  }
 
   toggleAddCount(){
     if(this.toggleCountForm){
       this.props.actions.minimizeCountShopForm()
     } else {
       this.props.actions.expandCountShopForm("addNew")
-      this.props.actions.minimizeTimeShopForm()
     }
   }
 
-  toggleAddTime() {
-    if(this.toggleTimeForm){
-      this.props.actions.minimizeTimeShopForm()
-    } else {
-      this.props.actions.expandTimeShopForm("addNew")
-      this.props.actions.minimizeCountShopForm()
-    }
-  }
 
   renderContent() {    
     if (this.props.list.expanded) {
@@ -92,14 +69,12 @@ class ShopList extends React.Component {
   renderExpandButton() {
 
     var buttonTextCount = (this.toggleCountForm)? "Peru lisäys" : "Lisää uusi Kertakortti"
-    var buttonTextTime = (this.toggleTimeForm)? "Peru lisäys" : "Lisää uusi Aikakortti"
-
+    
     if(this.props.list.expanded) {
       return (
         <div>
           <button className="expand-btn" onClick={() => this.props.actions.minimizeShopList()}>Piilota</button>
           <button className="expand-btn" onClick={() => this.toggleAddCount()}>{buttonTextCount}</button>
-          <button className="expand-btn" onClick={() => this.toggleAddTime()}>{buttonTextTime}</button>
         </div>
       )
     }
@@ -115,7 +90,6 @@ class ShopList extends React.Component {
           <h2 className="header-collapse">Kauppa</h2>
           {this.renderExpandButton()}
           {this.renderCountForm()}
-          {this.renderTimeForm()}
           {this.renderContent()}
         </div>
       </div>
@@ -124,7 +98,7 @@ class ShopList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { list: state.shopList, cmpCount: state.shopItemCountForm, cmpTime: state.shopItemTimeForm }
+  return { list: state.shopList, cmpCount: state.shopItemCountForm}
 }
 
 function mapDispatchToProps(dispatch) {

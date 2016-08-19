@@ -22,7 +22,7 @@ class UserSlotHistory extends React.Component {
       return (
         <div className="container bordered-container">
           <div className="content-container align-left">
-            <h2 className="header-collapse">Kurssihistoriasi</h2>
+            <h2 className="header-collapse">Varaushistoriasi</h2>
               <ul className="wide-list">
                 {this.props.currentUser.history.map(this.renderEntry)}
               </ul>

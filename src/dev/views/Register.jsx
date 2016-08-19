@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
 
 import * as actionCreators from '../actions/auth.js'
-import Logo from '../components/logos/JoogakouluLogo.jsx'
 import Terms from '../components/home/Terms.jsx'
 
 class Register extends React.Component {
@@ -79,7 +78,6 @@ class Register extends React.Component {
   render() {
       return (
         <div class="container">
-          <Logo />
           <div className="centered">
             <Link className="text-link back-btn" to="/">&lt;Takaisin</Link>
           </div>
