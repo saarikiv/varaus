@@ -108,10 +108,10 @@ class TopBar extends React.Component {
                 {adminShop}
               </div>
               <div className="mobile-row">
-                <Link className="text-link text-fade" to="userProfile" onClick={() => this.toggleNav()}>Käyttäjätiedot</Link>
+                <Link className="text-link text-fade" to="userProfile" onClick={() => this.toggleNav()}>Omat tiedot</Link>
               </div>
               <div className="mobile-row">
-                <Link className="text-link text-fade" to="feedback" onClick={() => this.toggleNav()}>Yhteystiedot & palaute</Link>
+                <Link className="text-link text-fade" to="feedback" onClick={() => this.toggleNav()}>Palaute</Link>
               </div>
               <div className="mobile-row">
                 <a className="text-link text-fade" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</a>

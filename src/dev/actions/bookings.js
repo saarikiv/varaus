@@ -52,48 +52,11 @@ export function postCancellation(item, txRef, slotInfo) {
     }
 }
 
-export function postLateReservation(forUser, weeksBehind, slotInfo) {
-    var VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/reserveLateSlot' : VARAUSSERVER + '/reserveLateSlot'
-    return dispatch => {
-        _showLoadingScreen(dispatch, "Varataan tuntia jälkikäteen")
-        let now = new Date();
-        firebase.auth().currentUser.getToken(true).then(idToken => {
-            axios.post(
-                    VARAUSURL, {
-                        user: idToken,
-                        forUser: forUser,
-                        slotInfo: slotInfo,
-                        weeksBehind: weeksBehind,
-                        timezoneOffset: now.getTimezoneOffset() * 60 * 1000
-                    })
-                .then(response => {
-                  dispatch({
-                    type: LATE_BOOK_A_SLOT,
-                    payload: {slotInfo}
-                  })
-                    _hideLoadingScreen(dispatch, "Varaus onnistui", true)
-                })
-                .catch(error => {
-                  dispatch({
-                    type: BOOKING_ERROR,
-                    payload: {error, slotInfo}
-                  })
-                    console.error(error);
-                    _hideLoadingScreen(dispatch, "Varauksen tekemisessä tapahtui virhe: " + error.data, false, 5000)
-                });
-        }).catch(error => {
-            console.error("Failde to get authentication token for current user: ", error);
-            _hideLoadingScreen(dispatch, "Varauksen tekemisessä tapahtui virhe: " + error.toString(), false)
-        });
-    }
-}
-
-
 
 export function postReservation(forward, slotInfo) {
     var VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/reserveSlot' : VARAUSSERVER + '/reserveSlot'
     return dispatch => {
-        _showLoadingScreen(dispatch, "Varataan tuntia")
+        _showLoadingScreen(dispatch, "Varataan vuoroa")
         let now = new Date();
         firebase.auth().currentUser.getToken(true).then(idToken => {
             axios.post(
