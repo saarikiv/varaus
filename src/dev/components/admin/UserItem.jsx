@@ -61,7 +61,7 @@ class UserItem extends React.Component {
             <button className="btn-small btn-red" onClick={() => this.props.adminActions.lockUser(this.props.item.uid)}>Lukitse</button>
           </span>
           <span className="item-row">
-            <button className="btn-small btn-blue" onClick={() => this.props.adminActions.makeAdmin(this.props.item.uid)}>Joogaopettajaksi</button>
+            <button className="btn-small btn-blue" onClick={() => this.props.adminActions.makeAdmin(this.props.item.uid)}>Pääkäyttäjäksi</button>
           </span>
         </div>
       )
