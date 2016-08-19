@@ -3,16 +3,11 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import AdminHeader from '../components/admin/AdminHeader.jsx'
-import ShopItemTimeForm from '../components/admin/ShopItemTimeForm.jsx'
 import ShopItemCountForm from '../components/admin/ShopItemCountForm.jsx'
 import UserList from '../components/admin/UserList.jsx'
 import AdminList from '../components/admin/AdminList.jsx'
-import CourseTypeList from '../components/admin/CourseTypeList.jsx'
-import CourseList from '../components/admin/CourseList.jsx'
-import InstructorList from '../components/admin/InstructorList.jsx'
+import SlotList from '../components/admin/SlotList.jsx'
 import ShopList from '../components/admin/ShopList.jsx'
-import SpecialCourseList from '../components/admin/SpecialCourseList.jsx'
-import PlaceList from '../components/admin/PlaceList.jsx'
 import InfoList from '../components/admin/InfoList.jsx'
 import TermsList from '../components/admin/TermsList.jsx'
 import PendingTransactionsList from '../components/admin/PendingTransactionsList.jsx'
@@ -50,13 +45,9 @@ componentWillReceiveProps(nextProps){
         <div>
           <AdminHeader />
           <AdminList />
-          <InstructorList />
           <UserList />
           <ShopList />
-          <PlaceList />
-          <CourseTypeList />
-          <CourseList />
-          <SpecialCourseList />
+          <SlotList />
           <TermsList />
         </div>
       )

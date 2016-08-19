@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
 
 import * as actionCreators from '../actions/auth.js'
-import Logo from '../components/logos/JoogakouluLogo.jsx'
 import Terms from '../components/home/Terms.jsx'
 
 class Register extends React.Component {
@@ -79,13 +78,12 @@ class Register extends React.Component {
   render() {
       return (
         <div class="container">
-          <Logo />
           <div className="centered">
             <Link className="text-link back-btn" to="/">&lt;Takaisin</Link>
           </div>
           <h2 className="centered login-header">Rekisteröidy käyttäjäksi</h2>          
           <div className="content-container login-container">
-            <p className="text-fade margin-top margin-bottom small-info pushed">Rekisteröidythän aktiivisella sähköpostilla! Lähetämme mahdolliset kuitit ja tuntien perumiset sähköpostiisi.</p>
+            <p className="text-fade margin-top margin-bottom small-info pushed">Rekisteröidythän aktiivisella sähköpostilla! Lähetämme mahdolliset kuitit ja vuorojen perumiset sähköpostiisi.</p>
             <p className="text-fade margin-top margin-bottom small-info pushed">Sähköpostiosoitetta käytetään vain vahvistus ja tiedotus viestien lähetykseen. Sähköpostitietoja ei luovuteta kolmannelle osapuolelle mitään tarkoitusta varten.</p>
             {this.renderForm()}
           </div>  

@@ -16,7 +16,7 @@
 
 #### Github-repo:
 > cd path/to/code <br>
-> git clone https://github.com/tsaarikivi/joogakoulusilta
+> git clone https://github.com/saarikiv/varaus
 
 #### Alustus:
 > cd path/to/code/project <br>
@@ -35,10 +35,10 @@
 > Valitse target: $>firebase use [production|stage]
 > Depoly: $>firebase deploy
 
-#### JOOGASERVER
+#### VARAUSSERVER
 > Jos haluat käyttää ulkoista maksuserveriä
-> aseta JOOGASERVER osoittamaan serveriin, jota haluat käyttää (esim. joogaserver.herokuapp.com)
-> JOOGASERVER on määritelty index.html:ssä
+> aseta VARAUSSERVER osoittamaan serveriin, jota haluat käyttää (esim. varausserver.herokuapp.com)
+> VARAUSSERVER on määritelty index.html:ssä
 
 
 #### Avaa projekti atomilla:

@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import Item from './InfoItem.jsx'
-import Logo from '../logos/JoogakouluLogo.jsx'
 import { fetchInfoList } from '../../actions/info.js'
 
 class InfoList extends React.Component {
@@ -23,7 +22,6 @@ class InfoList extends React.Component {
     if (this.props.list.list.length > 0) {
       return (
         <div class="container">
-          <Logo />
           <div className="centered">
             <Link className="text-link back-btn" to="/">&lt;Takaisin</Link>
           </div>

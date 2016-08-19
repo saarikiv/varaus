@@ -12,7 +12,7 @@ var commonLoaders = [
 
 module.exports = [
   {
-  name : "joogakoulu web front-end",
+  name : "varaus web front-end",
   context: path.join(__dirname, "src"),
   devtool: debug ? "inline-sourcemap" : null,
   entry: ["babel-polyfill", "./app.jsx"],

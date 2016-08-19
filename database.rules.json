@@ -1,80 +1,80 @@
 {
     "rules": {
         "users": {
-            ".read": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true || root.child('specialUsers').child(auth.uid).child('instructor').val() == true",
-            ".write": "auth.uid === 'joogaserver'  || root.child('specialUsers').child(auth.uid).child('admin').val() == true || root.child('specialUsers').child(auth.uid).child('instructor').val() == true",
+            ".read": "auth.uid === 'varausserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true || root.child('specialUsers').child(auth.uid).child('instructor').val() == true",
+            ".write": "auth.uid === 'varausserver'  || root.child('specialUsers').child(auth.uid).child('admin').val() == true || root.child('specialUsers').child(auth.uid).child('instructor').val() == true",
             "$userId": {
                 ".read": "auth.uid === $userId || root.child('specialUsers').child(auth.uid).child('instructor').val() == true",
                 ".write": "auth.uid === $userId"
             }
         },
-        "cancelledCourses": {
+        "cancelledSlots": {
             ".read": "auth != null",
-            ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('instructor').val() == true"
+            ".write": "auth.uid === 'varausserver' || root.child('specialUsers').child(auth.uid).child('instructor').val() == true"
         },
         "infoItems": {
             ".read": "true",
-            ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+            ".write": "auth.uid === 'varausserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
         },
         "diagnostics": {
-            ".read": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true",
+            ".read": "auth.uid === 'varausserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true",
             ".write": "true"
         },
         "terms": {
             ".read": "true",
-            ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+            ".write": "auth.uid === 'varausserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
         },
-        "bookingsbycourse": {
+        "bookingsbyslot": {
             ".read": "auth != null",
-            ".write": "auth.uid === 'joogaserver'"
+            ".write": "auth.uid === 'varausserver'"
         },
-        "scbookingsbycourse": {
+        "scbookingsbyslot": {
             ".read": "auth != null",
-            ".write": "auth.uid === 'joogaserver'"
+            ".write": "auth.uid === 'varausserver'"
         },
         "specialUsers": {
-            ".read": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true || root.child('specialUsers').child(auth.uid).child('instructor').val() == true",
-            ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true || root.child('specialUsers').child(auth.uid).child('instructor').val() == true",
+            ".read": "auth.uid === 'varausserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true || root.child('specialUsers').child(auth.uid).child('instructor').val() == true",
+            ".write": "auth.uid === 'varausserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true || root.child('specialUsers').child(auth.uid).child('instructor').val() == true",
             "$userId": {
-                ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
-                ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+                ".read": "auth.uid === 'varausserver' || auth.uid === $userId",
+                ".write": "auth.uid === 'varausserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
             }
         },
         "scbookingsbyuser": {
             "$userId": {
-                ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
-                ".write": "auth.uid === 'joogaserver'"
+                ".read": "auth.uid === 'varausserver' || auth.uid === $userId",
+                ".write": "auth.uid === 'varausserver'"
             }
         },
         "bookingsbyuser": {
             "$userId": {
-                ".read": "auth.uid === 'joogaserver' || auth.uid === $userId",
-                ".write": "auth.uid === 'joogaserver'"
+                ".read": "auth.uid === 'varausserver' || auth.uid === $userId",
+                ".write": "auth.uid === 'varausserver'"
             }
         },
         "transactions": {
             "$userId": {
-                ".read": "auth.uid === 'joogaserver' || auth.uid === $userId || root.child('specialUsers').child(auth.uid).child('admin').val() == true || root.child('specialUsers').child(auth.uid).child('instructor').val() == true",
-                ".write": "auth.uid === 'joogaserver'"
+                ".read": "auth.uid === 'varausserver' || auth.uid === $userId || root.child('specialUsers').child(auth.uid).child('admin').val() == true || root.child('specialUsers').child(auth.uid).child('instructor').val() == true",
+                ".write": "auth.uid === 'varausserver'"
             }
         },
         "pendingtransactions": {
-            ".read": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true",
-            ".write": "auth.uid === 'joogaserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
+            ".read": "auth.uid === 'varausserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true",
+            ".write": "auth.uid === 'varausserver' || root.child('specialUsers').child(auth.uid).child('admin').val() == true"
         },
-        "courseTypes": {
+        "slotTypes": {
             ".read": "auth != null",
             ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
         },
         "serverError": {
-            ".read": "auth.uid === 'joogaserver'",
-            ".write": "auth.uid === 'joogaserver'"
+            ".read": "auth.uid === 'varausserver'",
+            ".write": "auth.uid === 'varausserver'"
         },
-        "courses": {
+        "slots": {
             ".read": "auth != null",
             ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
         },
-        "specialCourses": {
+        "specialSlots": {
             ".read": "auth != null",
             ".write": "root.child('specialUsers').child(auth.uid).child('admin').val() == true"
         },

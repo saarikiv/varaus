@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux'
 import { reduxForm } from 'redux-form'
 
 import * as actionCreators from '../../actions/auth.js'
-import Logo from '../logos/JoogakouluLogo.jsx'
 
 class HomeLoginRegister extends React.Component {
   
@@ -45,10 +44,8 @@ class HomeLoginRegister extends React.Component {
   render() {
     return (
       <div class="container bordered-container centered">
-        <Logo />
-        <a className="text-link" href="http://www.joogakoulusilta.com" target="_blank">Tutustu tarkemmin</a>
 
-        <h3 className="centered login-header margin-bottom">Kirjaudu sisään Joogakoulu Siltaan</h3>
+        <h3 className="centered login-header margin-bottom">Kirjaudu sisään</h3>
         <div className="content-container login-container">          
           {this.renderForm()}
         </div>

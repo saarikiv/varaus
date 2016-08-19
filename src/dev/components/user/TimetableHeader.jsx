@@ -5,9 +5,8 @@ export default class TimetableHeader extends React.Component {
     return (
       <div class="container header-container">
         <div className="content-container">
-          <h1 className="nomargin nopadding">Aikataulu</h1>
-          <small className="text-fade margin-top margin-bottom small-info">Tästä voit varata paikkasi tunneille. Tunteja voi varata aina viikoksi eteenpäin.</small>
-          <small className="text-fade margin-top margin-bottom small-info">Klikkaa tuntia avataksesi lisätiedot sekä ostaaksesi ja varataksesi paikka tunnilta</small>
+          <h1 className="nomargin nopadding">Varaukset</h1>
+          <small className="text-fade margin-top margin-bottom small-info">Tästä voit varata saunavuorosi. Vuoroja voi varata aina viikoksi eteenpäin.</small>
         </div>
       </div>
     )

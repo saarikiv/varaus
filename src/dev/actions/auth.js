@@ -127,10 +127,10 @@ export function logout() {
 }
 
 function sendRegistrationNotification(){
-    let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/notifyRegistration' : JOOGASERVER + '/notifyRegistration'
+    let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/notifyRegistration' : VARAUSSERVER + '/notifyRegistration'
     firebase.auth().currentUser.getToken(true)
     .then(idToken => {
-        return axios.post(JOOGAURL, {
+        return axios.post(VARAUSURL, {
             current_user: idToken
         })
     })

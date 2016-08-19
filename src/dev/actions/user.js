@@ -6,7 +6,6 @@ import {
     USER_ERROR,
     USER_DETAILS_UPDATED_IN_DB,
     STOP_UPDATING_USER_DETAILS_FROM_DB,
-    UPDATE_USERS_SCBOOKINGS,
     SEND_FEEDBABCK,
     VERIFY_EMAIL,
     PASSWORD_RESET,
@@ -24,7 +23,6 @@ const Auth = firebase.auth();
 var UserRef;
 var TransactionsRef;
 var BookingsRef;
-var specialCBookingsRef;
 
 export function sendFeedback(feedback){
   return dispatch => {
@@ -33,10 +31,10 @@ export function sendFeedback(feedback){
       type: SEND_FEEDBABCK
     })
     _showLoadingScreen(dispatch, "Lähetetään palaute")
-    let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/feedback' : JOOGASERVER + '/feedback'
+    let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/feedback' : VARAUSSERVER + '/feedback'
     firebase.auth().currentUser.getToken(true)
     .then(idToken => {
-        return axios.post(JOOGAURL, {
+        return axios.post(VARAUSURL, {
             current_user: idToken,
             feedback_message: feedback
         })
@@ -83,78 +81,46 @@ export function updateUserDetails(user) {
     }
 }
 
-export function fetchUsersSpecialCourseBookings(uid) {
-    return dispatch => {
-        specialCBookingsRef = firebase.database().ref('/scbookingsbyuser/' + uid)
-        specialCBookingsRef.on('value', (snapshot) => {
-            let scBookings = snapshot.val();
-            let one;
-            let returnList = Object.assign([])
-            if (scBookings) {
-                for (one in scBookings) {
-                    if (scBookings[one].shopItem.date > Date.now()) {
-                        returnList.push(scBookings[one])
-                    }
-                }
-            }
-            dispatch({
-                type: UPDATE_USERS_SCBOOKINGS,
-                payload: {
-                    specialCoursesReady: true,
-                    specialCourses: returnList
-                }
-            })
-        }, (error) => {
-            dispatch({
-                type: USER_ERROR,
-                payload: {
-                    error,
-                    specialCoursesReady: true
-                }
-            })
-        })
-    }
-}
 
 export function fetchUsersBookings(uid) {
     return dispatch => {
-        var oneCourse;
-        var allCourses;
+        var oneSlot;
+        var allSlots;
         var oneBooking;
         var allBookings;
         var booking = {};
         var returnListBookings = [];
         var returnListHistory = [];
-        var courseInfo = {}
-        firebase.database().ref('/courses/').once('value')
+        var slotInfo = {}
+        firebase.database().ref('/slots/').once('value')
             .then(snapshot => {
-                courseInfo = snapshot.val()
+                slotInfo = snapshot.val()
                 BookingsRef = firebase.database().ref('/bookingsbyuser/' + uid);
                 BookingsRef.on('value', snapshot => {
-                    allCourses = snapshot.val();
+                    allSlots = snapshot.val();
                     returnListBookings = Object.assign([]);
                     returnListHistory = Object.assign([]);
-                    if (allCourses) {
-                        for (oneCourse in allCourses) {
-                            allBookings = allCourses[oneCourse]
+                    if (allSlots) {
+                        for (oneSlot in allSlots) {
+                            allBookings = allSlots[oneSlot]
                             for (oneBooking in allBookings) {
                                 booking = Object.assign({}, allBookings[oneBooking]);
-                                booking.course = oneCourse;
-                                booking.courseInfo = courseInfo[oneCourse];
-                                if (!booking.courseInfo) {
+                                booking.slot = oneSlot;
+                                booking.slotInfo = slotInfo[oneSlot];
+                                if (!booking.slotInfo) {
                                     dispatch({
                                         type: USER_ERROR,
                                         payload: {
                                             error: {
                                                 code: "DB_INTEGRITY_ERR",
-                                                message: "Referred course is missing from database: " + oneCourse
+                                                message: "Referred slot is missing from database: " + oneSlot
                                             },
                                             bookingsReady: true
                                         }
                                     })
                                 } else {
-                                    booking.courseInfo.key = oneCourse;
-                                    if (booking.courseTime < Date.now()) {
+                                    booking.slotInfo.key = oneSlot;
+                                    if (booking.slotTime < Date.now()) {
                                         returnListHistory.push(booking)
                                     } else {
                                         returnListBookings.push(booking);
@@ -163,10 +129,10 @@ export function fetchUsersBookings(uid) {
                             }
                         }
                         returnListBookings.sort((a, b) => {
-                            return a.courseTime - b.courseTime
+                            return a.slotTime - b.slotTime
                         })
                         returnListHistory.sort((a, b) => {
-                            return a.courseTime - b.courseTime
+                            return a.slotTime - b.slotTime
                         })
                     }
                     dispatch({
@@ -188,7 +154,7 @@ export function fetchUsersBookings(uid) {
                     })
                 })
             }, error => {
-                console.error("Failed getting course info: ", uid, error);
+                console.error("Failed getting slot info: ", uid, error);
                 dispatch({
                     type: USER_ERROR,
                     payload: {
@@ -222,7 +188,6 @@ export function fetchUsersTransactions(uid) {
                 details: {
                     valid: [],
                     expired: [],
-                    special: [],
                     oneTime: []
                 }
             };
@@ -257,24 +222,17 @@ export function fetchUsersTransactions(uid) {
                             }
                         }
                         break;
-                    case "special":
-                        //Placeholder for any special handling of specials
-                        break;
                     default:
                         console.error("undefined transaction type: ", uid, all[one].type, all[one]);
                         break;
                 }
-                if (all[one].type === "special") {
-                    trx.details.special.push(trxdetails);
+                if (trxdetails.expires > now) {
+                    trx.details.valid.push(trxdetails);
                 } else {
-                    if (trxdetails.expires > now) {
-                        trx.details.valid.push(trxdetails);
-                    } else {
-                        trx.details.expired.push(trxdetails);
-                    }
-                    if (trxdetails.oneTime) {
-                        trx.details.oneTime.push(trxdetails.shopItemKey)
-                    }
+                    trx.details.expired.push(trxdetails);
+                }
+                if (trxdetails.oneTime) {
+                    trx.details.oneTime.push(trxdetails.shopItemKey)
                 }
             }
             trx.details.valid.sort((a, b) => {
@@ -350,7 +308,6 @@ export function finishedWithUserDetails() {
     if (UserRef) UserRef.off('value');
     if (TransactionsRef) TransactionsRef.off('value');
     if (BookingsRef) BookingsRef.off('value')
-    if (specialCBookingsRef) specialCBookingsRef.off('value')
     return dispatch => {
         dispatch({
             type: STOP_UPDATING_USER_DETAILS_FROM_DB,

@@ -5,10 +5,10 @@ import {
 } from './loadingScreen.js'
 
 
-export function test1(joogaurl) {
+export function test1(url) {
     return dispatch => {
         _showLoadingScreen(dispatch, "Aloitetaan testit")
-            axios.get(joogaurl)
+            axios.get(url)
             .then(response => {
                 _hideLoadingScreen(dispatch, "testi1 onnistui", true, 5000)
             })
@@ -22,10 +22,10 @@ export function test1(joogaurl) {
 export function test2(query) {
     return dispatch => {
         _showLoadingScreen(dispatch, "Aloitetaan testit")
-        let JOOGAURL = 'http://localhost:3000/completepaytrail'
+        let VARAUSURL = 'http://localhost:3000/completepaytrail'
         firebase.auth().currentUser.getToken(true)
         .then(idToken => {
-            return axios.post(JOOGAURL, {
+            return axios.post(VARAUSURL, {
                 current_user: idToken,
                 METHOD: query.METHOD,
                 ORDER_NUMBER: query.ORDER_NUMBER,
@@ -47,10 +47,10 @@ export function test2(query) {
 export function testFirebaseErrorLogging() {
     return dispatch => {
         _showLoadingScreen(dispatch, "Aloitetaan testit")
-        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/test' : JOOGASERVER + '/test'
+        let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/test' : VARAUSSERVER + '/test'
         firebase.auth().currentUser.getToken(true)
         .then(idToken => {
-            return axios.post(JOOGAURL, {
+            return axios.post(VARAUSURL, {
                 current_user: idToken,
                 test_case: "firebase_error_log"
             })

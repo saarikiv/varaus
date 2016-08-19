@@ -50,30 +50,6 @@ export default class UserItem extends React.Component {
     return(<div/>)
   }
 
-  renderSpecialItem(special){
-    const { item } = this.props
-    return (
-      <SpecialItem key={this.counter++} item={special} user={item.uid} />
-    )
-  }
-
-  renderSpecials(){
-    const { credits } = this.props
-    if(credits){
-      const { special } = credits.details
-      if(special.length > 0){
-        return(
-          <div>
-            <p className="text-bold">Ostetut kurssit:</p>
-            <ul className="wide-list">
-              {special.map(this.renderSpecialItem.bind(this))}
-            </ul>
-          </div>
-        )
-      }
-    }
-    return(<div/>)
-  }
 
   render() {
     const {item} = this.props
@@ -83,7 +59,6 @@ export default class UserItem extends React.Component {
         <span className="item-row">{item.email}</span>
         {this.renderCredits()}
         {this.renderValidTransactions()}
-        {this.renderSpecials()}
       </li>
     )
   }

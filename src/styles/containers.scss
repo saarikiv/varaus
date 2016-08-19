@@ -5,8 +5,8 @@
 /////////////////////////////////////////////////////
 
 @media screen and (max-width: $mobile-size) {
-  .course-info-container {
-    .course-info {
+  .slot-info-container {
+    .slot-info {
       margin: 0 auto;
       padding: 5vw 0;
       width: 100%;
@@ -162,8 +162,8 @@
 /////////////////////////////////////////////////////
 
 @media screen and (min-width: $desktop-size) {
-  .course-info-container {
-    .course-info {
+  .slot-info-container {
+    .slot-info {
       border-radius: $container-radius;
       margin: 50px auto;
       padding: 20px;
@@ -319,7 +319,7 @@
 // ALL
 /////////////////////////////////////////////////////
 
-.course-info-container {
+.slot-info-container {
   position: fixed;
   z-index: 1;
   left: 0;
@@ -328,7 +328,7 @@
   height: 100%;
   overflow: auto;
   background-color: rgba(0,0,0,0.5);
-  .course-info {
+  .slot-info {
     background-color: $body-color;
     box-shadow: 0 3px 10px $text-dark;
     .week-info-container {

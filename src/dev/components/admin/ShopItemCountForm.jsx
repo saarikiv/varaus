@@ -29,7 +29,7 @@ class ShopItemCountForm extends React.Component {
           <input type="text" name="countTitle" {...title} placeholder="esim: 4 kerran kortti" />
 
           <label htmlFor="countDesc">Kuvaus</label>
-          <textarea type="text" name="countDesc" {...desc} placeholder="esim: Oikeus ilmoittautua mihin tahansa joogaan 8 kertaa." />
+          <textarea type="text" name="countDesc" {...desc} placeholder="esim: 4 kertaa saunomista" />
 
           <label htmlFor="countUsetimes">Käyttömäärä kertoina</label>
           <input type="number" name="countUsetimes" {...usetimes} placeholder="esim: 4 tai 8" />

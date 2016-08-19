@@ -26,11 +26,6 @@ class UserTransactions extends React.Component {
             <ul className="wide-list">
               {this.props.currentUser.transactions.details.expired.map(this.renderTransaction)}
             </ul>
-          <h3 className="header-collapse">Erikoiskurssit</h3>
-            <ul className="wide-list">
-              {this.props.currentUser.transactions.details.special.map(this.renderTransaction)}
-            </ul>
-
         </div>
       </div>
     )

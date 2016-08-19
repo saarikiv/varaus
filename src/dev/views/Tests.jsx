@@ -61,12 +61,12 @@ class Tests extends React.Component {
   testLateReserve(){
     let bookForUser = 'OmdRIx7cU6c6DwJADkFXqnap9ao2';
     let weeksBack = 1;
-    let course = null
-    firebase.database().ref('/courses/-KNcWXwm6zpYimw3ATZ1').once('value')
+    let slot = null
+    firebase.database().ref('/slots/-KNcWXwm6zpYimw3ATZ1').once('value')
     .then( snapshot => {
-      course = snapshot.val();
-      course.key = '-KNcWXwm6zpYimw3ATZ1'
-    this.props.bookingActions.postLateReservation(bookForUser, weeksBack, course)
+      slot = snapshot.val();
+      slot.key = '-KNcWXwm6zpYimw3ATZ1'
+    this.props.bookingActions.postLateReservation(bookForUser, weeksBack, slot)
 
     })
   }

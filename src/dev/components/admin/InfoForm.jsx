@@ -25,10 +25,10 @@ class InfoForm extends React.Component {
     return (
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
           <label htmlFor="infotitle">Infon otsikko</label>
-          <input type="text" name="infotitle" placeholder="esim: Joogakoulusta" {...title} />
+          <input type="text" name="infotitle" placeholder="esim: saunasta..." {...title} />
 
           <label htmlFor="infocontent">Infon kuvaus</label>
-          <textarea type="text" name="infocontent" placeholder="esim: Joogakoulu Lauttasaari on pieni ja rento joogastudio." {...content}/>
+          <textarea type="text" name="infocontent" placeholder="esim: sauna on lämmin ja rentoutumiselle omiaan." {...content}/>
 
           <button className="btn-small btn-blue" type="submit">{buttonText}</button>
         </form>

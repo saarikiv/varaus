@@ -28,10 +28,10 @@ const ShopItemsRef = firebase.database().ref('/shopItems/')
 export function removeTransaction(transaction, user){
     return dispatch => {
         _showLoadingScreen(dispatch, "Perutaan osto.")
-        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/removeTransaction' : JOOGASERVER + '/removeTransaction'
+        let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/removeTransaction' : VARAUSSERVER + '/removeTransaction'
         firebase.auth().currentUser.getToken(true)
             .then(idToken => {
-                return axios.post(JOOGAURL, {
+                return axios.post(VARAUSURL, {
                     current_user: idToken,
                     for_user: user,
                     transaction: transaction
@@ -60,10 +60,10 @@ export function removeTransaction(transaction, user){
 export function completePaytrailPayment(pendingTrxId){
     return dispatch => {
                 _showLoadingScreen(dispatch, "Hyväksytään osto")
-        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/approveincomplete' : JOOGASERVER + '/approveincomplete'
+        let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/approveincomplete' : VARAUSSERVER + '/approveincomplete'
         firebase.auth().currentUser.getToken(true)
             .then(idToken => {
-                return axios.post(JOOGAURL, {
+                return axios.post(VARAUSURL, {
                     current_user: idToken,
                     pending_transaction_id: pendingTrxId
                 })
@@ -157,10 +157,10 @@ export function buyWithPaytrail(pendingTrxId) {
 export function finishPayTrailTransaction(query){
         return dispatch => {
         _showLoadingScreen(dispatch, "Viimeistellään osto")
-        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/completepaytrail' : JOOGASERVER + '/completepaytrail'
+        let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/completepaytrail' : VARAUSSERVER + '/completepaytrail'
         firebase.auth().currentUser.getToken(true)
             .then(idToken => {
-                return axios.post(JOOGAURL, {
+                return axios.post(VARAUSURL, {
                     current_user: idToken,
                     METHOD: query.METHOD,
                     ORDER_NUMBER: query.ORDER_NUMBER,
@@ -201,10 +201,10 @@ export function finishPayTrailTransaction(query){
 export function getAuthCode(_authcode) {
     return dispatch => {
         _showLoadingScreen(dispatch, "Haetaan tunnistekoodia")
-        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/paytrailauthcode' : JOOGASERVER + '/paytrailauthcode'
+        let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/paytrailauthcode' : VARAUSSERVER + '/paytrailauthcode'
         firebase.auth().currentUser.getToken(true)
             .then(idToken => {
-                return axios.post(JOOGAURL, {
+                return axios.post(VARAUSURL, {
                     current_user: idToken,
                     auth_code: _authcode
                 })
@@ -247,11 +247,11 @@ export function cancelPaytrailPayment(pendingTrxId, resetShop = true){
 
 function _cancelPaytrailPayment(dispatch, pendingTrxId, resetShop = true) {
     _showLoadingScreen(dispatch, "Perutaan PayTrail maksu")
-    let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cnacelpaytrailtransaction' : JOOGASERVER + '/cancelpaytrailtransaction'
+    let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/cnacelpaytrailtransaction' : VARAUSSERVER + '/cancelpaytrailtransaction'
 
     firebase.auth().currentUser.getToken(true)
         .then(idToken => {
-            return axios.post(JOOGAURL, {
+            return axios.post(VARAUSURL, {
                 current_user: idToken,
                 pending_transaction: pendingTrxId
             })
@@ -296,11 +296,11 @@ function _cancelPaytrailPayment(dispatch, pendingTrxId, resetShop = true) {
 export function initializePayTrailTransaction(clientKey, type) {
     return dispatch => {
         _showLoadingScreen(dispatch, "Alustetaan PayTrail maksu")
-        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/initializepaytrailtransaction' : JOOGASERVER + '/initializepaytrailtransaction'
+        let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/initializepaytrailtransaction' : VARAUSSERVER + '/initializepaytrailtransaction'
 
         firebase.auth().currentUser.getToken(true)
             .then(idToken => {
-                return axios.post(JOOGAURL, {
+                return axios.post(VARAUSURL, {
                     item_key: clientKey,
                     current_user: idToken,
                     purchase_target: type
@@ -354,11 +354,11 @@ export function buyWithCash() {
 export function executeCashPurchase(forUsr, itemKey, type) {
     return dispatch => {
 
-        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cashbuy' : JOOGASERVER + '/cashbuy'
+        let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/cashbuy' : VARAUSSERVER + '/cashbuy'
         _showLoadingScreen(dispatch, "Käteisostoa suoritetaan")
         firebase.auth().currentUser.getToken(true)
             .then(idToken => {
-                return axios.post(JOOGAURL, {
+                return axios.post(VARAUSURL, {
                     for_user: forUsr,
                     item_key: itemKey,
                     current_user: idToken,
@@ -483,10 +483,10 @@ export function removeShopItem(key) {
                 phase: "braintreePayment",
             }
         })
-        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/clientToken' : JOOGASERVER + '/clientToken'
+        let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/clientToken' : VARAUSSERVER + '/clientToken'
         firebase.auth().currentUser.getToken(true)
             .then(idToken => {
-                return axios.get(JOOGAURL + '?token=' + idToken)
+                return axios.get(VARAUSURL + '?token=' + idToken)
             })
             .then(response => {
                 _hideLoadingScreen(dispatch, "Maksuyhteys valmis", true)
@@ -517,11 +517,11 @@ export function removeShopItem(key) {
 /*export function doPurchaseTransaction(nonce, clientKey, type) {
     return dispatch => {
         _showLoadingScreen(dispatch, "Suoritetaan maksu.")
-        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/checkout' : JOOGASERVER + '/checkout'
+        let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/checkout' : VARAUSSERVER + '/checkout'
 
         firebase.auth().currentUser.getToken(true)
             .then(idToken => {
-                return axios.post(JOOGAURL, {
+                return axios.post(VARAUSURL, {
                     payment_method_nonce: nonce,
                     item_key: clientKey,
                     current_user: idToken,

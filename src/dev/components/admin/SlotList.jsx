@@ -2,11 +2,11 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import CourseForm from '../../components/admin/CourseForm.jsx'
-import Item from './CourseItem.jsx'
+import SlotForm from '../../components/admin/SlotForm.jsx'
+import Item from './SlotItem.jsx'
 import * as actionCreators from '../../actions/admin.js'
 
-class CourseList extends React.Component {
+class SlotList extends React.Component {
 
   constructor(){
     super()
@@ -14,11 +14,11 @@ class CourseList extends React.Component {
   }
   
   componentWillMount() {
-    this.props.actions.fetchCourseList()
+    this.props.actions.fetchSlotList()
   }
 
   componentWillUnmount() {
-    this.props.actions.stopFetchCourseList()
+    this.props.actions.stopFetchSlotList()
   }
 
   componentWillReceiveProps(nextProps){
@@ -52,7 +52,7 @@ class CourseList extends React.Component {
 
  renderForm(){
     if(this.toggleForm){
-      return(<CourseForm mode="addNew"/>)
+      return(<SlotForm mode="addNew"/>)
     } else {
       return(<div></div>)
     }
@@ -61,9 +61,9 @@ class CourseList extends React.Component {
 
   toggleAdd(){
   if(this.toggleForm){
-      this.props.actions.minimizeCourseForm()
+      this.props.actions.minimizeSlotForm()
     } else {
-      this.props.actions.expandCourseForm("addNew")
+      this.props.actions.expandSlotForm("addNew")
     }    
   }
 
@@ -72,13 +72,13 @@ class CourseList extends React.Component {
     if(this.props.list.expanded) {
       return (
         <div>
-        <button className="expand-btn" onClick={() => this.props.actions.minimizeCourseList()}>Piilota</button>
+        <button className="expand-btn" onClick={() => this.props.actions.minimizeSlotList()}>Piilota</button>
         <button className="expand-btn" onClick={() => this.toggleAdd()}>{buttonText}</button>
         </div>
       )
     }
     else {
-      return <button className="expand-btn" onClick={() => this.props.actions.expandCourseList()}>Avaa</button>
+      return <button className="expand-btn" onClick={() => this.props.actions.expandSlotList()}>Avaa</button>
     }
   }
 
@@ -86,7 +86,7 @@ class CourseList extends React.Component {
     return (
       <div className="container bordered-container">
         <div className="content-container align-left">
-          <h2 className="header-collapse">Tunnit</h2>
+          <h2 className="header-collapse">Saunavuorot</h2>
           {this.renderExpandButton()}
           {this.renderForm()}
           {this.renderContent()}
@@ -97,11 +97,11 @@ class CourseList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  return { list: state.courseList, cmp: state.courseForm }
+  return { list: state.slotList, cmp: state.slotForm }
 }
 
 function mapDispatchToProps(dispatch) {
   return { actions: bindActionCreators(actionCreators, dispatch)}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CourseList)
+export default connect(mapStateToProps, mapDispatchToProps)(SlotList)

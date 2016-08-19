@@ -61,11 +61,6 @@ class TopBar extends React.Component {
     if(roles.tester){
       tests = <Link className="text-link" to="tests" onClick={() => this.toggleNav()}>Test</Link>
     }
-    let instructor = null;
-    if(roles.instructor){
-      instructor = <Link className="text-link" to="instructor" onClick={() => this.toggleNav()}>Opettaja</Link>
-      adminShop = <Link className="text-link text-green" to="shop" onClick={() => this.toggleNav()}>Admin-Kauppa</Link>
-    }
 
     if (this.props.curUsr.key != '0') {
       if(locked){
@@ -95,13 +90,7 @@ class TopBar extends React.Component {
             {this.renderTickets()}
             <div className="userinfo-container mobile-hidden" id="nav-menu">
               <div className="mobile-row">
-                <Link className="text-link" to="user" onClick={() => this.toggleNav()}>Joogatunnit & varaukset</Link>
-              </div>
-              <div className="mobile-row">
-                <Link className="text-link" to="specialCourses" onClick={() => this.toggleNav()}>Kurssit</Link>
-              </div>
-              <div className="mobile-row">
-                {instructor}
+                <Link className="text-link" to="user" onClick={() => this.toggleNav()}>Varaukset</Link>
               </div>
               <div className="mobile-row">
                 {admin}
@@ -119,13 +108,10 @@ class TopBar extends React.Component {
                 {adminShop}
               </div>
               <div className="mobile-row">
-                <a className="text-link text-green" href="https://holvi.com/shop/4Z4CW4/" onClick={() => this.toggleNav()} target="_blank">Kauppa - Holvi</a>
+                <Link className="text-link text-fade" to="userProfile" onClick={() => this.toggleNav()}>Omat tiedot</Link>
               </div>
               <div className="mobile-row">
-                <Link className="text-link text-fade" to="userProfile" onClick={() => this.toggleNav()}>Käyttäjätiedot</Link>
-              </div>
-              <div className="mobile-row">
-                <Link className="text-link text-fade" to="feedback" onClick={() => this.toggleNav()}>Yhteystiedot & palaute</Link>
+                <Link className="text-link text-fade" to="feedback" onClick={() => this.toggleNav()}>Palaute</Link>
               </div>
               <div className="mobile-row">
                 <a className="text-link text-fade" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</a>

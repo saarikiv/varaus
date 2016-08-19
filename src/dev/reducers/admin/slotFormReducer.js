@@ -1,6 +1,6 @@
 import {
-    EXPAND_COURSE_TYPE_FORM,
-    MINIMIZE_COURSE_TYPE_FORM
+    EXPAND_SLOT_FORM,
+    MINIMIZE_SLOT_FORM
 } from '../../actions/actionTypes.js'
 
 const INITIAL_STATE = {
@@ -10,9 +10,9 @@ const INITIAL_STATE = {
 
 export default function(state = INITIAL_STATE, action) {
     switch (action.type) {
-        case EXPAND_COURSE_TYPE_FORM:
+        case EXPAND_SLOT_FORM:
             return Object.assign({}, state, action.payload)
-        case MINIMIZE_COURSE_TYPE_FORM:
+        case MINIMIZE_SLOT_FORM:
             return Object.assign({}, state, action.payload)
         default:
             return state

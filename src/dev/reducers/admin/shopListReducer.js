@@ -1,4 +1,9 @@
-import { FETCH_SHOP_LIST, EXPAND_SHOP_LIST, MINIMIZE_SHOP_LIST, STOP_FETCH_SHOP_LIST } from '../../actions/actionTypes.js'
+import { 
+  FETCH_SHOP_LIST, 
+  EXPAND_SHOP_LIST, 
+  MINIMIZE_SHOP_LIST, 
+  STOP_FETCH_SHOP_LIST 
+} from '../../actions/actionTypes.js'
 
 const INITIAL_STATE = {expanded: false, list: []}
 
