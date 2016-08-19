@@ -35,10 +35,10 @@
 > Valitse target: $>firebase use [production|stage]
 > Depoly: $>firebase deploy
 
-#### JOOGASERVER
+#### VARAUSSERVER
 > Jos haluat käyttää ulkoista maksuserveriä
-> aseta JOOGASERVER osoittamaan serveriin, jota haluat käyttää (esim. joogaserver.herokuapp.com)
-> JOOGASERVER on määritelty index.html:ssä
+> aseta VARAUSSERVER osoittamaan serveriin, jota haluat käyttää (esim. varausserver.herokuapp.com)
+> VARAUSSERVER on määritelty index.html:ssä
 
 
 #### Avaa projekti atomilla:

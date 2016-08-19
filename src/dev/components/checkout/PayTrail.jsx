@@ -28,7 +28,7 @@ export default class PayTrail extends React.Component {
     let returnAddress = getCurrentBaseUrl(document.location.href) + "/#/paytrailreturn"
     let cancelAddress = getCurrentBaseUrl(document.location.href) + "/#/paytrailcancel"
     let pendingAddress = ""
-    let notifyAddress = JOOGASERVER + "/paytrailnotification"
+    let notifyAddress = VARAUSSERVER + "/paytrailnotification"
     let type = "S1"
     let culture = "fi_FI"
     let preselectedMethod = ""

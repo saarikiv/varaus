@@ -17,7 +17,7 @@ import {
 
 
 export function postCancellation(item, txRef, courseInfo) {
-    var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/cancelSlot' : JOOGASERVER + '/cancelSlot'
+    var JOOGAURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/cancelSlot' : VARAUSSERVER + '/cancelSlot'
     return dispatch => {
         _showLoadingScreen(dispatch, "Perutaan varausta")
         let now = new Date();
@@ -53,7 +53,7 @@ export function postCancellation(item, txRef, courseInfo) {
 }
 
 export function postLateReservation(forUser, weeksBehind, courseInfo) {
-    var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/reserveLateSlot' : JOOGASERVER + '/reserveLateSlot'
+    var JOOGAURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/reserveLateSlot' : VARAUSSERVER + '/reserveLateSlot'
     return dispatch => {
         _showLoadingScreen(dispatch, "Varataan tuntia jälkikäteen")
         let now = new Date();
@@ -91,7 +91,7 @@ export function postLateReservation(forUser, weeksBehind, courseInfo) {
 
 
 export function postReservation(forward, courseInfo) {
-    var JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/reserveSlot' : JOOGASERVER + '/reserveSlot'
+    var JOOGAURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/reserveSlot' : VARAUSSERVER + '/reserveSlot'
     return dispatch => {
         _showLoadingScreen(dispatch, "Varataan tuntia")
         let now = new Date();

@@ -47,7 +47,7 @@ export function test2(query) {
 export function testFirebaseErrorLogging() {
     return dispatch => {
         _showLoadingScreen(dispatch, "Aloitetaan testit")
-        let JOOGAURL = typeof(JOOGASERVER) === "undefined" ? 'http://localhost:3000/test' : JOOGASERVER + '/test'
+        let JOOGAURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/test' : VARAUSSERVER + '/test'
         firebase.auth().currentUser.getToken(true)
         .then(idToken => {
             return axios.post(JOOGAURL, {
