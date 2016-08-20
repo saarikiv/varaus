@@ -45,10 +45,10 @@ componentWillReceiveProps(nextProps){
         <div>
           <AdminHeader />
           <PendingTransactionsList />
-          <AdminList />
-          <UserList />
-          <ShopList />
           <SlotList />
+          <ShopList />
+          <UserList />
+          <AdminList />
           <TermsList />
         </div>
       )

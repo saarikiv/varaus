@@ -157,18 +157,42 @@ export function buyWithPaytrail(pendingTrxId) {
 
 export function buyDelayed(pendingTrxId) {
     return dispatch => {
-        //TODO: send e-mail to isännöitsijä
-        dispatch({
-            type: BUY_DELAYED,
-            payload: {
-                phase: "delayedPayment",
-                initializedTransaction: "0",
-                error: {
-                    code: "0",
-                    message: "no error"
-                }
-            }
-        })
+      _showLoadingScreen(dispatch, "Lähetetään viesti ostosta.")
+        let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/notifydelayed' : VARAUSSERVER + '/notifydelayed'
+        firebase.auth().currentUser.getToken(true)
+            .then(idToken => {
+                return axios.post(VARAUSURL, {
+                    current_user: idToken,
+                    transaction: pendingTrxId
+                })
+            })
+            .then(response => {
+                _hideLoadingScreen(dispatch, "Viesti lähetetty", true)
+                dispatch({
+                    type: BUY_DELAYED,
+                    payload: {
+                        phase: "delayedPayment",
+                        initializedTransaction: "0",
+                        error: {
+                            code: "0",
+                            message: "no error"
+                        }
+                    }
+                })
+            })
+            .catch(error => {
+                console.error("DELAYED_ERROR:", error);
+                _hideLoadingScreen(dispatch, "Viestin lähettämisessä tapahtui virhe: " + error.data, false)
+                dispatch({
+                    type: CHECKOUT_ERROR,
+                    payload: {
+                        error: {
+                            code: "DELAYED_ERROR",
+                            message: "Notification error: " + error.data
+                        }
+                    }
+                })
+            })
     }
 }
 
