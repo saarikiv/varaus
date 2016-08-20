@@ -1,7 +1,6 @@
 import React from 'react'
 
 import { daysLeft, getDayStrMs } from '../../helpers/timeHelper.js'
-import SpecialItem from './SpecialItem.jsx'
 import ValidItem from './ValidItem.jsx'
 
 export default class UserItem extends React.Component {

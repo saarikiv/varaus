@@ -297,7 +297,9 @@ export function addSlot(data) {
         firebase.database().ref('/slots/').push({
             start: toMilliseconds(parseInt(data.start)),
             end: toMilliseconds(parseInt(data.end)),
-            day: parseInt(data.day)
+            day: parseInt(data.day),
+            blocked: data.blocked,
+            reserver: data.reserver
         })
     }
 }
@@ -307,7 +309,9 @@ export function modifySlot(data, key) {
         firebase.database().ref('/slots/' + key).update({
             start: toMilliseconds(parseInt(data.start)),
             end: toMilliseconds(parseInt(data.end)),
-            day: parseInt(data.day)
+            day: parseInt(data.day),
+            blocked: data.blocked,
+            reserver: data.reserver
         })
     }
 }

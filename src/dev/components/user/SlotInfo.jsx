@@ -74,38 +74,37 @@ class SlotInfo extends React.Component {
     return (transactions.count > 0) ? true : false;
   }
 
-  slotIsFull(){
-    const { bookings, maxCapacity } = this.props.slotInfo;
-    if(bookings.all.length > 0){
-      return (bookings.all[0].reservations < maxCapacity)? false : true;
-    } else {
-      return false; // No bookings for the slot yet.
-    }
-  }
-
 
   //========================================================================
   //========================================================================
   //========================================================================
   renderReservationButton(slotInfo, day, dayStr, weekIndex){
 
+    console.log("SLOTINFO", slotInfo)
+
     var notificationText = null;
 
     if(slotInfo.bookings){
-    if(slotInfo.bookings.user.length > 0){
-        let cancelButton = (this.confirmation)? "Vahvista peruutus" : "Peru"
-        return( <div>
-                  <p className="text-blue"> Sinä olet ilmoittautunut tälle tunnille.</p>
-                  <button className="btn-small btn-red mobile-full" onClick={() => this.cancelReservation(weekIndex)} > {cancelButton} </button>
-                </div>
-              );
-    }}
-
-    if(this.slotIsFull()){
-      return(
-        <p className="text-red"> Vuoro on varattu!</p>
-      );
+      if(slotInfo.bookings.user.length > 0){
+          let cancelButton = (this.confirmation)? "Vahvista peruutus" : "Peru"
+          return( <div>
+                    <p className="text-blue"> Sinä olet varannut tämän vuoron.</p>
+                    <button className="btn-small btn-red mobile-full" onClick={() => this.cancelReservation(weekIndex)} > {cancelButton} </button>
+                  </div>
+                );
+      }
+      if(slotInfo.bookings.all.length > 0){
+        return(
+          <p className="text-red"> Vuoro on varattu!</p>
+        );
+      }
     }
+
+      if(slotInfo.blocked){
+        return(
+          <p className="text-red"> Vuoro on vakiovuoro!</p>
+        );
+      }
 
     if(!this.userCanBook(day)){
       return(<div>

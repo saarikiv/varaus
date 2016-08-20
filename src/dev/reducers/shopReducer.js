@@ -7,6 +7,7 @@ import {
     CHECKOUT_ERROR,
     CHECKOUT_TIMEOUT,
     BUY_WITH_CASH,
+    BUY_DELAYED,
     BUY_WITH_PAYTRAIL,
     EXECUTE_CASH_PURCHASE,
     RESET_SHOP,
@@ -35,6 +36,8 @@ export default function(state = INITIAL_STATE, action) {
         case BUY_WITH_PAYTRAIL:
             return Object.assign({}, state, action.payload);
         case FINISH_WITH_PAYTRAIL:
+            return Object.assign({}, state, action.payload);
+        case BUY_DELAYED:
             return Object.assign({}, state, action.payload);
         case BUY_WITH_CASH:
             return Object.assign({}, state, action.payload);

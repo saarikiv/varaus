@@ -28,20 +28,11 @@ class TimeTableItem extends React.Component {
     this.props.slotActions.putSlotInfo(this.props.item, this.props.booking)
   }
 
-  renderBooked(item, allBooked) {
-    if(!item.cancelled) {
-      return (
-        allBooked    
-      )
-    }    
-  }
-
   render() {
     const { booking, item } = this.props;
-    var slotCancelled = null;
-    if(item.cancelled){
-      slotCancelled = <p className="text-bold text-red table-alert-c">PERUTTU</p>
-    }
+    var booked = <span>
+                      <p className="table-participants margin-left">VAPAA</p>
+                 </span>  
     var userBooked = null;
     if(booking){
       if(booking.user.length > 0){
@@ -49,26 +40,27 @@ class TimeTableItem extends React.Component {
       }
     }
     if(booking){
-      var allBooked = <span>
-                        <p className="table-participants margin-left">VAPAA</p>
-                      </span>       
       if(booking.all.length > 0){
         if(booking.all[0].reservations === 1) {
-          allBooked = <p className="table-participants text-red text-bold table-alert-f">VARATTU</p>
+          booked = <p className="table-participants text-red text-bold table-alert-f">VARATTU</p>
 
         } else {
-          allBooked = <span>
+          booked = <span>
                         <p className="table-participants margin-left">VAPAA</p>
-                      </span>          
+                   </span>          
         }        
       }
     }
+    if(item.blocked){
+           booked = <span>
+                     <p className="table-participants margin-left">VAKIOVUORO</p>
+                   </span>          
+    }
     return (
       <td onClick={() => this.itemClicked()}>
-        <p className="table-time">{getTimeStrMsBeginnignOfDay(item.start)} - {getTimeStrMsBeginnignOfDay(item.end)}</p>        
-        {this.renderBooked(item, allBooked)}
+        <p className="table-time">{getTimeStrMsBeginnignOfDay(item.start)} - {getTimeStrMsBeginnignOfDay(item.end)}</p>
+        {booked}
         {userBooked}
-        {slotCancelled}
       </td>
     );
   }
