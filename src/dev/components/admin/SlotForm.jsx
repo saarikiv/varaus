@@ -21,7 +21,7 @@ class SlotForm extends React.Component {
 
   renderContent() {
     var buttonText = (this.props.mode === "addNew")? "Luo" : "Päivitä"
-    const { fields: { day, start, end }, handleSubmit } = this.props
+    const { fields: { day, start, end , blocked, reserver}, handleSubmit } = this.props
 
       return (
         <form onSubmit={handleSubmit(props => this.onSubmit(props))}>
@@ -42,6 +42,12 @@ class SlotForm extends React.Component {
 
           <label htmlFor="slotEnd">Loppuu klo.</label>
           <input type="number" name="slotEnd" {...end} placeholder="esim: 900 tai 1100 tai 2230" />
+
+          <label htmlFor="oneTime">Vakiovuoro</label>
+          <input type="checkbox" name="oneTime" className="checkbox rowbox" {...blocked} />
+
+          <label htmlFor="countTitle">Vakiovuoron varaaja</label>
+          <input type="text" name="reserver" {...reserver} placeholder="Varaajan asunnon numero" />
 
           <button className="btn-small btn-blue" type="submit">{buttonText}</button>
         </form>
@@ -72,6 +78,6 @@ function mapDispatchToProps(dispatch) {
 
 export default reduxForm({
   form: 'SlotForm',
-  fields: ['day', 'start', 'end'],
+  fields: ['day', 'start', 'end', 'blocked', 'reserver'],
   validate
 }, null, mapDispatchToProps)(SlotForm)

@@ -11,6 +11,7 @@ const INITIAL_STATE = {
 
 //Add events to be included here
 var approvedEvents = {
+    BUY_DELAYED: true,
     REMOVE_TRANSACTION: true,
     REMOVE_TRANSACTION_ERROR: true,
     REGISTER_USER: true,

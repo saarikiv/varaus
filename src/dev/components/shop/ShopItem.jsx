@@ -29,6 +29,16 @@ class ShopItem extends React.Component {
     }
   }
 
+  delayedPurchase(){
+    const { item } = this.props
+    if(!this.onceOnly){
+      this.onceOnly = true;
+      this.props.actions.addToCart(item);
+      this.props.actions.initializeDelayedTransaction(item.key, item.type)
+      this.context.router.push('checkout');
+    }
+  }
+
   cashPurchase(){
     if(!this.onceOnly){
       this.onceOnly = true;
@@ -61,12 +71,6 @@ class ShopItem extends React.Component {
 
 
 
-/*
--------Laita tämä {cashBuyButton} yläpuolelle
-      <span className="item-row">
-                <button className="btn-small btn-blue mobile-full" onClick={this.payTrailPurchase.bind(this)} >Osta</button>
-      </span>
-*/
 
   renderBuyButtons(){
 
@@ -77,6 +81,9 @@ class ShopItem extends React.Component {
     }
     return(
       <div>
+        <span className="item-row">
+                  <button className="btn-small btn-blue mobile-full" onClick={this.delayedPurchase.bind(this)} >Osta</button>
+        </span>
         <span className="item-row">
           {cashBuyButton}
         </span>

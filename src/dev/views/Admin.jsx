@@ -44,6 +44,7 @@ componentWillReceiveProps(nextProps){
       return (
         <div>
           <AdminHeader />
+          <PendingTransactionsList />
           <AdminList />
           <UserList />
           <ShopList />

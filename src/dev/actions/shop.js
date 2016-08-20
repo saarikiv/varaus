@@ -13,6 +13,7 @@ import {
     CHECKOUT_TIMEOUT,
     EXECUTE_CASH_PURCHASE,
     RESET_SHOP,
+    BUY_DELAYED,
     FETCH_PENDING_TRANSACTIONS,
     FINISH_WITH_PAYTRAIL,
     GET_AUTH_CODE
@@ -153,6 +154,24 @@ export function buyWithPaytrail(pendingTrxId) {
         })
     }
 }
+
+export function buyDelayed(pendingTrxId) {
+    return dispatch => {
+        //TODO: send e-mail to isännöitsijä
+        dispatch({
+            type: BUY_DELAYED,
+            payload: {
+                phase: "delayedPayment",
+                initializedTransaction: "0",
+                error: {
+                    code: "0",
+                    message: "no error"
+                }
+            }
+        })
+    }
+}
+
 
 export function finishPayTrailTransaction(query){
         return dispatch => {
@@ -295,7 +314,7 @@ function _cancelPaytrailPayment(dispatch, pendingTrxId, resetShop = true) {
 
 export function initializePayTrailTransaction(clientKey, type) {
     return dispatch => {
-        _showLoadingScreen(dispatch, "Alustetaan PayTrail maksu")
+        _showLoadingScreen(dispatch, "Alustetaan maksutapahtuma")
         let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/initializepaytrailtransaction' : VARAUSSERVER + '/initializepaytrailtransaction'
 
         firebase.auth().currentUser.getToken(true)
@@ -335,6 +354,50 @@ export function initializePayTrailTransaction(clientKey, type) {
             })
     }
 }
+
+export function initializeDelayedTransaction(clientKey, type) {
+    return dispatch => {
+        _showLoadingScreen(dispatch, "Alustetaan maksutapahtuma")
+        let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/initializedelayedtransaction' : VARAUSSERVER + '/initializedelayedtransaction'
+
+        firebase.auth().currentUser.getToken(true)
+            .then(idToken => {
+                return axios.post(VARAUSURL, {
+                    item_key: clientKey,
+                    current_user: idToken,
+                    purchase_target: type
+                })
+            })
+            .then(result => {
+                _hideLoadingScreen(dispatch, "Maksun alustus onnistui", true)
+                dispatch({
+                    type: DO_PURCHASE_TRANSACTION,
+                    payload: {
+                        phase: "delayedTransactionInitialized",
+                        initializedTransaction: result.data,
+                        error: {
+                            code: "0",
+                            message: "no error"
+                        }
+                    }
+                })
+            })
+            .catch(error => {
+                console.error("PURCHASE ERROR", error);
+                _hideLoadingScreen(dispatch, "Maksun suorituksessa tapahtui virhe: "+ error, false)
+                dispatch({
+                    type: CHECKOUT_ERROR,
+                    payload: {
+                        error: {
+                            code: "PURCHASE_ERROR",
+                            message: "Purchase error: " + error
+                        }
+                    }
+                })
+            })
+    }
+}
+
 
 export function buyWithCash() {
     return dispatch => {
