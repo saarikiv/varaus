@@ -298,8 +298,8 @@ export function addSlot(data) {
             start: toMilliseconds(parseInt(data.start)),
             end: toMilliseconds(parseInt(data.end)),
             day: parseInt(data.day),
-            blocked: data.blocked,
-            reserver: data.reserver
+            blocked: data.blocked || false,
+            reserver: data.reserver || ""
         })
     }
 }
@@ -310,8 +310,8 @@ export function modifySlot(data, key) {
             start: toMilliseconds(parseInt(data.start)),
             end: toMilliseconds(parseInt(data.end)),
             day: parseInt(data.day),
-            blocked: data.blocked,
-            reserver: data.reserver
+            blocked: data.blocked || false,
+            reserver: data.reserver || ""
         })
     }
 }
