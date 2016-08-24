@@ -16,7 +16,7 @@ class PendingTransactionItem extends React.Component {
 
   completeTransaction(item){
     if(this.confirmed1){
-      this.props.actions.completePaytrailPayment(item.key)
+      this.props.actions.completePendingPayment(item.key)
       this.confirmed1 = false;
     } else {
       this.confirmed1 = true;

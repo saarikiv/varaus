@@ -57,36 +57,39 @@ export function removeTransaction(transaction, user){
     }
 }
 
-
-export function completePaytrailPayment(pendingTrxId){
+export function completePendingPayment(pendingTrxId){
     return dispatch => {
-                _showLoadingScreen(dispatch, "Hyväksytään osto")
-        let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/approveincomplete' : VARAUSSERVER + '/approveincomplete'
-        firebase.auth().currentUser.getToken(true)
-            .then(idToken => {
-                return axios.post(VARAUSURL, {
-                    current_user: idToken,
-                    pending_transaction_id: pendingTrxId
-                })
-            })
-            .then(response => {
-                _hideLoadingScreen(dispatch, "Osto hyväksytty", true)
-            })
-            .catch(error => {
-                console.error("PAYTRAIL_ERROR:", error);
-                _hideLoadingScreen(dispatch, "Oston hyväksymisessä tapahtui virhe: " + error.toString(), false)
-                dispatch({
-                    type: CHECKOUT_ERROR,
-                    payload: {
-                        error: {
-                            code: "PAYTRAIL_ERROR",
-                            message: "Paytrail complete error: " + error.toString()
-                        }
-                    }
-                })
-            });
-
+        _completePendingPayment(dispatch, pendingTrxId)
     }
+}
+
+function _completePendingPayment(dispatch, pendingTrxId){
+            _showLoadingScreen(dispatch, "Hyväksytään osto")
+    let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/approveincomplete' : VARAUSSERVER + '/approveincomplete'
+    firebase.auth().currentUser.getToken(true)
+        .then(idToken => {
+            return axios.post(VARAUSURL, {
+                current_user: idToken,
+                pending_transaction_id: pendingTrxId
+            })
+        })
+        .then(response => {
+            _hideLoadingScreen(dispatch, "Osto hyväksytty", true)
+        })
+        .catch(error => {
+            console.error("PAYTRAIL_ERROR:", error);
+            _hideLoadingScreen(dispatch, "Oston hyväksymisessä tapahtui virhe: " + error.toString(), false)
+            dispatch({
+                type: CHECKOUT_ERROR,
+                payload: {
+                    error: {
+                        code: "PAYTRAIL_ERROR",
+                        message: "Paytrail complete error: " + error.toString()
+                    }
+                }
+            })
+        });
+
 }
 
 
@@ -157,7 +160,7 @@ export function buyWithPaytrail(pendingTrxId) {
 
 export function buyDelayed(pendingTrxId) {
     return dispatch => {
-      _showLoadingScreen(dispatch, "Lähetetään viesti ostosta.")
+      _showLoadingScreen(dispatch, "Lähetetään lasku ostosta.")
         let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/notifydelayed' : VARAUSSERVER + '/notifydelayed'
         firebase.auth().currentUser.getToken(true)
             .then(idToken => {
@@ -167,7 +170,7 @@ export function buyDelayed(pendingTrxId) {
                 })
             })
             .then(response => {
-                _hideLoadingScreen(dispatch, "Viesti lähetetty", true)
+                _hideLoadingScreen(dispatch, "Lasku lähetetty", true)
                 dispatch({
                     type: BUY_DELAYED,
                     payload: {
@@ -179,10 +182,11 @@ export function buyDelayed(pendingTrxId) {
                         }
                     }
                 })
+                _completePendingPayment(dispatch, pendingTrxId)
             })
             .catch(error => {
                 console.error("DELAYED_ERROR:", error);
-                _hideLoadingScreen(dispatch, "Viestin lähettämisessä tapahtui virhe: " + error.data, false)
+                _hideLoadingScreen(dispatch, "Laskun lähettämisessä tapahtui virhe: " + error.data, false)
                 dispatch({
                     type: CHECKOUT_ERROR,
                     payload: {
