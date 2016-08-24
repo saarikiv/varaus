@@ -22,8 +22,8 @@ class Timetable extends React.Component {
     let today = (dayNumber === mapDay(day.getDay()))? true: false;
     if(today){
     return(
-      <tr className="glowing" key={dayNumber}>
-        <th className="text-bold text-blue">{dayname}</th>
+      <tr key={dayNumber}>
+        <th className="bg-lightblue">{dayname}</th>
         {
           slots.map(function(item) {
             if (item.day === dayNumber) {
@@ -83,7 +83,7 @@ class Timetable extends React.Component {
           <tbody>
             {this.renderWeek()}
           </tbody>
-        </table>        
+        </table>
       </div>
     )
   }
