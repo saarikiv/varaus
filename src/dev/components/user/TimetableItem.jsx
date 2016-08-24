@@ -30,34 +30,37 @@ class TimeTableItem extends React.Component {
 
   render() {
     const { booking, item } = this.props;
-    var booked = <span>
-                      <p className="table-participants margin-left">VAPAA</p>
-                 </span>  
-    var userBooked = null;
-    if(booking){
-      if(booking.user.length > 0){
-         userBooked = <img className="mini-icon margin-left tiny-icon" src="./assets/booked.png" />
-      }
+    let booked = <span>
+                    <p className="table-participants margin-left">VAPAA</p>
+                 </span>
+    let userBooked = null
+    let tdClass = "td-green"
+
+    if(item.blocked){
+        booked = <span>
+                    <p className="table-participants margin-left">VAKIOVUORO</p>
+                </span>
+        tdClass = "td-blue"
     }
+
     if(booking){
       if(booking.all.length > 0){
         if(booking.all[0].reservations === 1) {
-          booked = <p className="table-participants text-red text-bold table-alert-f">VARATTU</p>
-
+            booked = <p className="table-participants">KERTAVARAUS</p>
+            tdClass = "td-orange"
         } else {
           booked = <span>
                         <p className="table-participants margin-left">VAPAA</p>
-                   </span>          
-        }        
+                   </span>
+        }
+      }
+      if(booking.user.length > 0){
+            tdClass += " bg-yellow"
       }
     }
-    if(item.blocked){
-           booked = <span>
-                     <p className="table-participants margin-left">VAKIOVUORO</p>
-                   </span>          
-    }
+
     return (
-      <td onClick={() => this.itemClicked()}>
+      <td className={tdClass} onClick={() => this.itemClicked()}>
         <p className="table-time">{getTimeStrMsBeginnignOfDay(item.start)} - {getTimeStrMsBeginnignOfDay(item.end)}</p>
         {booked}
         {userBooked}
