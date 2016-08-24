@@ -31,14 +31,14 @@ class TimeTableItem extends React.Component {
   render() {
     const { booking, item } = this.props;
     let booked = <span>
-                    <p className="table-participants margin-left">VAPAA</p>
+                    <p className="table-participants">VAPAA</p>
                  </span>
     let userBooked = null
     let tdClass = "td-green"
 
     if(item.blocked){
         booked = <span>
-                    <p className="table-participants margin-left">VAKIOVUORO</p>
+                    <p className="table-participants">VAKIOVUORO</p>
                 </span>
         tdClass = "td-blue"
     }
@@ -50,7 +50,7 @@ class TimeTableItem extends React.Component {
             tdClass = "td-orange"
         } else {
           booked = <span>
-                        <p className="table-participants margin-left">VAPAA</p>
+                        <p className="table-participants">VAPAA</p>
                    </span>
         }
       }
