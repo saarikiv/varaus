@@ -129,7 +129,7 @@ class SlotInfo extends React.Component {
     const { slotInfo } = this.props;
 
     let weekIndex = 0;
-    if (hasTimePassed(slotInfo.day, slotInfo.start)) {
+    if (hasTimePassed(slotInfo.day, slotInfo.end)) {
       weekIndex = 1;
     }
 
