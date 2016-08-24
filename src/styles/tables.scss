@@ -50,6 +50,18 @@
   .tiny-icon {
     height: 4.2vw;
   }
+
+  .td-orange {
+      border-left: $indWidthMobile solid $orange;
+  }
+
+  .td-blue {
+      border-left: $indWidthMobile solid $blue;
+  }
+
+  .td-green {
+      border-left: $indWidthMobile solid $green;
+  }
 }
 
 /////////////////////////////////////////////////////
@@ -100,6 +112,18 @@
     margin: 1px 3px 0 0;
     height: 18px;
   }
+
+  .td-orange {
+      border-left: $indWidthPc solid $orange;
+  }
+
+  .td-blue {
+      border-left: $indWidthPc solid $blue;
+  }
+
+  .td-green {
+      border-left: $indWidthPc solid $green;
+  }
 }
 
 /////////////////////////////////////////////////////
@@ -149,16 +173,4 @@ table {
 }
 .table-nonmargin {
   margin-top: 0;
-}
-
-.td-orange {
-    border-left: 4px solid $orange;
-}
-
-.td-blue {
-    border-left: 4px solid $blue;
-}
-
-.td-green {
-    border-left: 4px solid $green;
 }
