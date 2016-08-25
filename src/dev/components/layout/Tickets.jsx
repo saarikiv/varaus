@@ -27,7 +27,7 @@ export default class Tickets extends React.Component {
 
   render() {
     return (
-      <div className="tickets-container mobile-hidden" id="tickets-info" title={"Sinulla on " + this.daysRemaining() + " päivää jäljellä aikakortissasi"}>
+      <div className="tickets-container" id="tickets-info" title={"Sinulla on " + this.daysRemaining() + " päivää jäljellä aikakortissasi"}>
         <span className="ticket-logo" title={"Sinulla on käytettävissäsi " + this.count + " kertalippua"}>
           <img className="mini-icon" src="./assets/ticket.png" />
           <p className="ticket-amnt">{this.count} krt</p>

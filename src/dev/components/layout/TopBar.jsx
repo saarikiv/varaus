@@ -21,6 +21,7 @@ class TopBar extends React.Component {
   }
 
   toggleNav() {
+    /*
     if (this.state.navOpen) {
       this.setState({navOpen: false})
       document.getElementById("nav-btn").classList.remove("mobile-hidden")
@@ -32,6 +33,7 @@ class TopBar extends React.Component {
       document.getElementById("nav-menu").classList.remove("mobile-hidden")
       document.getElementById("tickets-info").classList.remove("mobile-hidden")
     }
+    */
   }
 
   handleLogout(){
@@ -66,11 +68,11 @@ class TopBar extends React.Component {
         return(
         <nav class="user-header-container">
           <div className="align-right">
-            <img src="./assets/nav.png" className="nav-btn align-right desktop-hidden" id="nav-btn" alt="navigation" onClick={() => this.toggleNav()}/>
+            <img src="./assets/nav.png" className="nav-btn align-right mobile-hidden desktop-hidden" id="nav-btn" alt="navigation" onClick={() => this.toggleNav()}/>
           </div>
           <div className="content-container">
             {this.renderTickets()}
-            <div className="userinfo-container mobile-hidden" id="nav-menu">
+            <div className="userinfo-container" id="nav-menu">
               <div className="mobile-row">
                 <a className="text-link text-fade" onClick={this.handleLogout.bind(this)}>Kirjaudu ulos</a>
               </div>
@@ -83,11 +85,11 @@ class TopBar extends React.Component {
       return (
         <nav class="user-header-container">
           <div className="align-right">
-            <img src="./assets/nav.png" className="nav-btn align-right desktop-hidden" id="nav-btn" alt="navigation" onClick={() => this.toggleNav()}/>
+            <img src="./assets/nav.png" className="nav-btn align-right mobile-hidden desktop-hidden" id="nav-btn" alt="navigation" onClick={() => this.toggleNav()}/>
           </div>
           <div className="content-container">
             {this.renderTickets()}
-            <div className="userinfo-container mobile-hidden" id="nav-menu">
+            <div className="userinfo-container" id="nav-menu">
               <div className="mobile-row">
                 <Link className="text-link" to="user" onClick={() => this.toggleNav()}>Varaukset</Link>
               </div>
