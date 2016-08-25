@@ -53,14 +53,17 @@
 
   .td-orange {
       border-left: $indWidthMobile solid $orange;
+      border-right: $indWidthMobile solid transparent;
   }
 
   .td-blue {
       border-left: $indWidthMobile solid $blue;
+      border-right: $indWidthMobile solid transparent;
   }
 
   .td-green {
       border-left: $indWidthMobile solid $green;
+      border-right: $indWidthMobile solid transparent;
   }
 }
 
@@ -115,14 +118,17 @@
 
   .td-orange {
       border-left: $indWidthPc solid $orange;
+      border-right: $indWidthPc solid transparent;
   }
 
   .td-blue {
       border-left: $indWidthPc solid $blue;
+      border-right: $indWidthPc solid transparent;
   }
 
   .td-green {
       border-left: $indWidthPc solid $green;
+      border-right: $indWidthPc solid transparent;
   }
 }
 
