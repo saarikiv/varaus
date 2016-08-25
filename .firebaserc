@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "varaus-a0250"
+    "stage": "varaus-a0250",
+    "production": "hakolahdentie-2"
   }
 }
