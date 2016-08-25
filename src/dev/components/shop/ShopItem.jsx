@@ -9,6 +9,8 @@ class ShopItem extends React.Component {
   constructor(){
     super();
     this.onceOnly = false;
+    this.confirm = false;
+    this.timeoutId = 0;
   }
 
   static contextTypes = {
@@ -17,6 +19,12 @@ class ShopItem extends React.Component {
 
   componentDidMount(){
     this.onceOnly = false;
+  }
+
+  componentWillUnmount(){
+    if(this.timeoutId !== 0){
+      clearTimeout(this.timeoutId);
+    }
   }
 
   payTrailPurchase(){
@@ -31,11 +39,21 @@ class ShopItem extends React.Component {
 
   delayedPurchase(){
     const { item } = this.props
-    if(!this.onceOnly){
-      this.onceOnly = true;
-      this.props.actions.addToCart(item);
-      this.props.actions.initializeDelayedTransaction(item.key, item.type)
-      this.context.router.push('checkout');
+    if(this.confirm){
+      if(!this.onceOnly){
+        this.onceOnly = true;
+        this.props.actions.addToCart(item);
+        this.props.actions.doPurchaseTransaction(item.key)
+        //this.props.actions.initializeDelayedTransaction(item.key, item.type)
+        this.context.router.push('checkout');
+      }
+    } else {
+      this.confirm = true;
+      this.forceUpdate()
+      this.timeoutId = setTimeout(() => {
+        this.confirm = false
+        this.forceUpdate()
+      }, 5000)
     }
   }
 
@@ -79,10 +97,11 @@ class ShopItem extends React.Component {
     if(admin || instructor){
       cashBuyButton = <button className="btn-small btn-blue mobile-full margin-top" onClick={this.cashPurchase.bind(this)} >Käteisosto</button>
     }
+    let buttonTitle = this.confirm? "Vahvista osto" : "Osta"
     return(
       <div>
         <span className="item-row">
-                  <button className="btn-small btn-blue mobile-full" onClick={this.delayedPurchase.bind(this)} >Osta</button>
+                  <button className="btn-small btn-blue mobile-full" onClick={this.delayedPurchase.bind(this)} >{buttonTitle}</button>
         </span>
         <span className="item-row">
           {cashBuyButton}

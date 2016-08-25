@@ -340,7 +340,7 @@ function _cancelPaytrailPayment(dispatch, pendingTrxId, resetShop = true) {
         })
 }
 
-export function initializePayTrailTransaction(clientKey, type) {
+export function initializePayTrailTransaction(shopItem, type) {
     return dispatch => {
         _showLoadingScreen(dispatch, "Alustetaan maksutapahtuma")
         let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/initializepaytrailtransaction' : VARAUSSERVER + '/initializepaytrailtransaction'
@@ -348,7 +348,7 @@ export function initializePayTrailTransaction(clientKey, type) {
         firebase.auth().currentUser.getToken(true)
             .then(idToken => {
                 return axios.post(VARAUSURL, {
-                    item_key: clientKey,
+                    item_key: shopItem,
                     current_user: idToken,
                     purchase_target: type
                 })
@@ -383,7 +383,7 @@ export function initializePayTrailTransaction(clientKey, type) {
     }
 }
 
-export function initializeDelayedTransaction(clientKey, type) {
+export function initializeDelayedTransaction(shopItem, type) {
     return dispatch => {
         _showLoadingScreen(dispatch, "Alustetaan maksutapahtuma")
         let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/initializedelayedtransaction' : VARAUSSERVER + '/initializedelayedtransaction'
@@ -391,7 +391,7 @@ export function initializeDelayedTransaction(clientKey, type) {
         firebase.auth().currentUser.getToken(true)
             .then(idToken => {
                 return axios.post(VARAUSURL, {
-                    item_key: clientKey,
+                    item_key: shopItem,
                     current_user: idToken,
                     purchase_target: type
                 })
@@ -605,28 +605,26 @@ export function removeShopItem(key) {
     }
 }*/
 
-/*export function doPurchaseTransaction(nonce, clientKey, type) {
+export function doPurchaseTransaction(shopItem) {
     return dispatch => {
-        _showLoadingScreen(dispatch, "Suoritetaan maksu.")
+        _showLoadingScreen(dispatch, "Lähetetään lasku sähköpostisi.")
         let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/checkout' : VARAUSSERVER + '/checkout'
 
         firebase.auth().currentUser.getToken(true)
             .then(idToken => {
                 return axios.post(VARAUSURL, {
-                    payment_method_nonce: nonce,
-                    item_key: clientKey,
                     current_user: idToken,
-                    purchase_target: type
+                    item_key: shopItem
                 })
             })
             .then(result => {
-                _hideLoadingScreen(dispatch, "Maksun suoritus onnistui", true)
+                _hideLoadingScreen(dispatch, "Laskun lähetys onnistui", true)
                 dispatch({
                     type: DO_PURCHASE_TRANSACTION,
                     payload: {
                         cart: {},
                         phase: "done",
-                        purchaseResult: result,
+                        purchaseResult: result.data,
                         error: {
                             code: "0",
                             message: "no error"
@@ -636,16 +634,16 @@ export function removeShopItem(key) {
             })
             .catch(error => {
                 console.error("PURCHASE ERROR", error);
-                _hideLoadingScreen(dispatch, "Maksun suorituksessa tapahtui virhe: "+ error, false)
+                _hideLoadingScreen(dispatch, "Laskun lähetyksessä tapahtui virhe: "+ error.data, false)
                 dispatch({
                     type: CHECKOUT_ERROR,
                     payload: {
                         error: {
                             code: "PURCHASE_ERROR",
-                            message: "Purchase error: " + error
+                            message: "Purchase error: " + error.data
                         }
                     }
                 })
             })
     }
-} */
+}
