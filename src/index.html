@@ -14,8 +14,8 @@
     <script type="text/javascript" src="https://payment.paytrail.com/js/payment-widget-v1.0.min.js"></script>
     <script>
         // Select your VARAUSSERVER
-        var VARAUSSERVER = 'https://varausserver-stage.herokuapp.com';
-        //var VARAUSSERVER = 'https://varausserver.herokuapp.com';
+        //var VARAUSSERVER = 'https://varausserver-stage.herokuapp.com';
+        var VARAUSSERVER = 'https://varausserver.herokuapp.com';
         //var VARAUSSERVER = 'http://localhost:3000';
 
         // Initialize Firebase
@@ -37,8 +37,8 @@
         //----------------------------------------
         //SELECT THE FIREBASE instance
         //----------------------------------------
-        firebase.initializeApp(firebaseStageConfig);
-        //firebase.initializeApp(firebaseProdConfig);
+        //firebase.initializeApp(firebaseStageConfig);
+        firebase.initializeApp(firebaseProdConfig);
         //----------------------------------------
     </script>
 
