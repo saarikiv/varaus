@@ -108,7 +108,7 @@ class SlotInfo extends React.Component {
 
     if(!this.userCanBook(day)){
       return(<div>
-              <p className="info-cantreserve">Sinulla ei ole varausoikeutta.</p>
+              <p className="info-cantreserve">Sinulla ei ole varausoikeutta. Mene sovelluksen KAUPPA-osioon ja osta itsellesi varauskertoja.</p>
             </div>
       );
     }
@@ -144,6 +144,7 @@ class SlotInfo extends React.Component {
           <div className="slot-info">
             <img src="./assets/error.png" className="exit-btn" onClick={this.exitContainer.bind(this)} />
             <div className="info-info-container">
+            <h3>Vuoron tiedot</h3>
               <div className="surrounded-border">
                 <p className="info-line border-bottom">Aika: {dayStr} - {endStr}</p>
               </div>
