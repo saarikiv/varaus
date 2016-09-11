@@ -86,6 +86,11 @@ class SlotInfo extends React.Component {
 
     if(slotInfo.bookings){
       if(slotInfo.bookings.user.length > 0){
+        if((Date.now() + (3 * 60 * 60 * 1000)) > day.getTime() ){
+          return(
+            <p className="text-red"> Vuoron alkuun alle 3 tuntia. Vuoroa ei voi enää perua.</p>
+          );
+        }
           let cancelButton = (this.confirmation)? "Vahvista peruutus" : "Peru"
           return( <div>
                     <p className="text-blue"> Sinä olet varannut tämän vuoron.</p>

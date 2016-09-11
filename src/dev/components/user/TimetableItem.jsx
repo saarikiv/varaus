@@ -33,7 +33,6 @@ class TimeTableItem extends React.Component {
     let booked = <span>
                     <p className="table-participants">VAPAA</p>
                  </span>
-    let userBooked = null
     let tdClass = "td-green"
 
     if(item.blocked){
@@ -63,7 +62,6 @@ class TimeTableItem extends React.Component {
       <td className={tdClass} onClick={() => this.itemClicked()}>
         <p className="table-time">{getTimeStrMsBeginnignOfDay(item.start)} - {getTimeStrMsBeginnignOfDay(item.end)}</p>
         {booked}
-        {userBooked}
       </td>
     );
   }
