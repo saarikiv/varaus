@@ -79,8 +79,8 @@ class Timetable extends React.Component {
   render() {
     return (
       <div class="container timetable-container">
+      <h3 className="centered">Varauskalenteri:</h3>
         <table className="centered">
-          <h3>Varauskalenteri:</h3>
           <tbody>
             {this.renderWeek()}
           </tbody>
