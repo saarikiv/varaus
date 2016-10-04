@@ -88,7 +88,7 @@ export function postReservation(forward, slotInfo) {
     }
 }
 
-function processBookings(inputBookings, uid, bookings, userbookings) {
+function processBookings(inputBookings, uid, bookings, userbookings, slot) {
     let instanceId;
     let instanceObj;
     let booking = {}
@@ -96,7 +96,8 @@ function processBookings(inputBookings, uid, bookings, userbookings) {
     let index = 0;
     for (instanceId in inputBookings) {
         //Booking is in the future - it counts!!
-        if (instanceId > Date.now()) {
+        let referenceTime = Number(instanceId) + slot.end - slot.start
+        if (referenceTime > Date.now()) {
             booking.instance = instanceId;
             booking.reservations = 0;
             booking.participants = [];
@@ -127,21 +128,20 @@ function processBookings(inputBookings, uid, bookings, userbookings) {
     })
 }
 
-export function fetchSlotBookings(slotkey, uid) {
-    var bookings = [];
-    var userbookings = [];
-
+export function fetchSlotBookings(slot, uid) {
+    var bookings = []
+    var userbookings = []
     return dispatch => {
-        var bkns = {};
+        var bkns = {}
         var returnObject;
         //Clear the booking details in case there are no bookings and the
-        firebase.database().ref('/bookingsbyslot/' + slotkey).on('value', snapshot => {
+        firebase.database().ref('/bookingsbyslot/' + slot.key).on('value', snapshot => {
             bkns = snapshot.val();
             bookings = Object.assign([]);
             userbookings = Object.assign([]);
-            processBookings(bkns, uid, bookings, userbookings)
+            processBookings(bkns, uid, bookings, userbookings, slot)
             returnObject = Object.assign({})
-            returnObject[slotkey] = {
+            returnObject[slot.key] = {
                 all: bookings,
                 user: userbookings
             }

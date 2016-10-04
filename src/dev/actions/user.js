@@ -120,7 +120,8 @@ export function fetchUsersBookings(uid) {
                                     })
                                 } else {
                                     booking.slotInfo.key = oneSlot;
-                                    if (booking.slotTime < Date.now()) {
+                                    let referenceTime = booking.slotTime + booking.slotInfo.end - booking.slotInfo.start //Find the end time of the slot
+                                    if (referenceTime < Date.now()) {
                                         returnListHistory.push(booking)
                                     } else {
                                         returnListBookings.push(booking);

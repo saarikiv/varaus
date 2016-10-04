@@ -17,7 +17,7 @@ class TimeTableItem extends React.Component {
   }
 
   componentWillMount(){
-    this.props.bookingsActions.fetchSlotBookings(this.props.item.key, this.props.currentUser.uid)
+    this.props.bookingsActions.fetchSlotBookings(this.props.item, this.props.currentUser.uid)
   }
 
   componentWillUnmount(){

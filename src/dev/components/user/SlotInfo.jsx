@@ -80,8 +80,6 @@ class SlotInfo extends React.Component {
   //========================================================================
   renderReservationButton(slotInfo, day, dayStr, weekIndex){
 
-    console.log("SLOTINFO", slotInfo)
-
     var notificationText = null;
 
     if(slotInfo.bookings){
