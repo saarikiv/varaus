@@ -1,7 +1,8 @@
 import {
     ADD_USERS_TO_OVERVIEW,
     ADD_CREDITS_TO_OVERVIEW,
-    REMOVE_TRANSACTION
+    REMOVE_TRANSACTION,
+    OK_TRANSACTION
 } from '../actions/actionTypes.js'
 
 const INITIAL_STATE = {
@@ -14,6 +15,7 @@ const INITIAL_STATE = {
 export default function(state = INITIAL_STATE, action) {
     switch (action.type) {
         case REMOVE_TRANSACTION:
+        case OK_TRANSACTION:
             return Object.assign({}, INITIAL_STATE, {refreshRequired: true})
         case ADD_USERS_TO_OVERVIEW:
             return Object.assign({}, state, action.payload, {refreshRequired: false})

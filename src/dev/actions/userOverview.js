@@ -60,6 +60,7 @@ function fetchTransactionsToOverview(dispatch ,uid) {
             trxdetails = Object.assign({}); //Need new object to be pushed to arrays
             trxdetails.purchasetime = one;
             trxdetails.type = all[one].type;
+            trxdetails.paymentReceived = all[one].paymentReceived;
             trxdetails.expires = all[one].expires;
             trxdetails.paymentInstrumentType = all[one].details.transaction.paymentInstrumentType;
             trxdetails.shopItem = all[one].shopItem;

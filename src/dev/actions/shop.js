@@ -1,6 +1,8 @@
 import axios from "axios"
 
 import {
+    OK_TRANSACTION,
+    OK_TRANSACTION_ERROR,
     REMOVE_TRANSACTION,
     REMOVE_TRANSACTION_ERROR,
     START_CHECKOUT_FLOW,
@@ -56,6 +58,38 @@ export function removeTransaction(transaction, user){
 
     }
 }
+
+export function okTransaction(transaction, user){
+    return dispatch => {
+        _showLoadingScreen(dispatch, "Kuitataan maksu saaduksi.")
+        let VARAUSURL = typeof(VARAUSSERVER) === "undefined" ? 'http://localhost:3000/okTransaction' : VARAUSSERVER + '/okTransaction'
+        firebase.auth().currentUser.getToken(true)
+            .then(idToken => {
+                return axios.post(VARAUSURL, {
+                    current_user: idToken,
+                    for_user: user,
+                    transaction: transaction
+                })
+            })
+            .then(response => {
+                _hideLoadingScreen(dispatch, "Maksu kuitattu.", true)
+                dispatch({
+                    type: OK_TRANSACTION,
+                    payload:{transaction, user}
+                })
+            })
+            .catch(error => {
+                console.error("PAYTRAIL_ERROR:", error);
+                _hideLoadingScreen(dispatch, "Maksun kuittaamisessa tapahtui virhe: " + error.data, false, 5000)
+                dispatch({
+                    type: OK_TRANSACTION_ERROR,
+                    payload:{transaction, user}
+                })
+            });
+
+    }
+}
+
 
 export function completePendingPayment(pendingTrxId){
     return dispatch => {
