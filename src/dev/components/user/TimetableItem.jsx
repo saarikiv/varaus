@@ -37,7 +37,7 @@ class TimeTableItem extends React.Component {
 
     if(item.blocked){
         booked = <span>
-                    <p className="table-participants">VAKIOVUORO</p>
+                    <p className="table-participants">VAKIOV. {item.reserver}</p>
                 </span>
         tdClass = "td-blue"
     }
